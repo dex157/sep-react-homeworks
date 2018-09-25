@@ -16,8 +16,8 @@ before_script:
 
 script:
   - yarn build
-  - yarn run cypress:run
-  - yarn test
+  # - yarn run cypress:run
+  # - yarn test
 
 after_script:
   - cp build/index.html build/200.html
