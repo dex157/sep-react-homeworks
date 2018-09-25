@@ -19,6 +19,8 @@ script:
   - yarn run cypress:run
   - yarn test
 
-after_script:
-  - cp build/index.html build/200.html
-  - surge --project ./build --domain react-sep-pr-$TRAVIS_PULL_REQUEST.surge.sh
+deploy:
+  provider: surge
+  skip_cleanup: true
+  project: ./build/
+  domain: react-sep-pr-$TRAVIS_PULL_REQUEST.surge.sh
