@@ -44,7 +44,6 @@ jobs:
       #       name: Cypress tests
       #       command: yarn run cypress:run
 
-      - run: echo $CIRCLE_PULL_REQUEST | awk -F/ '{print $NF}'
       - run: echo $CIRCLE_PULL_REQUEST | grep -oE "[^/]+$"
       - run: echo $CIRCLE_PULL_REQUEST | grep -oE "[^/]+$" >> $BASH_ENV
       - run: echo $BASH_ENV
