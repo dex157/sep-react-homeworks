@@ -50,7 +50,11 @@ jobs:
       - run: echo $CIRCLE_BRANCH
       - run: echo $CIRCLE_JOB
       - run: echo $CIRCLE_NODE_INDEX
-      - run: echo '123'
-      - run: echo "$CIRCLE_PR_NUMBER"
-      - run: echo '$CIRCLE_PR_NUMBER'
+      - run: echo $CIRCLE_PR_REPONAME
+      - run: echo $CIRCLE_PR_USERNAME
+      - run: echo $CIRCLE_PREVIOUS_BUILD_NUM
+      - run: echo $CIRCLE_PROJECT_REPONAME
+      - run: echo $CIRCLE_PROJECT_USERNAME
+      - run: echo $CIRCLE_PULL_REQUEST
+
 
