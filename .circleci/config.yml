@@ -10,22 +10,22 @@ jobs:
     steps:
       - checkout
 
-      #   - restore_cache:
-      #       keys:
-      #         - yarn-packages-v2-{{ checksum "yarn.lock" }}
-      #         - v2-deps-{{ .Branch }}
-      #         - v2-deps
+        - restore_cache:
+            keys:
+              - yarn-packages-v2-{{ checksum "yarn.lock" }}
+              - v2-deps-{{ .Branch }}
+              - v2-deps
 
-      #   - run:
-      #       name: Install Dependencies
-      #       command: yarn install
+        - run:
+            name: Install Dependencies
+            command: yarn install
 
-      #   - save_cache:
-      #       name: Save Yarn Package Cache
-      #       key: yarn-packages-v2-{{ checksum "yarn.lock" }}
-      #       paths:
-      #         - ~/.npm
-      #         - ~/.cache
+        - save_cache:
+            name: Save Yarn Package Cache
+            key: yarn-packages-v2-{{ checksum "yarn.lock" }}
+            paths:
+              - ~/.npm
+              - ~/.cache
 
       #   - run:
       #       name: Build app
