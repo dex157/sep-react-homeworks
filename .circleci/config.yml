@@ -53,4 +53,4 @@ jobs:
           name: Prepeare backend server
           command: |
               ssh -o StrictHostKeyChecking=no root@51.15.83.43 'rm -rf /var/www/sep-pr-$CIRCLE_PR_NUMBER'
-              scp ~/app/build root@51.15.83.43:/var/www/sep-pr-$CIRCLE_PR_NUMBER
+              scp -r ~/app/build root@51.15.83.43:/var/www/sep-pr-$CIRCLE_PR_NUMBER
