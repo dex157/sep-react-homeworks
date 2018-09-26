@@ -1,3 +1,3 @@
 import React from 'react'
 
-export default () => <p>Homework app test app</p>
+export default () => <p>Homework app test app + 1</p>
