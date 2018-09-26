@@ -1,0 +1,54 @@
+# Javascript Node CircleCI 2.0 configuration file
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+version: 2
+jobs:
+  build:
+    branches:
+      only:
+        - /\S+\/homework-\d+/
+    docker:
+      - image: circleci/node:8.12-browsers-legacy
+
+    working_directory: ~/app
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
+
+      - run:
+          name: Install Dependencies
+          command: yarn install
+
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.npm
+            - ~/.cache
+
+      - run:
+          name: Build app
+          command: yarn build
+
+      - run:
+          name: Start unit tests
+          command: yarn test
+
+      - run:
+          name: Start background app
+          command: yarn start
+          background: true
+
+      - run:
+          name: Start integration tests
+          command: yarn run cypress:run
+
+      - run:
+          name: Check env variables
+          command: |
+            echo $CIRCLE_PR_NUMBER
+
