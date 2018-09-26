@@ -69,7 +69,7 @@ jobs:
       - run:
           name: Set PR number
           command: |
-              echo 'export CIRCLE_PR_NUMBER="${CIRCLE_PR_NUMBER:-${CIRCLE_BUILD_URL##*/}}"' >> $BASH_ENV
+              echo 'export CIRCLE_PR_NUMBER="${CIRCLE_PR_NUMBER:-${CI_PULL_REQUEST##*/}}"' >> $BASH_ENV
               source $BASH_ENV
               echo $CIRCLE_PR_NUMBER
       - run:
