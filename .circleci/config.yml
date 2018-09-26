@@ -44,7 +44,8 @@ jobs:
           name: Cypress tests
           command: yarn run cypress:run
 
-      - run:
-          name: Check env variables
-          command: echo $CIRCLE_PR_NUMBER
+      - run: echo $CIRCLE_PR_NUMBER
+      - run: echo '123'
+      - run: echo "$CIRCLE_PR_NUMBER"
+      - run: echo '$CIRCLE_PR_NUMBER'
 
