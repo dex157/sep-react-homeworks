@@ -6,9 +6,11 @@ jobs:
   build:
     branches:
       only:
+        - master
         - /\S+\/homework-\d+/
+
     docker:
-      - image: circleci/node:8.12-browsers-legacy
+      - image: circleci/node:8.12.0
 
     working_directory: ~/app
 
