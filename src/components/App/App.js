@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 
 class App extends Component {
     render() {
-      return (
+        return (
         <div className="App">
-          <p className="description">
-          Миру-мир, студентам - beer.
-          </p>
+            <p className="description">
+            Миру-мир, студентам - beer.
+            </p>
         </div>
-      );
+        );
     }
-  }
+}
   
   export default App;
