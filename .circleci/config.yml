@@ -44,13 +44,34 @@ jobs:
           name: Cypress tests
           command: yarn run cypress:run
 
+      - run: echo $CI
+      - run: echo $CI_PULL_REQUEST
+      - run: echo $CIRCLE_BRANCH
+      - run: echo $CIRCLE_BUILD_NUM
+      - run: echo $CIRCLE_BUILD_URL
+      - run: echo $CIRCLE_COMPARE_URL
+      - run: echo $CIRCLE_INTERNAL_TASK_DATA
+      - run: echo $CIRCLE_JOB
+      - run: echo $CIRCLE_PR_NUMBER
+      - run: echo $CIRCLE_PR_REPONAME
+      - run: echo $CIRCLE_PR_USERNAME
+      - run: echo $CIRCLE_PROJECT_REPONAME
+      - run: echo $CIRCLE_PROJECT_USERNAME
+      - run: echo $CIRCLE_REPOSITORY_URL
+      - run: echo $CIRCLE_SHA1
+      - run: echo $CIRCLE_TAG
+      - run: echo $CIRCLE_USERNAME
+      - run: echo $CIRCLE_WORKFLOW_ID
+      - run: echo $CIRCLECI
+      - run: echo $HOME
+      - run: echo $CIRCLE_PULL_REQUEST
+      - run: echo $CIRCLE_PR_USERNAME
       - run:
           name: Set PR number
           command: |
-              echo 'export CIRCLE_PR_NUMBER="${CIRCLE_PR_NUMBER:-${CIRCLE_PULL_REQUEST##*/}}"' >> $BASH_ENV
+              echo 'export CIRCLE_PR_NUMBER="${CIRCLE_PR_NUMBER:-${CIRCLE_BUILD_URL##*/}}"' >> $BASH_ENV
               source $BASH_ENV
               echo $CIRCLE_PR_NUMBER
-
       - run:
           name: Deploy
           command: |
