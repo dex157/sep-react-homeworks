@@ -4,20 +4,26 @@
 version: 2
 jobs:
   build:
+    working_directory: ~/app
+
     branches:
       only:
-        - /.+\/homework-.*/
-    docker:
-      - image: circleci/node:8.12.0
+        - master
+        - /\S+\/homework-\d+/
 
-    working_directory: ~/app
+    docker:
+      - image: cypress/base:8
+        environment:
+          TERM: xterm
 
     steps:
       - checkout
 
       - restore_cache:
           keys:
-            - yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - yarn-packages-v2-{{ checksum "yarn.lock" }}
+            - v2-deps-{{ .Branch }}
+            - v2-deps
 
       - run:
           name: Install Dependencies
@@ -25,7 +31,7 @@ jobs:
 
       - save_cache:
           name: Save Yarn Package Cache
-          key: yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          key: yarn-packages-v2-{{ checksum "yarn.lock" }}
           paths:
             - ~/.npm
             - ~/.cache
@@ -49,6 +55,5 @@ jobs:
 
       - run:
           name: Check env variables
-          command: |
-            echo $CIRCLE_PR_NUMBER
+          command: echo $CIRCLE_PR_NUMBER
 
