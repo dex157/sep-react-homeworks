@@ -10,22 +10,22 @@ jobs:
     steps:
       - checkout
 
-    #   - restore_cache:
-    #       keys:
-    #         - yarn-packages-v2-{{ checksum "yarn.lock" }}
-    #         - v2-deps-{{ .Branch }}
-    #         - v2-deps
+      #   - restore_cache:
+      #       keys:
+      #         - yarn-packages-v2-{{ checksum "yarn.lock" }}
+      #         - v2-deps-{{ .Branch }}
+      #         - v2-deps
 
-    #   - run:
-    #       name: Install Dependencies
-    #       command: yarn install
+      #   - run:
+      #       name: Install Dependencies
+      #       command: yarn install
 
-    #   - save_cache:
-    #       name: Save Yarn Package Cache
-    #       key: yarn-packages-v2-{{ checksum "yarn.lock" }}
-    #       paths:
-    #         - ~/.npm
-    #         - ~/.cache
+      #   - save_cache:
+      #       name: Save Yarn Package Cache
+      #       key: yarn-packages-v2-{{ checksum "yarn.lock" }}
+      #       paths:
+      #         - ~/.npm
+      #         - ~/.cache
 
       #   - run:
       #       name: Build app
@@ -43,13 +43,11 @@ jobs:
       #   - run:
       #       name: Cypress tests
       #       command: yarn run cypress:run
-      run:
-        name: Set PR number
-        command: |
+      - run:
+          name: Set PR number
+          command: |
             echo 'export CIRCLE_PR_NUMBER="${CIRCLE_PR_NUMBER:-${CIRCLE_PULL_REQUEST##*/}}"' >> $BASH_ENV
             source $BASH_ENV
             echo $CIRCLE_PR_NUMBER
-
     #   - run: export PR_NUM=$(echo $CIRCLE_PULL_REQUEST | grep -oE "[^/]+$" | { read p; echo sep-pr-$pr })
     #   - run: echo $PR_NUM
-
