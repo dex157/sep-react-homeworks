@@ -43,7 +43,7 @@ jobs:
       - run:
           name: Cypress tests
           command: yarn run cypress:run
-
+      - run: echo $CIRCLE_PULL_REQUEST
       - run:
           name: Set PR number
           command: |
