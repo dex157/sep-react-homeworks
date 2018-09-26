@@ -27,9 +27,9 @@ jobs:
               - ~/.npm
               - ~/.cache
 
-      #   - run:
-      #       name: Build app
-      #       command: yarn build
+        - run:
+            name: Build app
+            command: yarn build
 
       #   - run:
       #       name: Unit tests
