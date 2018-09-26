@@ -58,13 +58,13 @@ jobs:
       - run:
           name: Remove old build
           command:
-            ssh -o StrictHostKeyChecking=no root@51.15.83.43 'rm -rf
-            /var/www/sep-pr-$CIRCLE_PR_NUMBER'
+            ssh -o StrictHostKeyChecking=no root@51.15.83.43 "rm -rf
+            /var/www/sep-pr-$CIRCLE_PR_NUMBER"
 
       - run:
           name: Copy new build
           command:
-            scp -o StrictHostKeyChecking=no -r ~/app/build
+            scp -v -o StrictHostKeyChecking=no -r ~/app/build
             root@51.15.83.43:/var/www/sep-pr-$CIRCLE_PR_NUMBER
 
       - run:
