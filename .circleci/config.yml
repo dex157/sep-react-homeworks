@@ -44,4 +44,4 @@ jobs:
       #       name: Cypress tests
       #       command: yarn run cypress:run
 
-      - run: echo sep-pr-${echo $CIRCLE_PULL_REQUEST | grep -oE "[^/]+$"}
+      - run: echo $CIRCLE_PULL_REQUEST | grep -oE "[^/]+$" | sed s/sep-pr-$//g
