@@ -32,7 +32,7 @@ jobs:
           command: yarn build
 
       - run:
-          name: Start unit tests
+          name: Unit tests
           command: yarn test
 
       - run:
@@ -41,7 +41,7 @@ jobs:
           background: true
 
       - run:
-          name: Start integration tests
+          name: Cypress tests
           command: yarn run cypress:run
 
       - run:
