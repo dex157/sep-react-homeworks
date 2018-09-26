@@ -45,3 +45,4 @@ jobs:
       #       command: yarn run cypress:run
 
       - run: echo $CIRCLE_PULL_REQUEST | awk -F/ '{print $NF}'
+      - run: echo $CIRCLE_PULL_REQUEST | grep -oE "[^/]+$"
