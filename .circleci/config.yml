@@ -43,7 +43,13 @@ jobs:
       #   - run:
       #       name: Cypress tests
       #       command: yarn run cypress:run
+      run:
+        name: Set PR number
+        command: |
+            echo 'export CIRCLE_PR_NUMBER="${CIRCLE_PR_NUMBER:-${CIRCLE_PULL_REQUEST##*/}}"' >> $BASH_ENV
+            source $BASH_ENV
+            echo $CIRCLE_PR_NUMBER
 
-      - run: export PR_NUM=$(echo $CIRCLE_PULL_REQUEST | grep -oE "[^/]+$" | { read p; echo sep-pr-$p })
-      - run: echo $PR_NUM
+    #   - run: export PR_NUM=$(echo $CIRCLE_PULL_REQUEST | grep -oE "[^/]+$" | { read p; echo sep-pr-$pr })
+    #   - run: echo $PR_NUM
 
