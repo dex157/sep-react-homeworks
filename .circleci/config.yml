@@ -27,22 +27,22 @@ jobs:
             - ~/.npm
             - ~/.cache
 
-    #   - run:
-    #       name: Build app
-    #       command: yarn build
+      #   - run:
+      #       name: Build app
+      #       command: yarn build
 
-    #   - run:
-    #       name: Unit tests
-    #       command: yarn test
+      #   - run:
+      #       name: Unit tests
+      #       command: yarn test
 
-    #   - run:
-    #       name: Start background app
-    #       command: yarn start
-    #       background: true
+      #   - run:
+      #       name: Start background app
+      #       command: yarn start
+      #       background: true
 
-    #   - run:
-    #       name: Cypress tests
-    #       command: yarn run cypress:run
+      #   - run:
+      #       name: Cypress tests
+      #       command: yarn run cypress:run
 
       - run: echo $CIRCLE_PR_NUMBER
       - run: echo $CIRCLE_BUILD_NUM
@@ -57,4 +57,11 @@ jobs:
       - run: echo $CIRCLE_PROJECT_USERNAME
       - run: echo $CIRCLE_PULL_REQUEST
 
+      - run:
+        name: Set PR number
+        command: |
+          echo 'export CIRCLE_PR_NUMBER="${CIRCLE_PR_NUMBER:-${CIRCLE_PULL_REQUEST##*/}}"' >> $BASH_ENV
+          source $BASH_ENV
+          echo $CIRCLE_PR_NUMBER
 
+      - run: echo $CIRCLE_PR_NUMBER
