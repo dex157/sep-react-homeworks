@@ -61,14 +61,14 @@ jobs:
             ssh -o StrictHostKeyChecking=no root@51.15.83.43 rm -rf
             /var/www/sep-pr-$CIRCLE_PR_NUMBER
 
-    #   - run:
-    #       name: Copy new build
-    #       command:
-    #         scp -v -o StrictHostKeyChecking=no -r ~/app/build
-    #         root@51.15.83.43:/var/www/sep-pr-$CIRCLE_PR_NUMBER
+      - run:
+          name: Copy new build
+          command:
+            scp -v -o StrictHostKeyChecking=no -r ~/app/build
+            root@51.15.83.43:/var/www/sep-pr-$CIRCLE_PR_NUMBER
 
-    #   - run:
-    #       name: Create dns zone
-    #       command:
-    #         ssh -o StrictHostKeyChecking=no root@51.15.83.43
-    #         "/var/www/setup-server/index.js --address sep-pr-$CIRCLE_PR_NUMBER"
+      - run:
+          name: Create dns zone
+          command:
+            ssh -o StrictHostKeyChecking=no root@51.15.83.43
+            "/var/www/setup-server/index.js --address sep-pr-$CIRCLE_PR_NUMBER"
