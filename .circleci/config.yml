@@ -2,12 +2,6 @@ version: 2
 jobs:
   build:
     working_directory: ~/app
-
-    branches:
-      only:
-        - master
-        - /.+/homework-\d+/
-
     docker:
       - image: cypress/base:8
         environment:
