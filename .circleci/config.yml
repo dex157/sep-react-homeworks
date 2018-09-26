@@ -44,4 +44,5 @@ jobs:
       #       name: Cypress tests
       #       command: yarn run cypress:run
 
-      - run: echo $CIRCLE_PULL_REQUEST | grep -oE "[^/]+$" | sed s/sep-pr-$//g
+      - run: echo $CIRCLE_PULL_REQUEST | grep -oE "[^/]+$" | { read pr; export PR_NUM=$(sep-pr-$pr) } >> $BASH_ENV
+      - run: echo $PR_NUM
