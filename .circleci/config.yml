@@ -12,9 +12,9 @@ jobs:
 
       - restore_cache:
           keys:
-              - yarn-packages-v2-{{ checksum "yarn.lock" }}
-              - v2-deps-{{ .Branch }}
-              - v2-deps
+            - yarn-packages-v2-{{ checksum "yarn.lock" }}
+            - v2-deps-{{ .Branch }}
+            - v2-deps
 
       - run:
           name: Install Dependencies
@@ -24,8 +24,8 @@ jobs:
           name: Save Yarn Package Cache
           key: yarn-packages-v2-{{ checksum "yarn.lock" }}
           paths:
-              - ~/.npm
-              - ~/.cache
+            - ~/.npm
+            - ~/.cache
 
       - run:
           name: Build app
@@ -47,13 +47,24 @@ jobs:
       - run:
           name: Set PR number
           command: |
-              echo 'export CIRCLE_PR_NUMBER="${CIRCLE_PR_NUMBER:-${CIRCLE_PULL_REQUEST##*/}}"' >> $BASH_ENV
-              source $BASH_ENV
-              echo $CIRCLE_PR_NUMBER
+            echo 'export CIRCLE_PR_NUMBER="${CIRCLE_PR_NUMBER:-${CIRCLE_PULL_REQUEST##*/}}"' >> $BASH_ENV
+            source $BASH_ENV
+            echo $CIRCLE_PR_NUMBER
 
       - run:
-          name: Deploy
-          command: |
-              ssh -o StrictHostKeyChecking=no root@51.15.83.43 'rm -rf /var/www/sep-pr-$CIRCLE_PR_NUMBER'
-              scp -r ~/app/build root@51.15.83.43:/var/www/sep-pr-$CIRCLE_PR_NUMBER
-              ssh root@51.15.83.43 "/var/www/setup-server/index.js --address sep-pr-$CIRCLE_PR_NUMBER"
+          name: Remove old build
+          command:
+            ssh -o StrictHostKeyChecking=no root@51.15.83.43 'rm -rf
+            /var/www/sep-pr-$CIRCLE_PR_NUMBER'
+
+      - run:
+          name: Copy new build
+          command:
+            scp -o StrictHostKeyChecking=no -r ~/app/build
+            root@51.15.83.43:/var/www/sep-pr-$CIRCLE_PR_NUMBER
+
+      - run:
+          name: Create dns zone
+          command:
+            ssh -o StrictHostKeyChecking=no root@51.15.83.43
+            "/var/www/setup-server/index.js --address sep-pr-$CIRCLE_PR_NUMBER"
