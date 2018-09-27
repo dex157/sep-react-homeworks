@@ -10,7 +10,7 @@
 
 .message-list {
   flex: 10 1;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .messages {
