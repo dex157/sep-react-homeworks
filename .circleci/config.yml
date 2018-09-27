@@ -1,0 +1,74 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/app
+    docker:
+      - image: cypress/base:8
+        environment:
+          TERM: xterm
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - yarn-packages-v2-{{ checksum "yarn.lock" }}
+            - v2-deps-{{ .Branch }}
+            - v2-deps
+
+      - run:
+          name: Install Dependencies
+          command: yarn install
+
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-v2-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.npm
+            - ~/.cache
+
+      - run:
+          name: Build app
+          command: yarn build
+
+      - run:
+          name: Unit tests
+          command: yarn test
+
+      - run:
+          name: Start background app
+          command: yarn start
+          background: true
+
+      - run:
+          name: Cypress tests
+          command: yarn run cypress:run
+
+      - run:
+          name: Set PR number
+          command: |
+            echo 'export CIRCLE_PR_NUMBER="${CIRCLE_PR_NUMBER:-${CIRCLE_PULL_REQUEST##*/}}"' >> $BASH_ENV
+            source $BASH_ENV
+            echo $CIRCLE_PR_NUMBER
+
+      - run:
+          name: Remove service workers
+          command: rm ~/app/build/service-worker.js
+
+      - run:
+          name: Remove old build
+          command:
+            ssh -o StrictHostKeyChecking=no root@51.15.83.43 rm -rf
+            /var/www/sep-pr-$CIRCLE_PR_NUMBER
+
+      - run:
+          name: Copy new build
+          command:
+            scp -v -o StrictHostKeyChecking=no -r ~/app/build
+            root@51.15.83.43:/var/www/sep-pr-$CIRCLE_PR_NUMBER
+
+      - run:
+          name: Create dns zone
+          command:
+            ssh -o StrictHostKeyChecking=no root@51.15.83.43
+            "/var/www/setup-server/index.js --address sep-pr-$CIRCLE_PR_NUMBER"
