@@ -14,10 +14,17 @@ class Chat extends Component {
 
   sendMessageOnEnter = event => {
     const { messageInput, messages } = this.state;
-    if (event.key === 'Enter') {
-      messages.push({ text: messageInput });
-      this.setState({ messages: messages });
-      this.setState({ messageInput: '' });
+
+    if (event.key === 'Enter' && messageInput) {
+      this.setState({
+        messages: [
+          ...messages,
+          {
+            text: messageInput
+          }
+        ],
+        messageInput: ''
+      });
     }
   };
 
@@ -29,9 +36,11 @@ class Chat extends Component {
 
   componentDidUpdate() {
     this.scrollToBottom();
-  }
+  };
+
   render() {
     const { messages, messageInput } = this.state;
+
     return (
       <div className="chat">
         <div className="message-list">
@@ -54,7 +63,7 @@ class Chat extends Component {
         />
       </div>
     );
-  }
+  };
 }
 
 export default Chat;
