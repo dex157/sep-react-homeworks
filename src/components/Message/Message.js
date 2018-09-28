@@ -3,10 +3,10 @@ import './Message.css';
 
 class Message extends Component {
     render() {
-        let {prop} = this.props;
+        let {text} = this.props;
 
         return (
-            <span className="message">{prop.text}</span>
+            <span className="message">{text}</span>
         );
     }
 }

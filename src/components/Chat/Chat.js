@@ -31,7 +31,7 @@ class Chat extends Component {
             <div className="chat">
                 <div className="message-list">
                     <div className="messages">
-                        {messages.map((message, i) => <Message prop={message} key={i}/>)}
+                        {messages.map((message, i) => <Message text={message.text} key={i}/>)}
                     </div>
                 </div>
                 <input className="input-message" type="text" onChange={this.changeInputMessage} onKeyPress={this.sendMessageOnEnter} value={messageInput}/>
