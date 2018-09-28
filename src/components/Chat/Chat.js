@@ -1,7 +1,7 @@
 import React from 'react';
 import Message from '../Message/Message';
 import './Chat.css';
-const uuidv4 = require('uuid/v4');
+import uuidv4 from 'uuid/v4';
 
 class Chat extends React.Component {
   state = {
