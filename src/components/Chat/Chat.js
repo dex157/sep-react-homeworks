@@ -1,6 +1,7 @@
 import React from 'react';
 import Message from '../Message/Message';
 import './Chat.css';
+const uuidv4 = require('uuid/v4');
 
 class Chat extends React.Component {
   state = {
@@ -25,7 +26,7 @@ class Chat extends React.Component {
         <div className="message-list">
           <div className="messages">
             {messages.map(message => (
-              <Message key={message.text} text={message.text} />
+              <Message key={uuidv4()} text={message.text} />
             ))}
           </div>
         </div>
