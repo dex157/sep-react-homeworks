@@ -3,14 +3,10 @@ import './Message.css';
 
 class Message extends Component {
     render() {
-        let {text} = this.props || [];
+        let {prop} = this.props;
 
         return (
-        <div className="messages">
-            {text.map((props, i) => (
-                <span className="message" key={i}>{props.text}</span>   
-            ))}
-        </div>
+            <span className="message">{prop.text}</span>
         );
     }
 }
