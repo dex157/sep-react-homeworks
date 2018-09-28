@@ -20,6 +20,7 @@
     "enzyme": "^3.6.0",
     "enzyme-adapter-react-16": "^1.5.0",
     "eslint-plugin-cypress": "^2.0.1",
+    "prettier": "1.14.3",
     "surge": "^0.20.1"
   }
 }
