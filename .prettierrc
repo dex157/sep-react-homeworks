@@ -6,18 +6,18 @@ bracketSpacing: true
 parser: babylon
 trailingComma: none
 overrides:
-- files:
-  - '*.ts'
-  - '*.tsx'
-  options:
-    parser: typescript
-- files: '*.md'
-  options:
-    parser: markdown
-- files: '*.json'
-  options:
+    -files:
+    -'*.ts' -
+    '*.tsx'
+options:
+    parser: typescript -
+    files: '*.md'
+options:
+    parser: markdown -
+    files: '*.json'
+options:
     parser: json
-    printWidth: 80
-- files: '*.css'
-  options:
+printWidth: 80 -
+    files: '*.css'
+options:
     parser: css
