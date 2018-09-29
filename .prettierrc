@@ -7,8 +7,8 @@ parser: babylon
 trailingComma: none
 overrides:
 - files:
-  - '*.ts'
-  - '*.tsx'
+  - '*.js'
+  - '*.jsx'
   options:
     parser: typescript
 - files: '*.md'
