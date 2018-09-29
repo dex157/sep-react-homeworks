@@ -15,10 +15,18 @@ class Chat extends Component{
 
     handleKeyPress = (event) => {
         const { messageList, messageInput } = this.state;
+        //generates unique id for key-prop
+        let id = function () {
+            // Math.random should be unique because of its seeding algorithm.
+            // Convert it to base 36 (numbers + letters), and grab the first 9 characters
+            // after the decimal.
+            return '_' + Math.random().toString(36).substr(2, 9);
+        };
+
         if(event.key === 'Enter'){
             this.setState({
-                messageList: [<Message messageInput={messageInput}/>, ...messageList],
-                messageInput: ''
+                messageList: [<Message key={id()} messageInput={messageInput}/>, ...messageList],
+                messageInput: '' // to clear value of input-field
             });
         }
     };
