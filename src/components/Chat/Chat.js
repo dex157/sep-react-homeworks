@@ -16,11 +16,23 @@ class Chat extends React.Component {
         const { messages, messageInput } = this.state;
 
         if (event.key === 'Enter') {
-            this.setState({
-                messages: [...messages, { text: messageInput }],
-                messageInput: ''
-            });
+            if (messageInput.length !== 0) {
+                this.setState({
+                    messages: [...messages, { text: messageInput }],
+                    messageInput: ''
+                });
+            }
         }
+    }
+
+    scrollToBottom = () => {
+        if (this.messagesEnd) {
+            this.messagesEnd.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+    
+    componentDidUpdate() {
+        this.scrollToBottom();
     }
 
     render() {
@@ -33,6 +45,9 @@ class Chat extends React.Component {
                         {messages.map((el, key) => (
                             <Message key={key} text={el.text} />
                         ))}
+                        <div ref={el => {
+                            this.messagesEnd = el;
+                        }} />
                     </div>
                 </div>
                 <input className='input-message' value={messageInput}
