@@ -4,17 +4,30 @@ import Message from '../Message';
 
 class Chat extends Component{
     state = {
-        messageList : [],
+        messages : [],
         messageInput: ''
     };
-    onChange = (event) => {
-        this.setState({
-            messageInput: event.target.value
-        });
+
+    changeInputMessage = (e)  => {
+            this.setState({
+                messageInput: e.target.value
+            });
     };
 
-    handleKeyPress = (event) => {
-        const { messageList, messageInput } = this.state;
+    sendMessageOnEnter = (e) => {
+        const { messages, messageInput } = this.state;
+
+        if(e.key === 'Enter'){
+            this.setState({
+                // messages: [<Message key={id()} text={messageInput}/>, ...messages],
+                messages: [{"text": messageInput}, ...messages],
+                messageInput: '' // to clear value of input-field
+            });
+        }
+    };
+
+    render(){
+        const { messages, messageInput } = this.state;
         //generates unique id for key-prop
         let id = function () {
             // Math.random should be unique because of its seeding algorithm.
@@ -22,25 +35,16 @@ class Chat extends Component{
             // after the decimal.
             return '_' + Math.random().toString(36).substr(2, 9);
         };
-
-        if(event.key === 'Enter'){
-            this.setState({
-                messageList: [<Message key={id()} messageInput={messageInput}/>, ...messageList],
-                messageInput: '' // to clear value of input-field
-            });
-        }
-    };
-
-    render(){
-        const { messageList, messageInput } = this.state;
         return(
             <div className="chat">
                 <div className="message-list">
                     <div className="messages">
-                        {messageList}
+                        {messages.map((message) =>
+                            <Message key={id} text={message.text} />
+                        )}
                     </div>
                 </div>
-                <input className="input-message" value={messageInput} onChange={this.onChange} onKeyPress={this.handleKeyPress}/>
+                <input className="input-message" value={messageInput} onChange={this.changeInputMessage} onKeyPress={this.sendMessageOnEnter}/>
             </div>
         );
     }

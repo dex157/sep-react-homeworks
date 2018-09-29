@@ -3,10 +3,11 @@ import './Message.css';
 
 class Message extends Component{
     render(){
-        const { messageInput } = this.props;
+        const { text } = this.props;
+
         return(
             <span className="message">
-                {messageInput}
+                { text }
             </span>
         );
     }
