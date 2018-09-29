@@ -4,9 +4,9 @@ import './Message.css';
 class Message extends Component {
   render() {
     return (
-      <div className="message">
+      <span className="message">
         {this.props.text}
-      </div>
+      </span>
     )
   }
 }
