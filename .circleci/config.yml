@@ -15,6 +15,7 @@ jobs:
       - restore_cache: &restore_cache
           keys:
             - yarn-packages-v7-{{ checksum "yarn.lock" }}
+            - yarn-packages-v7-
 
       - run: &install_deps
           name: Install Dependencies
