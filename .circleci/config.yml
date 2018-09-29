@@ -93,7 +93,7 @@ jobs:
 
       - run:
           name: Remove service workers
-          command: rm build/service-worker.js
+          command: rm ~/app/build/service-worker.js
 
       - run:
           name: Remove old build
@@ -136,4 +136,3 @@ workflows:
             - build
             - unit-tests
             - integration-tests
-
