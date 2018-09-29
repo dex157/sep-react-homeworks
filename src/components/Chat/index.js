@@ -36,7 +36,7 @@ class Chat extends Component {
           className="input-message"
         />
       </div>
-    )
+    );
   }
 }
 

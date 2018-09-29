@@ -7,7 +7,7 @@ class Message extends Component {
       <span className="message">
         {this.props.text}
       </span>
-    )
+    );
   }
 }
 
