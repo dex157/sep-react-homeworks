@@ -1,68 +1,94 @@
 import React, { Component } from 'react'
 import './Form.css'
+import ImageBond from './assets/bond_approve.jpg'
+
+const validParams = {
+    firstname: 'james',
+    lastname: 'bond',
+    password: '007',
+}
+
+const fields = [
+    {
+        label: 'Имя',
+        type: 'text',
+        name: 'firstname',
+        errorEmpty: 'Нужно указать имя',
+        errorValid: 'Имя указано не верно',
+    },
+    {
+        label: 'Фамилия',
+        type: 'text',
+        name: 'lastname',
+        errorEmpty: 'Нужно указать фамилию',
+        errorValid: 'Фамилия указана не верно',
+    },
+    {
+        label: 'Пароль',
+        type: 'password',
+        name: 'password',
+        errorEmpty: 'Нужно указать пароль',
+        errorValid: 'Пароль указан не верно',
+    },
+]
 
 class Form extends Component {
-    static defaultProps = {
-        firstname: 'James',
-        lastname: 'Bond',
-        password: '007',
-    }
-
     state = {
         firstname: '',
         lastname: '',
         password: '',
-        errorFirstName: '',
-        errorLastName: '',
-        errorPasswors: '',
+        errors: {
+            firstname: '',
+            lastname: '',
+            password: '',
+        },
         formValid: false,
+    }
+
+    // Валидатор возвращает пустой текст или текст ошибки
+    validation(fieldName) {
+        const fieldsItem = fields.find(el => el.name === fieldName)
+
+        if(this.state[fieldName]) {
+            if (this.state[fieldName] === validParams[fieldName]){
+                return false
+            } else {
+                return fieldsItem.errorValid
+            }
+        } else {
+            return fieldsItem.errorEmpty
+        }
     }
 
     validSubmit = event => {
         event.preventDefault()
 
-        const {
-            firstname,
-            lastname,
-            password,
-        } = this.state
+        let errors = {}
 
-        if (firstname) {
-            (firstname === this.props.firstName)
-                ? this.setState({ formValid: true })
-                : this.setState({ errorFirstName: 'Имя указано не верно' })
-        } else {
-            this.setState({ errorFirstName: 'Нужно указать имя' })
+        for (const item of fields) {   
+            if (this.validation(item.name))
+                errors[item.name] = this.validation(item.name)
         }
 
-        if (lastname) {
-            (lastname === this.props.lastname)
-                ? this.setState({ formValid: true })
-                : this.setState({ errorLastName: 'Фамилия указана не верно' })
+        if (Object.keys(errors).length !== 0) {
+            this.setState(state => ({
+                errors: { ...state.errors, ...errors }
+            }))
         } else {
-            this.setState({ errorLastName: 'Нужно указать фамимлию' })
-        }
-
-        if (password) {
-            (password === this.props.password)
-                ? this.setState({ formValid: true })
-                : this.setState({ errorPasswors: 'Пароль указан не верно' })
-        } else {
-            this.setState({ errorPasswors: 'Нужно указать пароль' })
+            this.setState({ formValid: true })
         }
     }
 
-    inputChange = event => {       
+    inputChange = event => {
         this.setState({
+            errors: {
+                firstname: '',
+                lastname: '',
+                password: '',
+            },
             [event.target.name]: event.target.value,
         })
-        console.log(this.state.firstname)
     }
-
-    componentDidMount(){
-        
-    }
-
 
     render(){
         const { formValid } = this.state
@@ -73,54 +99,26 @@ class Form extends Component {
                 ) : (
                     <form className="form">
                         <h1>Введите свои данные, агент</h1>
-                        <p className="field">
-                            <label className="field__label" htmlFor="firstname">
-                                <span className="field-label">Имя</span>
-                            </label>
-                            <input 
-                                className="field__input field-input t-input-firstname"
-                                type="text"
-                                name="firstname"
-                                onChange={this.inputChange}
-                                value={this.state.firstname}
-                            />
-                            <span className="field__error field-error t-error-firstname">
-                                {this.state.errorFirstName}
-                                {/* Имя указано не верно */}
-                            </span>
-                        </p>
-                        <p className="field">
-                            <label className="field__label" htmlFor="lastname">
-                                <span className="field-label">Фамилия</span>
-                            </label>
-                            <input 
-                                className="field__input field-input t-input-lastname"
-                                type="text"
-                                name="lastname"
-                                value={this.state.lastname}
-                                onChange={this.inputChange}
-                            />
-                            <span className="field__error field-error t-error-lastname">
-                                {this.state.errorLastName}
-                                {/* Фамилия указана не верно */}
-                            </span>
-                        </p>
-                        <p className="field">
-                            <label className="field__label" htmlFor="password">
-                                <span className="field-label">Пароль</span>
-                            </label>
-                            <input 
-                                className="field__input field-input t-input-password"
-                                type="password"
-                                name="password"
-                                value={this.state.password}
-                                onChange={this.inputChange}
-                            />
-                            <span className="field__error field-error t-error-password">
-                                {this.state.errorPasswors}
-                                {/* Пароль указан не верно */}
-                            </span>
-                        </p>
+
+                        {/* Импуты ввода данных */}
+                        {fields.map(fieldName => (
+                            <p className="field" key={fieldName.name}>
+                                <label className="field__label" htmlFor={fieldName.name}>
+                                    <span className="field-label">{fieldName.label}</span>
+                                </label>
+                                <input 
+                                    className={`field__input field-input t-input-${fieldName.name}`}
+                                    type={fieldName.type}
+                                    name={fieldName.name}
+                                    onChange={this.inputChange}
+                                    value={this.state[fieldName.name]}
+                                />
+                                <span className={`field__error field-error t-error-${fieldName.name}`}>
+                                    {this.state.errors[fieldName.name]}
+                                </span>
+                            </p>
+                        ))}
+
                         <div className="form__buttons">
                             <input onClick={this.validSubmit} className="button t-submit" type="submit" value="Проверить"/>
                         </div>
@@ -132,13 +130,11 @@ class Form extends Component {
 }
 
 class Approve extends Component {
-
     render() {
         return (
-            <img scr="#" alt="Картинка James Bond" className="t-bond-image"/>
+            <img scr={ImageBond} alt="Картинка James Bond" className="t-bond-image"/>
         )
     }
 }
-
 
 export default Form
