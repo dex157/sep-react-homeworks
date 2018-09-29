@@ -1,43 +1,57 @@
 version: 2
-jobs:
-  build:
-    working_directory: ~/app
-    docker:
-      - image: cypress/base:8
-        environment:
-          TERM: xterm
 
+defaults: &defaults
+  working_directory: ~/app
+  docker:
+    - image: cypress/base:8
+      environment:
+        TERM: xterm
+
+jobs:
+  cache-warm:
+    <<: *defaults
     steps:
       - checkout
+      - restore_cache: &restore_cache
+          keys:
+            - yarn-packages-v7-{{ checksum "yarn.lock" }}
+
+      - run: &install_deps
+          name: Install Dependencies
+          command: yarn install
+
+      - save_cache: &save_cache
+          name: Save Yarn Package Cache
+          key: yarn-packages-v7-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache
+            - node_modules
+
+  lint:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache: *restore_cache
 
       - run:
           name: Run linters
           command: yarn run lint
 
-      - restore_cache:
-          keys:
-            - yarn-packages-v2-{{ checksum "yarn.lock" }}
-            - v2-deps-{{ .Branch }}
-            - v2-deps
-
-      - run:
-          name: Install Dependencies
-          command: yarn install
-
-      - save_cache:
-          name: Save Yarn Package Cache
-          key: yarn-packages-v2-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.npm
-            - ~/.cache
-
-      - run:
-          name: Build app
-          command: yarn build
+  unit-tests:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache: *restore_cache
 
       - run:
           name: Unit tests
           command: yarn test
+
+  integration-tests:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache: *restore_cache
 
       - run:
           name: Start background app
@@ -47,6 +61,18 @@ jobs:
       - run:
           name: Cypress tests
           command: yarn run cypress:run
+
+  build-and-deploy:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache: *restore_cache
+      - run: *install_deps
+      - save_cache: *save_cache
+
+      - run:
+          name: Build app
+          command: yarn build
 
       - run:
           name: Set PR number
@@ -76,3 +102,27 @@ jobs:
           command:
             ssh -o StrictHostKeyChecking=no root@51.15.83.43
             "/var/www/setup-server/index.js --address sep-pr-$CIRCLE_PR_NUMBER"
+
+workflows:
+  version: 2
+  build-test-deploy:
+    jobs:
+      - cache-warm
+
+      - lint:
+          requires:
+            - cache-warm
+
+      - unit-tests:
+          requires:
+            - cache-warm
+
+      - integration-tests:
+          requires:
+            - cache-warm
+
+      - build-and-deploy:
+          requires:
+            - lint
+            - unit-tests
+            - integration-tests
