@@ -8,31 +8,27 @@ defaults: &defaults
         TERM: xterm
 
 jobs:
-  cache-warm:
+  lint-and-cache-warm:
     <<: *defaults
     steps:
       - checkout
       - restore_cache: &restore_cache
           keys:
-            - yarn-packages-v7-{{ checksum "yarn.lock" }}
-            - yarn-packages-v7-
+            - yarn-packages-v12-{{ checksum "yarn.lock" }}
+            - yarn-packages-v12-
 
       - run: &install_deps
           name: Install Dependencies
-          command: yarn install
+          command: |
+            yarn install
+            yarn autoclean --force
 
       - save_cache: &save_cache
           name: Save Yarn Package Cache
-          key: yarn-packages-v7-{{ checksum "yarn.lock" }}
+          key: yarn-packages-v12-{{ checksum "yarn.lock" }}
           paths:
-            - ~/.cache
+            - ~/.cache/Cypress
             - node_modules
-
-  lint:
-    <<: *defaults
-    steps:
-      - checkout
-      - restore_cache: *restore_cache
 
       - run:
           name: Run linters
@@ -63,7 +59,7 @@ jobs:
           name: Cypress tests
           command: yarn run cypress:run
 
-  build-and-deploy:
+  build:
     <<: *defaults
     steps:
       - checkout
@@ -72,6 +68,21 @@ jobs:
       - run:
           name: Build app
           command: yarn build
+
+      - persist_to_workspace:
+          root: build
+          paths:
+            - index.html
+            - asset-manifest.json
+            - favicon.ico
+            - manifest.json
+            - static
+
+  deploy:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: build
 
       - run:
           name: Set PR number
@@ -82,7 +93,7 @@ jobs:
 
       - run:
           name: Remove service workers
-          command: rm ~/app/build/service-worker.js
+          command: rm build/service-worker.js
 
       - run:
           name: Remove old build
@@ -93,7 +104,7 @@ jobs:
       - run:
           name: Copy new build
           command:
-            scp -v -o StrictHostKeyChecking=no -r ~/app/build
+            scp -v -o StrictHostKeyChecking=no -r build
             root@51.15.83.43:/var/www/sep-pr-$CIRCLE_PR_NUMBER
 
       - run:
@@ -106,22 +117,22 @@ workflows:
   version: 2
   build-test-deploy:
     jobs:
-      - cache-warm
-
-      - lint:
-          requires:
-            - cache-warm
+      - lint-and-cache-warm
 
       - unit-tests:
           requires:
-            - cache-warm
+            - lint-and-cache-warm
 
       - integration-tests:
           requires:
-            - cache-warm
+            - lint-and-cache-warm
 
-      - build-and-deploy:
+      - build:
           requires:
-            - lint
+            - lint-and-cache-warm
+
+      - deploy:
+          requires:
+            - build
             - unit-tests
             - integration-tests
