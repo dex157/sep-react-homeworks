@@ -9,7 +9,6 @@ class Chat extends Component {
   }
 
   changeInputMessage = (e) => {
-    e.preventDefault()
     this.setState({ messageInput: e.target.value });
   }
 
