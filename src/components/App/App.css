@@ -1,0 +1,34 @@
+.app {
+  margin: 0 auto;
+  max-width: 700px;
+  width: 100%;
+}
+
+.radio-group {
+  display: flex;
+  justify-content: space-around;
+}
+
+.radio-input {
+  opacity: 0;
+  position: absolute;
+}
+
+.radio {
+  border: 1px solid #cfc;
+  border-radius: 3px;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.radio--selected {
+  border-style: inset;
+  border: 1px solid #999;
+}
+
+.radio-label {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
