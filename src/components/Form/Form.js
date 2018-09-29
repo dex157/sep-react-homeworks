@@ -10,7 +10,7 @@ class Form extends Component {
         inputValue: '',
         errors: {
           emptyMessage: 'Нужно указать имя',
-          wrongMessage: 'Имя указано неверно'
+          wrongMessage: 'Имя указано не верно'
         }
       },
       lastname: {
@@ -18,7 +18,7 @@ class Form extends Component {
         inputValue: '',
         errors: {
           emptyMessage: 'Нужно указать фамилию',
-          wrongMessage: 'Фамилия указана неверно'
+          wrongMessage: 'Фамилия указана не верно'
         }
       },
       password: {
@@ -26,7 +26,7 @@ class Form extends Component {
         inputValue: '',
         errors: {
           emptyMessage: 'Нужно указать пароль',
-          wrongMessage: 'Пароль указан неверно'
+          wrongMessage: 'Пароль указан не верно'
         }
       }
     },
