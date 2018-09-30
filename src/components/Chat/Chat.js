@@ -19,9 +19,10 @@ export default class Chat extends Component {
     const { messages, messageInput } = this.state;
 
     if (event.key === 'Enter' && messageInput) {
-      messages.push({ text: messageInput });
-
-      this.setState({ messages, messageInput: '' });
+      this.setState({
+        messages: [...messages, { text: messageInput }],
+        messageInput: ''
+      });
     }
   };
 
