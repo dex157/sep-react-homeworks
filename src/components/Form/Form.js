@@ -110,7 +110,7 @@ class Form extends Component {
     return (
       <div className="app-container">
         {isValid ? (
-          <img src={BondPhoto} className="t-bond-image" />
+          <img src={BondPhoto} className="t-bond-image" alt="bond approve"/>
         ) : (
           <div>
             <form
