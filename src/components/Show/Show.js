@@ -29,7 +29,7 @@ class Show extends React.Component {
   }
 
   render(){
-    const { image, name, genres, summary } = this.state.data;   
+    const { data: { image, name, genres, summary }} = this.state;   
     const { showId } = this.props;   
     if (showId === '') {
       return <p className="show-inforation t-show-info">Шоу не выбрано</p>
