@@ -34,18 +34,11 @@ jobs:
           name: Run linters
           command: yarn run lint
 
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - app/node_modules
-            - .cache/Cypress
-
   unit-tests:
     <<: *defaults
     steps:
       - checkout
-      - attach_workspace:
-          at: ~/
+      - restore_cache: &restore_cache
 
       - run:
           name: Unit tests
@@ -55,8 +48,7 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - attach_workspace:
-          at: ~/
+      - restore_cache: &restore_cache
 
       - run:
           name: Start background app
@@ -71,8 +63,7 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - attach_workspace:
-          at: ~/
+      - restore_cache: &restore_cache
 
       - run:
           name: Build app
