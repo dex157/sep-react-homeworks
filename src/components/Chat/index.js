@@ -26,16 +26,14 @@ class Chat extends Component{
     }
     
     render(){
-        var count = 0;
         const {messageInput} = this.state.messageInput;
 
         return (
         <div className="chat">
         <div className="message-list">
             <div className="messages">
-                {this.state.messages.map(message => {
-                    count++;
-                    return <Message key={count-1} text={message.text} />;
+                {this.state.messages.map((message,id) => {
+                    return <Message key={id} text={message.text} />;
                 })}
             </div>
         </div>
