@@ -31,18 +31,15 @@ export default class Chat extends Component {
     }
 
     sendMessageOnEnter = event => {
-        let {messages} = this.state;
-
-        if (event.key === 'Enter') {
-            let arr = messages.slice();
-            arr.push({
-                        text: event.target.value,
-                    });
-
-            this.setState({
-                messages: arr,
-                messageInput: '',
-            });
+         if (event.key === 'Enter') {
+            this.setState(
+                ({messages, messageInput}) => (
+                    {
+                        messages: [...messages, {text: messageInput}],
+                        messageInput: ''
+                    }
+                )
+            );
         }
     }
 }
