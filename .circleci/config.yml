@@ -92,10 +92,6 @@ jobs:
             echo $CIRCLE_PR_NUMBER
 
       - run:
-          name: Remove service workers
-          command: rm build/service-worker.js
-
-      - run:
           name: Remove old build
           command:
             ssh -o StrictHostKeyChecking=no root@51.15.83.43 rm -rf
