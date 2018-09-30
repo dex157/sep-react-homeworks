@@ -1,66 +1,72 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import './Chat.css';
+import Message from 'components/Message';
 
+export default class Chat extends Component {
+    // инициализируем state
+    state = {
+        messages: [],
+        messageInput: ''
+    };
 
-class Chat extends Component {
-  state = {
-    count: 0,
-  };
+    // обеспечиваем видимость элементов в окне формы
+    componentDidUpdate() {
+      this.scrollVisible();
+    }    
 
-  handleClick = (event) => {
-    const { count } = this.state;
+    // отслеживание изменений поля ввода
+    changeInputMessage = event => {
+        this.setState({
+            messageInput: event.target.value
+        });
+    };
 
-    this.setState({ count: count + 1 });
-  };
+    // добавление сообщения при нажатии Enter
+    sendMessageOnEnter = event => {
+      const { messages, messageInput } = this.state;
+      
+        if (event.key === 'Enter') {
 
-  render() {
-    const { count } = this.state;
-    const { prop1 } = this.state;
-    const list = [
-      {
-        id: 1,
-        name: "white"
-      },
-      {
-        id: 2,
-        name: "green"
-      },
-      {
-        id: 3,
-        name: "blue"
-      },
-      {
-        id: 4,
-        name: "black"
+            // добавляем запись в список messages, в конец списка
+            this.setState({
+              messages: [...messages, { text: messageInput }],
+              messageInput: ''
+            });
+
+        } else {
+            return false;
+        }
+    };
+
+    scrollVisible() {
+      if (this.elem) {
+        this.elem.scrollIntoView({ block: 'end', behavior: 'smooth' });
       }
-    ]
+    }
 
-    return (
+    render() {
+        return (
+            <div className="chat">
+                <div className="message-list">
+                    <div className="messages"
+                      ref={elem => {
+                        this.elem = elem;
+                      }}
+                    >
+                        {this.state.messages.map((message, index) => {
+                            return <Message key={index} text={message.text}/>;
+                        })}
+                    </div>
+                </div>
 
-        <div>
-          <button onClick={this.handleClick}>+</button>
-          <RedColor>
-            <p>counter: {count}</p>
-            <p>{`prop: ${prop1}`}</p>
+                <input
+                    className="input-message"
+                    value={this.state.messageInput}
+                    onChange={this.changeInputMessage}
+                    onKeyPress={this.sendMessageOnEnter}
+                />
+            </div>
 
-              <pre>counter: {count}</pre>
-              <div>
-                {list.map((el, i) => (
-                  <p key={i}>{i}  {el.name}</p>
-                ))}
-              </div>
-          </RedColor>  
-        </div>
-
-    );
-  }
+        );
+    }
 }
-
-class RedColor extends Component {
-  render() {
-      const { children } = this.props;
-      return <div style= {{ color:'red' }}> {children} </div>;
-  }
-}
-
-export default Chat;
