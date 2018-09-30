@@ -8,38 +8,61 @@ class Chat extends Component {
     messageInput: ''
   };
 
-  changeInputMessage = e => {
-    this.setState({ messageInput: e.target.value });
+  changeInputMessage = event => {
+    this.setState({ messageInput: event.target.value });
   };
 
-  sendMessageOnEnter = e => {
-    const { messages, messageInput } = this.state;
+  sendMessageOnEnter = event => {
+    const {
+      messages,
+      messageInput
+    } = this.state;
 
-    if ((e.key === 'Enter') && (messageInput)) {
-      messages.push( { text: messageInput } );
-
-      this.setState( { messages: messages } );
-      this.setState( { messageInput: ''} );
+    if ((event.key === 'Enter') && (messageInput)) {
+      this.setState({
+        messages: [...messages, {
+          text: messageInput
+        }],
+        messageInput: ''
+      });
     }
   };
 
+  scrollToBottom = () => {
+    if (this.messagesEnd) {
+      this.messagesEnd.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
+
   render() {
-    const {messages, messageInput } = this.state;
+    const {
+      messages,
+      messageInput
+    } = this.state;
 
     return (
       <div className="chat">
         <div className="message-list">
-          <div className="messages">
-            {messages.map((message, keyId) => {
-              return <Message key={keyId} text={message.text} />
-            })}
+          <div ref="messages" className="messages">
+            {messages.map((message, key) => (
+              <Message key={key} text={message.text} />
+            ))}
+            <div
+              ref={el => {
+                this.messagesEnd = el;
+              }}
+            />
           </div>
         </div>
         <input
           className="input-message"
+          value={messageInput}
           onChange={this.changeInputMessage}
           onKeyPress={this.sendMessageOnEnter}
-          value={messageInput}
         />
       </div>
     );
