@@ -13,35 +13,34 @@ class Show extends PureComponent {
 
     if (showId !== prevProp.showId) {
       getShowInfo(showId).then(data => {
-        this.setState({data});
+        this.setState({ data });
       });
     }
   };
 
-    isEmpty(object) {
-        return JSON.stringify(object) === "{}";
-    }
-    
+  isEmpty(object) {
+    return JSON.stringify(object) === '{}';
+  }
 
   render() {
-    const { data} = this.state;
+    const { data, data: { image, name, genres, summary }} = this.state;
 
     if (!this.isEmpty(data)) {
       return (
         <div className="show">
           <img
             className="show-image"
-            src={data.image.original}
-            alt={data.name}
+            src={image.original}
+            alt={name}
           />
-          <h2 className="show-label t-show-name">{data.name}</h2>
+          <h2 className="show-label t-show-name">{name}</h2>
           <p className="show-text t-show-genre">
             <b>Жанр: </b>
-            {data.genres.join(', ')}
+            {genres.join(', ')}
           </p>
           <p
             className="show-text t-show-summary"
-            dangerouslySetInnerHTML={{ __html: data.summary }}
+            dangerouslySetInnerHTML={{ __html: summary }}
           />
         </div>
       );
