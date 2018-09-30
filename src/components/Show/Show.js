@@ -20,7 +20,7 @@ class Show extends Component {
         return null;
     }
 
-    componentDidUpdate(prevProp, prevState) {
+    componentDidUpdate(prevProp) {
         const {showId} = this.state;
 
         if(prevProp.showId === showId) return false;
