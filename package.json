@@ -22,7 +22,6 @@
     "enzyme-adapter-react-16": "^1.5.0",
     "eslint-plugin-cypress": "^2.0.1",
     "eslint-plugin-react": "^7.11.1",
-    "eslint-plugin-react-perf": "^2.0.9",
-    "surge": "^0.20.1"
+    "eslint-plugin-react-perf": "^2.0.9"
   }
 }
