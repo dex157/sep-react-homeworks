@@ -3,8 +3,8 @@ import './Form.css';
 import Image from './assets/bond_approve.jpg';
 
 const currectValue = {
-    firstname: 'James',
-    lastname: 'Bond',
+    firstname: 'james',
+    lastname: 'bond',
     password: '007',
 };
 
@@ -73,7 +73,7 @@ class Form extends React.Component {
         const field = fields[name];
 
         switch (field['value']) {
-            case currectValue[field['inputName']]:
+            case currectValue[field['inputName']].toLowerCase():
                 return '';
             case '':
                 return field['error'].emptyMsg;
