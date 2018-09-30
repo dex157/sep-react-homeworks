@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 
 describe('Компонент Message', () => {
   describe('render', () => {
-    const wrapper = shallow(<Message text={'test'} />);
+    const wrapper = shallow(<Message text={'text'} />);
     it('Содержит span с классом message', () => {
       expect(wrapper.find('span.message')).toHaveLength(1);
     });
