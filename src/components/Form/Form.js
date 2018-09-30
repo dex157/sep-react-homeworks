@@ -49,11 +49,11 @@ class Form extends Component {
     if (event && event.type === 'submit') {
       event.preventDefault();
     }
-    // TODO
-    // По хорошему бы придумать обернуть это тоже в цикл
-    errors.firstname = this.validateField('firstname');
-    errors.lastname = this.validateField('lastname');
-    errors.password = this.validateField('password');
+        
+    Object.keys(errors).map((error) => (
+      errors[error] = this.validateField([error])
+    ));
+
     this.setState({
       errors,
       isValid: !errors.firstname && !errors.lastname && !errors.password
