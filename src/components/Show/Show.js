@@ -20,7 +20,7 @@ export default class Show extends Component {
   componentDidUpdate() {
     const { showId, data } = this.state;
 
-    if (data === null && showId !== '') {
+    if (showId !== '' && data === null) {
       getShowInfo(showId).then(data => {
         this.setState({ data: data });
       });
