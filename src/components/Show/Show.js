@@ -13,8 +13,9 @@ class Show extends React.Component {
   }
 
   componentDidUpdate (prevProps) {
-    if (this.props.showId !== prevProps.showId) {
-      fetch(URLs[this.props.showId])
+    const { showId } = this.props;
+    if (showId !== prevProps.showId) {
+      fetch(URLs[showId])
             .then(response => response.json())
             .then(data => this.setState({ data }));
     }    
@@ -28,9 +29,9 @@ class Show extends React.Component {
   }
 
   render(){
-    console.log(this.state.data);
     const { image, name, genres, summary } = this.state.data;   
-    if (this.props.showId === '') {
+    const { showId } = this.props;   
+    if (showId === '') {
       return <p className="show-inforation t-show-info">Шоу не выбрано</p>
     } else if(image) {
       const genresArr = genres.join(', ');
