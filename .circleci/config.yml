@@ -60,20 +60,20 @@ jobs:
       - run:
           name: Remove old build
           command: |
-            if [[ -z $CIRCLE_PR_NUMBER ]]
+            if [[ -z "$CIRCLE_PR_NUMBER" ]]
               then ssh -o StrictHostKeyChecking=no root@51.15.83.43 rm -rf /var/www/sep-pr-$CIRCLE_PR_NUMBER
             fi
 
       - run:
           name: Copy new build
           command: |
-            if [[ -z $CIRCLE_PR_NUMBER ]]
+            if [[ -z "$CIRCLE_PR_NUMBER" ]]
               then scp -v -o StrictHostKeyChecking=no -r build root@51.15.83.43:/var/www/sep-pr-$CIRCLE_PR_NUMBER
             fi
 
       - run:
           name: Create dns zone
-          command:
-            if [[ -z $CIRCLE_PR_NUMBER ]]
+          command: |
+            if [[ -z "$CIRCLE_PR_NUMBER" ]]
               then ssh -o StrictHostKeyChecking=no root@51.15.83.43 "/var/www/setup-server/index.js --address sep-pr-$CIRCLE_PR_NUMBER"
             if
