@@ -20,7 +20,7 @@ export default class Chat extends Component {
     sendMessageOnEnter = event => {
       const { messages, messageInput } = this.state;
       
-        if (event.key === 'Enter') {
+        if (event.key === 'Enter' && messageInput !== '') {
 
             // добавляем запись в список messages, в конец списка
             this.setState({
