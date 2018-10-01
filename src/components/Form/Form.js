@@ -85,58 +85,63 @@ class Form extends Component{
         }
     };
 
-    bond = () =>{
-        return (
-            <img src={bondImg} alt="bond approve" className="t-bond-image" />
-        );
-    };
-
-    loginForm = () =>{
+    render(){
         const {
             firstnameErrorMessage,
             lastnameErrorMessage,
             passwordErrorMessage
         } = this.state;
 
-        return (
-            <form className="form">
-                <h1>Введите свои данные, агент</h1>
-
-                <p className="field">
-                    <label className="field__label" htmlFor="firstname">
-                        <span className="field-label">Имя</span>
-                    </label>
-                    <input className="field__input field-input t-input-firstname" type="text" name="firstname" value={this.state.inputs.firstname} onChange={this.handleChange} onKeyPress={this.validateForm} />
-                    <span className="field__error field-error t-error-firstname">{firstnameErrorMessage}</span>
-                </p>
-
-                <p className="field">
-                    <label className="field__label" htmlFor="lastname">
-                        <span className="field-label">Фамилия</span>
-                    </label>
-                    <input className="field__input field-input t-input-lastname" type="text" name="lastname" value={this.state.inputs.lastname} onChange={this.handleChange} onKeyPress={this.validateForm} />
-                    <span className="field__error field-error t-error-lastname">{lastnameErrorMessage}</span>
-                </p>
-
-                <p className="field">
-                    <label className="field__label" htmlFor="password">
-                        <span className="field-label">Пароль</span>
-                    </label>
-                    <input className="field__input field-input t-input-password" type="password" name="password" value={this.state.inputs.password} onChange={this.handleChange} onKeyPress={this.validateForm} />
-                    <span className="field__error field-error t-error-password">{passwordErrorMessage}</span>
-                </p>
-
-                <div className="form__buttons">
-                    <input onClick={this.validateForm} type="button" ref={this.submitButton} className="button t-submit" value="Проверить" />
-                </div>
-            </form>
-        );
-    };
-
-    render(){
         return(
             <div ref={this.appContainer} className="app-container">
-                {this.state.formSubmitted ? this.bond() : this.loginForm()}
+                {
+                    this.state.formSubmitted ? (
+                            <img src={bondImg} alt="bond approve" className="t-bond-image"/>
+                        ):
+                        (
+                            <form className="form">
+                                <h1>Введите свои данные, агент</h1>
+
+                                <p className="field">
+                                    <label className="field__label" htmlFor="firstname">
+                                        <span className="field-label">Имя</span>
+                                    </label>
+                                    <input className="field__input field-input t-input-firstname" type="text"
+                                           name="firstname" value={this.state.inputs.firstname}
+                                           onChange={this.handleChange} onKeyPress={this.validateForm}/>
+                                    <span
+                                        className="field__error field-error t-error-firstname">{firstnameErrorMessage}</span>
+                                </p>
+
+                                <p className="field">
+                                    <label className="field__label" htmlFor="lastname">
+                                        <span className="field-label">Фамилия</span>
+                                    </label>
+                                    <input className="field__input field-input t-input-lastname" type="text"
+                                           name="lastname" value={this.state.inputs.lastname}
+                                           onChange={this.handleChange} onKeyPress={this.validateForm}/>
+                                    <span
+                                        className="field__error field-error t-error-lastname">{lastnameErrorMessage}</span>
+                                </p>
+
+                                <p className="field">
+                                    <label className="field__label" htmlFor="password">
+                                        <span className="field-label">Пароль</span>
+                                    </label>
+                                    <input className="field__input field-input t-input-password" type="password"
+                                           name="password" value={this.state.inputs.password}
+                                           onChange={this.handleChange} onKeyPress={this.validateForm}/>
+                                    <span
+                                        className="field__error field-error t-error-password">{passwordErrorMessage}</span>
+                                </p>
+
+                                <div className="form__buttons">
+                                    <input onClick={this.validateForm} type="button" ref={this.submitButton}
+                                           className="button t-submit" value="Проверить"/>
+                                </div>
+                            </form>
+                        )
+                }
             </div>
         );
     }
