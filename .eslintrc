@@ -5,5 +5,10 @@
   ],
   "env": {
     "cypress/globals": true
+  },
+  "rules": {
+    "max-statements": ["error", 8],
+    "max-depth": ["error", 4],
+    "max-params": ["error", 3]
   }
 }
