@@ -22,9 +22,9 @@ class Show extends PureComponent {
     }
 
     render () {
-        const {data} = this.state;
+        const {data, showId} = this.state;
 
-        if(this.state.showId !== '') {
+        if(showId !== '') {
             return(
                 <div className = "show">
                     <img 
