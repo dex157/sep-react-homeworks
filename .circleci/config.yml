@@ -1,7 +1,7 @@
 version: 2
 
 jobs:
-  test-build-deploy:
+  build:
     working_directory: ~/app
     docker:
       - image: cypress/base:8
