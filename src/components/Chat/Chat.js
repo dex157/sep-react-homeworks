@@ -13,7 +13,7 @@ class Chat extends Component {
   };
 
   sendMessageOnEnter = e => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && e.target.value !== '') {
       const { messageInput, messages } = this.state;
       this.setState({
         messageInput: '',
