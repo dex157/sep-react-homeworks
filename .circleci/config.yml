@@ -34,17 +34,21 @@ jobs:
       - run:
           name: Start background app
           command: |
-            'if [[ -f ./cypress/integration/homework.spec.js ]]; then if [[ -s
-            ./cypress/integration/homework.spec.js ]]; then yarn start:run;
-            fi;fi'
+            if [[ -f ./cypress/integration/homework.spec.js ]];
+              then if [[ -s ./cypress/integration/homework.spec.js ]];
+                then yarn start:run;
+              fi;
+            fi
           background: true
 
       - run:
           name: Cypress tests
           command: |
-            'if [[ -f ./cypress/integration/homework.spec.js ]]; then if [[ -s
-            ./cypress/integration/homework.spec.js ]]; then yarn run
-            cypress:run; fi;fi'
+            if [[ -f ./cypress/integration/homework.spec.js ]];
+              then if [[ -s ./cypress/integration/homework.spec.js ]];
+                then yarn run cypress:run;
+              fi;
+            fi
 
       - run:
           name: Build app
