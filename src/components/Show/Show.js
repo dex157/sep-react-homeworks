@@ -22,22 +22,24 @@ class Show extends PureComponent {
     }
 
     render () {
+        const {data} = this.state;
+
         if(this.state.showId !== '') {
             return(
                 <div className = "show">
                     <img 
                         className = "show-image"
-                        src = {this.state.data.image.original}
-                        alt = {this.state.data.name}
+                        src = {data.image.original}
+                        alt = {data.name}
                     />
-                    <h2 className = "show-label t-show-name">{this.state.data.name}</h2>
+                    <h2 className = "show-label t-show-name">{data.name}</h2>
                     <p className = "show-text t-show-genre">
                         <b>Жанр: </b>
-                        {this.state.data.genres.join(', ')}
+                        {data.genres.join(', ')}
                     </p>
                     <p 
                         className = "show-text t-show-summary"
-                        dangerouslySetInnerHTML = {{ __html: this.state.data.summary}}
+                        dangerouslySetInnerHTML = {{ __html: data.summary}}
                     >
                     </p>
                 </div>
