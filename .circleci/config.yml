@@ -68,7 +68,7 @@ jobs:
           name: Copy new build
           command: |
             if [[ -z "$CIRCLE_PR_NUMBER" ]]
-              then scp -v -o StrictHostKeyChecking=no -r build root@51.15.83.43:/var/www/sep-pr-$CIRCLE_PR_NUMBER
+              then echo "var-$CIRCLE_PR_NUMBER-var"; scp -v -o StrictHostKeyChecking=no -r build root@51.15.83.43:/var/www/sep-pr-$CIRCLE_PR_NUMBER
             fi
 
       - run:
