@@ -8,12 +8,7 @@ export default class Chat extends Component {
         messages: [],
         messageInput: ''
     };
-
-    // обеспечиваем видимость элементов в окне формы
-    componentDidUpdate() {
-      this.scrollVisible();
-    }    
-
+  
     // отслеживание изменений поля ввода
     changeInputMessage = event => {
         this.setState({
@@ -37,6 +32,11 @@ export default class Chat extends Component {
             return false;
         }
     };
+    
+    // обеспечиваем видимость элементов в окне формы
+    componentDidUpdate() {
+      this.scrollVisible();
+    }  
 
     scrollVisible() {
       if (this.elem) {
