@@ -2,6 +2,25 @@ import React, { Component } from 'react';
 import './Form.css'
 import Image from './assets/bond_approve.jpg';
 
+const values = [
+    {
+        emptyInput: 'Нужно указать имя',
+        invalidInput: 'Имя указано не верно',
+        value: 'James'
+    },
+    {
+        emptyInput: 'Нужно указать фамилию',
+        invalidInput: 'Фамилия указана не верно',
+        value: 'Bond' 
+    },
+    {
+        emptyInput: 'Нужно указать пароль',
+        invalidInput: 'Пароль указан не верно',
+        value: '007'
+    }
+];
+
+
 class Form extends Component {
     state = {
         firstName: {value: '', error: ''},
@@ -12,28 +31,12 @@ class Form extends Component {
 
     verifyBond = e => {
         e.preventDefault();
-        let values = [
-            {
-                emptyInput: 'Нужно указать имя',
-                invalidInput: 'Имя указано не верно',
-                value: 'James'
-            },
-            {
-                emptyInput: 'Нужно указать фамилию',
-                invalidInput: 'Фамилия указана не верно',
-                value: 'Bond' 
-            },
-            {
-                emptyInput: 'Нужно указать пароль',
-                invalidInput: 'Пароль указан не верно',
-                value: '007'
-            }
-        ];
+        const {firstName, lastName, password} = this.state;
 
         let errors = {
-            firstName: this.checkInput(this.state.firstName.value, values[0]),
-            lastName: this.checkInput(this.state.lastName.value, values[1]),
-            password: this.checkInput(this.state.password.value, values[2])
+            firstName: this.checkInput(firstName.value, values[0]),
+            lastName: this.checkInput(lastName.value, values[1]),
+            password: this.checkInput(password.value, values[2])
         }
 
         this.setState({
@@ -78,13 +81,13 @@ class Form extends Component {
     }
     
     onChange = e => {
-        let value = e.target.value,
-            name = e.target.name;
+        const {value, name} = e.target;
+        const {firstName, lastName, password} = this.state;
             
         this.setState({
-            firstName: {value: this.state.firstName.value, error: ''},
-            lastName: {value: this.state.lastName.value, error: ''},
-            password: {value: this.state.password.value, error: ''}
+            firstName: {value: firstName.value, error: ''},
+            lastName: {value: lastName.value, error: ''},
+            password: {value: password.value, error: ''}
         });
         this.setState({
             [name]: {'value': `${value}`, error: ''},
