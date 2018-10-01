@@ -36,16 +36,6 @@ class Form extends Component{
 
     };
 
-    submitForm = (requiredFields)=> {
-        let validForm = requiredFields === 3 ? true : false;
-
-        if (validForm){
-            this.setState({
-                formSubmitted: true
-            });
-        }
-    };
-
     validateForm = (event) => {
         if (event.key === 'Enter' || event.target === this.submitButton.current) {
 
@@ -69,7 +59,9 @@ class Form extends Component{
                     missing: 'Нужно указать пароль',
                 }
             };
+
             let validRequiredFields = 0;
+
             for(var input in this.state.inputs){
                 if(this.state.inputs[input] === ''){
                     this.setState({
@@ -87,7 +79,8 @@ class Form extends Component{
                 }
             }
 
-            this.submitForm(validRequiredFields);
+            if(validRequiredFields === 3)
+                this.setState({formSubmitted: true})
 
         }
     };
