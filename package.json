@@ -21,5 +21,9 @@
     "enzyme-adapter-react-16": "^1.5.0",
     "eslint-plugin-cypress": "^2.0.1",
     "surge": "^0.20.1"
-  }
+  },
+  "main": "index.js",
+  "repository": "https://github.com/vostack13/sep-react-homeworks.git",
+  "author": "Stanislav Vozikov <stanislav.vozikov@gmail.com>",
+  "license": "MIT"
 }
