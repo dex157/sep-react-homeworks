@@ -52,12 +52,16 @@ jobs:
 
       - run:
           name: Start background app
-          command: yarn start
+          command:
+            '[ -f cypress/integration/homework.spec.js ] && [ -s
+            cypress/integration/homework.spec.js ] && yarn start'
           background: true
 
       - run:
           name: Cypress tests
-          command: yarn run cypress:run
+          command:
+            '[ -f cypress/integration/homework.spec.js ] && [ -s
+            cypress/integration/homework.spec.js ] && yarn run cypress:run'
 
   build:
     <<: *defaults
