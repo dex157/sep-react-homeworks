@@ -1,29 +1,26 @@
 version: 2
 
-defaults: &defaults
-  working_directory: ~/app
-  docker:
-    - image: cypress/base:8
-      environment:
-        TERM: xterm
-
 jobs:
-  lint-and-workspace-warm:
-    <<: *defaults
+  test-build-deploy:
+    working_directory: ~/app
+    docker:
+      - image: cypress/base:8
+        environment:
+          TERM: xterm
     steps:
       - checkout
-      - restore_cache: &restore_cache
+      - restore_cache:
           keys:
             - yarn-packages-v12-{{ checksum "yarn.lock" }}
             - yarn-packages-v12-
 
-      - run: &install_deps
+      - run:
           name: Install Dependencies
           command: |
             yarn install
             yarn autoclean --force
 
-      - save_cache: &save_cache
+      - save_cache:
           name: Save Yarn Package Cache
           key: yarn-packages-v12-{{ checksum "yarn.lock" }}
           paths:
@@ -34,59 +31,24 @@ jobs:
           name: Run linters
           command: yarn run lint
 
-  unit-tests:
-    <<: *defaults
-    steps:
-      - checkout
-      - restore_cache: *restore_cache
-
-      - run:
-          name: Unit tests
-          command: yarn test
-
-  integration-tests:
-    <<: *defaults
-    steps:
-      - checkout
-      - restore_cache: *restore_cache
-
       - run:
           name: Start background app
           command:
-            '[ -f cypress/integration/homework.spec.js ] && [ -s
-            cypress/integration/homework.spec.js ] && yarn start'
+            'if [[ -f ./cypress/integration/homework.spec.js ]]; then if [[ -s
+            ./cypress/integration/homework.spec.js ]]; then yarn start:run;
+            fi;fi'
           background: true
 
       - run:
           name: Cypress tests
           command:
-            '[ -f cypress/integration/homework.spec.js ] && [ -s
-            cypress/integration/homework.spec.js ] && yarn run cypress:run'
-
-  build:
-    <<: *defaults
-    steps:
-      - checkout
-      - restore_cache: *restore_cache
+            'if [[ -f ./cypress/integration/homework.spec.js ]]; then if [[ -s
+            ./cypress/integration/homework.spec.js ]]; then yarn run
+            cypress:run; fi;fi'
 
       - run:
           name: Build app
           command: yarn build
-
-      - persist_to_workspace:
-          root: build
-          paths:
-            - index.html
-            - asset-manifest.json
-            - favicon.ico
-            - manifest.json
-            - static
-
-  deploy:
-    <<: *defaults
-    steps:
-      - attach_workspace:
-          at: build
 
       - run:
           name: Set PR number
@@ -112,27 +74,3 @@ jobs:
           command:
             ssh -o StrictHostKeyChecking=no root@51.15.83.43
             "/var/www/setup-server/index.js --address sep-pr-$CIRCLE_PR_NUMBER"
-
-workflows:
-  version: 2
-  build-test-deploy:
-    jobs:
-      - lint-and-workspace-warm
-
-      - unit-tests:
-          requires:
-            - lint-and-workspace-warm
-
-      - integration-tests:
-          requires:
-            - lint-and-workspace-warm
-
-      - build:
-          requires:
-            - lint-and-workspace-warm
-
-      - deploy:
-          requires:
-            - build
-            - unit-tests
-            - integration-tests
