@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
+import './Message.css';
 
 export default class Message extends Component {
   render() {
-    return (
-      <div className='message'>
-        <div className='message__like'>
-          <span className="message">{this.props.text}</span>;
-        </div>
-      </div>
-    );
+    return <span className="message">{this.props.text}</span>;
   }
 }

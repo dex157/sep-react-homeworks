@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Message from '../Message';
+import './Chat.css';
 
 export default class Chat extends Component {
   constructor(props) {
@@ -26,12 +27,15 @@ export default class Chat extends Component {
   render() {
     return (
       <div className="chat">
-        <div className='message-list'>
-          {this.state.messages.map((el, key) => (
-            <Message className="messages" key={key} text={el.text} />
-          ))}
+        <div className="message-list">
+          <div className="messages">
+            {this.state.messages.map((el, i) => (
+              <Message key={i} text={el.text} />
+            ))}
+          </div>
         </div>
         <input
+          type="text"
           onChange={this.changeInputMessage}
           className="input-message"
           onKeyPress={this.sendMessageOnEnter}
