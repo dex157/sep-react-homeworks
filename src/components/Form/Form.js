@@ -1,12 +1,8 @@
 import React from 'react';
 import './Form.css';
 import Image from './assets/bond_approve.jpg';
-
-const currectValue = {
-    firstname: 'james',
-    lastname: 'bond',
-    password: '007',
-};
+import { initialState } from './constants';
+import { renderForm } from './renderForm';
 
 class Form extends React.Component {
     state = {
@@ -72,8 +68,8 @@ class Form extends React.Component {
         const { fields } = this.state;
         const field = fields[name];
 
-        switch (field['value']) {
-            case currectValue[field['inputName']].toLowerCase():
+        switch (field['value'].toLowerCase()) {
+            case initialState[field['inputName']]:
                 return '';
             case '':
                 return field['error'].emptyMsg;
@@ -98,51 +94,16 @@ class Form extends React.Component {
         });
     };
 
-    handleKeyPress = event => {
-        if (event.key === 'Enter') {
-            this.handleSubmit();
-        }
-    };
-
     render () {
-        const { fields, errorMsg, authenticated } = this.state;
+        const { authenticated } = this.state;
 
         return (
             <div className='app-container'>
                 { authenticated ? (
                     <img src={Image} alt='bond approve' className='t-bond-image'/>
-                    ) : (
-                    <form onKeyPress={this.handleKeyPress} onSubmit={this.handleSubmit}>
-                        <h1>Введите свои данные, агент</h1>
-                        { Object.keys(fields).map((field, key) => (
-                            <p className='field' key={key}>
-                                <label className='field__label'>
-                                    <span className='field-label'>
-                                        {fields[field].labelName}
-                                    </span>
-                                </label>
-                                <input
-                                    className={`field__input field-input t-input-${fields[field].inputName}`}
-                                    type={fields[field].type}
-                                    name={fields[field].inputName}
-                                    onChange={this.handleChange}
-                                    value={fields[field].value}
-                                />
-                                <span className={`field__error field-error t-error-${fields[field].inputName}`}>
-                                    {errorMsg[field]}
-                                </span>
-                            </p>
-                        ))}
-                        <div className='form__buttons'>
-                            <input
-                                type='submit'
-                                className='button t-submit'
-                                value='Проверить'
-                                onClick={this.handleSubmit}/>
-                        </div>
-                    </form>
-                    )
-                }
+                ) : (
+                    renderForm(this.state, this.handleSubmit, this.handleChange)
+                )}
             </div>
         );
     }
