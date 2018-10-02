@@ -47,7 +47,7 @@ class AuthProvider extends PureComponent {
 
   render() {
     const { children } = this.props;
-    return <Provider>{children}</Provider>;
+    return <Provider value={this.getProviderValue()}>{children}</Provider>;
   }
 }
 

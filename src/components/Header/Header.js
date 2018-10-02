@@ -1,17 +1,28 @@
-import React, { PureComponent, Fragment } from 'react';
+import React, { PureComponent } from 'react';
 import { AuthConsumer } from '../../contexts/Auth';
-import Button from '../Button'
+import Button from '../Button';
 import './Header.css';
 
 class Header extends PureComponent {
   render() {
-    const {getProviderValue} = AuthConsumer;
     return (
-      <Fragment>
-        {console.log(getProviderValue)}
-        <p>1</p>
-        <p>1</p>
-      </Fragment>
+      <AuthConsumer>
+        {({ isAuthorized, email, logout }) =>
+          isAuthorized ? (
+            <div className="header-menu">
+              <p className="header-menu__email header-email t-header-email">
+                {email}
+              </p>
+              <Button
+                className="header-menu__button t-logout button"
+                onClick={logout}
+              >
+                Выйти
+              </Button>
+            </div>
+          ) : null
+        }
+      </AuthConsumer>
     );
   }
 }
