@@ -26,10 +26,11 @@ export default class Chat extends Component {
   render() {
     return (
       <div className="chat">
-        {this.state.messages.map((el, key) => (
-          <Message key={key} text={el.text} />
-        ))}
-
+        <div className='message-list'>
+          {this.state.messages.map((el, key) => (
+            <Message className="messages" key={key} text={el.text} />
+          ))}
+        </div>
         <input
           onChange={this.changeInputMessage}
           className="input-message"
