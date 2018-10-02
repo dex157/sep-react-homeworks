@@ -2,7 +2,7 @@ import Pic from './assets/bond_approve.jpg';
 
 export const Picture = Pic;
 
-export const initialState = {
+export const Inputs = {
   inputs: {
     firstname: {
       inputName: 'Имя',
@@ -28,16 +28,30 @@ export const initialState = {
         wrongMessage: 'Пароль указан не верно'
       }
     }
-  },
-  errors: {
-    firstname: '',
-    lastname: '',
-    password: ''
-  },
+  }
+};
+
+export const Credits = {
   credits: {
     firstname: 'james',
     lastname: 'bond',
     password: '007'
-  },
+  }
+};
+
+export const Errors = () => {
+  var errors = {
+    errors: {}
+  };
+
+  Object.keys(Inputs.inputs).map(field => (errors.errors[field] = ''));
+
+  return errors;
+};
+
+export const initialState = {
+  ...Inputs,
+  ...Credits,
+  ...Errors(),
   isValid: false
 };
