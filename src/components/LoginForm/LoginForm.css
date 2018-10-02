@@ -1,0 +1,40 @@
+.login-form {
+  align-items: center;
+  border: 3px dashed #49C4E1;
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  width: 300px;
+}
+
+.login-form-title {
+  margin: 5px 0;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0 0;
+}
+
+.field-input {
+  background-color: transparent;
+  border: 3px dashed #49C4E1;
+  color: white;
+  padding: 4px 0;
+}
+
+.field__label {
+  padding-bottom: 10px;
+}
+
+.login-form-error {
+  color: red;
+  font-size: 12px;
+  margin: 10px 0 0;
+}
+
+.login-form__buttons {
+  padding-top: 20px;
+}
