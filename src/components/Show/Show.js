@@ -9,17 +9,12 @@ export default class Show extends Component {
     showId: ''
   };
 
-  componentDidUpdate() {
-    const props = this.props;
-    const state = this.state;
+  componentDidUpdate(prevProps) {
+    const { showId } = this.props;
 
-    if (props.showId !== state.showId) {
-      this.setState({ showId: props.showId, data: null });
-    }
-
-    if (state.data === null && state.showId !== '') {
-      getShowInfo(state.showId).then(data => {
-        this.setState({ data: data });
+    if (showId !== prevProps.showId) {
+      getShowInfo(showId).then(data => {
+        this.setState({ showId: showId, data: data });
       });
     }
   }
@@ -42,16 +37,8 @@ export default class Show extends Component {
   render() {
     const { showId, data } = this.state;
 
-    if (showId === '') {
+    if (!showId && data === null) {
       return <p className="show-inforation t-show-info">Шоу не выбрано</p>;
-    }
-
-    if (showId !== '' && data === null) {
-      return (
-        <p className="show-inforation t-show-info">
-          Загрузка шоу с id {showId}
-        </p>
-      );
     }
 
     return this.renderShow(data);
