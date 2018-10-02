@@ -1,46 +1,11 @@
 import React, { Component } from 'react';
+import { Field } from './FormFieldStaff.js';
 import './Form.css';
-import Picture from './assets/bond_approve.jpg';
+import { Picture, initialState } from './constants.js';
 
 class Form extends Component {
   state = {
-    inputs: {
-      firstname: {
-        inputName: 'Имя',
-        inputValue: '',
-        errors: {
-          emptyMessage: 'Нужно указать имя',
-          wrongMessage: 'Имя указано не верно'
-        }
-      },
-      lastname: {
-        inputName: 'Фамилия',
-        inputValue: '',
-        errors: {
-          emptyMessage: 'Нужно указать фамилию',
-          wrongMessage: 'Фамилия указана не верно'
-        }
-      },
-      password: {
-        inputName: 'Пароль',
-        inputValue: '',
-        errors: {
-          emptyMessage: 'Нужно указать пароль',
-          wrongMessage: 'Пароль указан не верно'
-        }
-      }
-    },
-    credits: {
-      firstname: 'james',
-      lastname: 'bond',
-      password: '007'
-    },
-    errors: {
-      firstname: '',
-      lastname: '',
-      password: ''
-    },
-    isValid: false
+    ...initialState
   };
 
   handleSubmit = event => {
@@ -49,10 +14,10 @@ class Form extends Component {
     if (event && event.type === 'submit') {
       event.preventDefault();
     }
-        
-    Object.keys(errors).map((error) => (
-      errors[error] = this.validateField([error])
-    ));
+
+    Object.keys(errors).map(
+      error => (errors[error] = this.validateField([error]))
+    );
 
     this.setState({
       errors,
@@ -114,27 +79,17 @@ class Form extends Component {
             >
               <h1>Введите свои данные, агент</h1>
 
-              {Object.keys(this.state.inputs).map((fieldname, key) => (
-                <p className="field" key={key}>
-                  <label className="field__label" htmlFor={fieldname}>
-                    <span className="field-label">
-                      {inputs[fieldname].inputName}
-                    </span>
-                  </label>
-                  <input
-                    className={`field__input field-input t-input-${fieldname}`}
-                    type="text"
-                    name={fieldname}
-                    value={inputs[fieldname].inputValue}
-                    onChange={this.handleChange}
-                  />
-                  <span
-                    className={`field__error field-error t-error-${fieldname}`}
-                  >
-                    {errors[fieldname]}
-                  </span>
-                </p>
+              {Object.keys(this.state.inputs).map((fieldName, key) => (
+                <Field
+                  key={key}
+                  fieldName={fieldName}
+                  fieldValue={inputs[fieldName].inputValue}
+                  frontName={inputs[fieldName].inputName}
+                  error={errors[fieldName]}
+                  onChangeFunc={this.handleChange}
+                />
               ))}
+
               <div className="form__buttons">
                 <input
                   type="submit"
