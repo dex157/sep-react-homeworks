@@ -18,9 +18,6 @@ class Chat extends React.Component {
     const { messageInput, messages } = this.state;
 
     if (event.key === 'Enter' && messageInput !== '') {
-      // messages.push({ text: messageInput });
-      // this.setState({ messages: messages });
-      // this.setState({ messageInput: ‘’ });
       this.setState({
         messages: [
           ...messages,
@@ -47,15 +44,6 @@ class Chat extends React.Component {
     const { messageInput, messages } = this.state;
 
     return (
-      // <div className='chat'>
-      //   <Message messages={messages} />
-      //   <input type='text' className='input-message' placeholder='Enter your message'
-      //     value={this.state.messageInput}
-      //     onKeyPress={this.sendMessageOnEnter}
-      //     onChange={(event)=>this.changeInputMessage(event)}>
-      //   </input>
-      // </div>
-
       <div className="chat">
         <div className="message-list">
           <div ref="messages" className="messages">
