@@ -24,7 +24,6 @@ class Show extends Component {
 
   render() {
     const {data} = this.state;
-    console.log(data);
 
     if(data) {
       return (
