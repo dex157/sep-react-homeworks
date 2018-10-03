@@ -6,7 +6,8 @@
   width: 100%;
 }
 
-.header__title {
+.header__title,
+.footer__title {
   padding-left: 5px;
   padding-right: 20px;
 }
