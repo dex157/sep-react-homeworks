@@ -31,7 +31,8 @@ class Show extends Component {
   }
 
   render () {
-    let {data} = this.state;
+    const {data} = this.state;
+
     if (data) {
       return (
         <div className="show">
@@ -46,4 +47,5 @@ class Show extends Component {
     }
   }
 }
+
 export default Show;
