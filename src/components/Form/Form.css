@@ -8,6 +8,11 @@
   color: rgb(181, 181, 181);
 }
 
+/* .form {
+    display: block;
+    margin-top: 0em;
+} */
+
 .form__buttons {
   padding-left: 90px;
   padding-top: 10px;
@@ -57,3 +62,5 @@
   font-weight: 500;
   padding: 5px 10px;
 }
+
+
