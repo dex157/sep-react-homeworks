@@ -19,7 +19,6 @@ html {
   display: flex;
   justify-content: center;
   align-items: center;
-=======
   background-color: #202125;
 }
 
@@ -27,5 +26,4 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
->>>>>>> 0fffbe2a1cde77081a31198b8d69590be1b0418c
 }
