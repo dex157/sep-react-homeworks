@@ -12,4 +12,26 @@ class App extends Component {
     }
 }
 
+
+// // 1. Расширить класс Component
+
+// class HelloWorld extends React.Component {
+//     render() {
+//         return <div>Hello!</div>;
+//     }
+// }
+
+// // 2. Расширить класс PureComponent
+// class HelloWorld extends React.PureComponent {
+//     render() {
+//         return <div>Hello!</div>;
+//     }
+// }
+
+// // 3. Написать функцию возвращающую jsx
+
+// function HelloWorld() {
+//     return <div>Hello!</div>
+// }
+
 export default App;
