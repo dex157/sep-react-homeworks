@@ -79,7 +79,6 @@ class Form extends Component {
   };
 
   handleChange = event => {
-    console.log(event.target.name,event.target.value);
     this.setState({
       errors: {
         firstname: '',
