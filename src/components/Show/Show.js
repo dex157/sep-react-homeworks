@@ -9,7 +9,7 @@ class Show extends Component {
   };
 
   componentDidUpdate(prevProp, prevState) {
-    const { showId } = this.props;
+    const {showId} = this.props;
 
     if (prevProp.showId === showId) return false;
 
@@ -21,8 +21,17 @@ class Show extends Component {
     });
   }
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (prevState.showId !== nextProps.showId) {
+      return {
+        showId: nextProps.showId
+      };
+    }
+    return null;
+  }
+
   render() {
-    const { data } = this.state;
+    const {data} = this.state;
 
     return data ? (
       <div className="show">
