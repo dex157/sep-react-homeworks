@@ -13,3 +13,5 @@ describe('Компонент Message', () => {
     });
   });
 });
+
+export default Message;
