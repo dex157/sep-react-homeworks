@@ -1,0 +1,21 @@
+.card {
+  width: 300px;
+  height: 500px;
+  background-color: #eee3c3;
+  padding: 5px;
+  border: 1px solid #525151;
+  border-radius: 20px;
+  box-shadow: inset -1px -1px 5px 4px #b4a985, 0 0 20px 6px rgba(0, 0, 0, .5);
+  overflow: auto;
+}
+
+.card__title {
+  margin: 0;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
+.card-title {
+  color: #66a;
+  font-weight: 300;
+}
