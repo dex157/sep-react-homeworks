@@ -14,12 +14,13 @@ class Chat extends Component {
 
   sendMessageOnEnter = (e) => {
     if (e.key === 'Enter') {
-  
-      this.setState( ({ messages, messageInput }) => ({
-        messages: [...messages, {text: messageInput}],
-        messageInput: ''
-      }));
 
+      if (this.state.messageInput) {
+        this.setState( ({ messages, messageInput }) => ({
+          messages: [...messages, {text: messageInput}],
+          messageInput: ''
+        }));
+      }
     }
   }
 
