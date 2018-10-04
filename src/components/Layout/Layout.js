@@ -8,7 +8,7 @@ class Layout extends PureComponent {
     const headClass = header ? "main--with-header" : '';
     const footClass = footer ? "main--with-footer" : '';
     return (
-      <div>
+      <Fragment>
         {header && <header className="header">
           <SectionTitle className='header-title'>HEADER</SectionTitle>
           <div className="header__content">
@@ -23,7 +23,7 @@ class Layout extends PureComponent {
           <SectionTitle className="header__title">Footer</SectionTitle>
           {this.renderFooter(footer)}
         </footer>}
-      </div>
+      </Fragment>
     );
   }
 
