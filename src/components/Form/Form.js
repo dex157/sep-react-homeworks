@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import imageBond from './assets/bond_approve.jpg';
 import './Form.css';
-import image from './assets/bond_approve.jpg';
 
 const fields = [
   {
@@ -84,7 +84,7 @@ class Form extends Component {
     return (
       <div className="app-container">
         {isValid ? (
-          <img scr={image} alt="Картинка James Bond" className="t-bond-image" />
+          <img scr={imageBond} alt="Картинка James Bond" className="t-bond-image" />
         ) : (
           <form className="form" onSubmit={this.handleSubmit}>
             <h1>Введите свои данные, агент</h1>
@@ -112,7 +112,6 @@ class Form extends Component {
                 type="submit"
                 className="button t-submit"
                 value="Проверить"
-                onClick={this.validate}                
               />
             </div>
           </form>
