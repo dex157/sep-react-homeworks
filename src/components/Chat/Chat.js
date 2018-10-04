@@ -25,7 +25,7 @@ class Chat extends Component {
     };
 
     render() {
-        let {messages, messageInput} = this.state;
+        let {messages} = this.state;
         return (
             <div className="chat">
                 <div className = "messages">
@@ -33,7 +33,7 @@ class Chat extends Component {
                         return <Message key={key} text={message.text}  /> 
                     })}
                 </div>
-                <input className="input-message"  value={messageInput} type="text" onChange={this.changeInputMessage} onKeyPress={this.sendMessageOnEnter}/>
+                <input className="input-message"  value={this.state.messageInput} type="text" onChange={this.changeInputMessage} onKeyPress={this.sendMessageOnEnter}/>
             </div>
         );
     }
