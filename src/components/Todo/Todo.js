@@ -28,16 +28,15 @@ class Todo extends PureComponent {
     const { saveData, savedData } = this.props;
     const index = parseInt(event.target.dataset.todoId, 10);
 
-    let changeData = [];
-    savedData.map(data => {
+    let changeData = savedData.map(data => {
       if (index === data.id) {
-        changeData.push({
+        return {
           id: data.id, 
           isDone: !data.isDone, 
           value: data.value
-        });
+        };
       } else {
-        changeData.push(data);
+        return data;
       }
     })
     saveData(changeData);
@@ -89,8 +88,8 @@ class Todo extends PureComponent {
 
   renderRecord = record => {
     return (
-      record.map((task, key) => (
-        <div key={key} className="todo-item t-todo">
+      record.map((task) => (
+        <div key={task.id} className="todo-item t-todo">
           <p className="todo-item__text">
             {task.value}
           </p>
