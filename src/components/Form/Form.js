@@ -1,7 +1,5 @@
 import React, { Component } from 'react'; // эту строку надо писать всегда, чтобы babel понимал что мы используем JSX
 
-export default () => <p>Homework app</p>
-
 class Form extends Component {
     state = {
         login: '',
