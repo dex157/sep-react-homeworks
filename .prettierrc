@@ -14,6 +14,9 @@ overrides:
 - files: '*.md'
   options:
     parser: markdown
+- files: '*.yml'
+  options:
+    parser: yaml
 - files: '*.json'
   options:
     parser: json
