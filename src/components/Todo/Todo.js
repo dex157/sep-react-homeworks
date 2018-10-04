@@ -14,7 +14,11 @@ class Todo extends PureComponent {
     return biggest + 1;
   }
 
-  handleChange = event => {};
+  handleChange = event => {
+    this.setState({
+        inputValue: event.target.value
+    })
+  };
 
   createNewRecordByEnter = event => {};
 
@@ -23,7 +27,23 @@ class Todo extends PureComponent {
   createNewRecord = () => {};
 
   render() {
-    return;
+    const { inputValue } = this.state;
+    return (
+        <Card title="Список дел">
+            <div className="todo t-todo-list">
+                <div className="todo-item todo-item-new">
+                    <input
+                        type="text" 
+                        className="todo-input t-input" 
+                        placeholder="Введите задачу"
+                        onChange={this.handleChange}
+                        value={inputValue}
+                    />
+                    <span className="plus t-plus">+</span>
+                </div>
+            </div>
+        </Card>
+    );
   }
 
   renderEmptyRecord() {
@@ -35,4 +55,10 @@ class Todo extends PureComponent {
   };
 }
 
+// export default Todo;
+
 export default withLocalstorage('todo-app', [])(Todo);
+
+// const enhance = withLocalstorage('todo-app', []);
+
+// export default enhance(Todo);
