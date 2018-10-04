@@ -44,7 +44,7 @@ class LoginForm extends PureComponent {
     const { authorizeError } = this.props;
 
     return (
-      <div className="login-form">
+      <form className="login-form" onSubmit={this.handleSubmit}>
         <h1 className="login-form-title">Авторизация</h1>
 
         {fields.map(({ id, label, type }) => (
@@ -72,7 +72,7 @@ class LoginForm extends PureComponent {
             Войти
           </Button>
         </div>
-      </div>
+      </form>
     );
   }
 }
