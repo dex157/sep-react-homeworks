@@ -24,8 +24,8 @@ class Show extends Component {
 
         if(showId !== prevProps.showId) {
             getShowInfo(showId)
-                .then(response => {
-                    this.setState({data: response});
+                .then(data => {
+                    this.setState({data});
                 });
         }
     }
