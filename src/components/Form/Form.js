@@ -9,18 +9,35 @@ export default class Form extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            values: {
-                firstname: 'Slav',
+            values : {
+                firstname: '',
                 lastname: '',
-                password: '',
-            },    
-            errors: {
-                  firstname: '',
-                  lastname: '',
-                  password: ''
+                password: '',        
             },
-            isSubmitted: false
-        };        
+            errors : {
+                firstname: '',
+                lastname: '',
+                password: '',        
+            },
+            isValid: false
+        };    
+        this.authData = {
+            correct : {
+                firstname: 'james',
+                lastname: 'bond',
+                password: '007'        
+            },
+            errors : {
+                firstname: 'Имя указано неверно',
+                lastname: 'Фамилия указана неверно',
+                password: 'Пароль указан неверно'        
+            }, 
+            empty : {
+                firstname: 'Нужно указать имя',
+                lastname: 'Нужно указать фамилию',
+                password: 'Нужно указать пароль'        
+            }
+        }       
     }
 
     // обновляем содержимое state при изменении поля Input
@@ -33,45 +50,29 @@ export default class Form extends Component {
 
     // отслеживание изменений поля ввода
     changeInputMessage = event => {
-        this.setState({
-            firstname: event.target.value
-        });
+        console.log(event.target.value);
+        const { name, value } = event.target;
+        this.setState({ [name]: value });
         
     };
     
-    onSubmit = event => {
-        const { firstname, value } = event.target;
-        this.setState({ [firstname]: value })
-        console.log(this.state.firstname);
-        
-            if (event.key === 'Enter' && this.state.firstname !== 'James') {
-                console.log('AAAAAAAAAAAAA');
-                
-                this.setState({
-                    firstnameError: 'Имя указано не верно'
-                });
-            } else {
-                this.renderImage();
-            };   
+    onSubmit(event) {
+        event.preventDefault();
+               
+            if ( this.state.firstname.toLowerCase() !== 'james') {
+                this.state.firstname === '' ? this.setState({ firstnameError: 'Нужно указать имя' }) 
+                : this.setState({ firstnameError: 'Имя указано неверно' });
+            }; 
+            if ( this.state.lastname.toLowerCase() !== 'bond') {
+                this.state.lastname === '' ? this.setState({ lastnameError: 'Нужно указать фамилию' }) 
+                : this.setState({ lastnameError: 'Фамилия указана неверно' });
+            }; 
+
+            if ( this.state.password !== '007') {
+                this.state.password === '' ? this.setState({ passwordError: 'Нужно указать пароль' }) 
+                : this.setState({ passwordError: 'Пароль указан неверно' });
+            };           
     }
-        
-    // добавление сообщения при нажатии Enter
-    sendMessageOnEnter = event => {
-      const { name, value } = event.target;
-      this.setState({ [name]: value })
-      
-        if (event.key === 'Enter' && this.state.firstname !== 'James') {
-            console.log('No Name');
-            
-            this.setState({
-                firstnameError: 'Имя указано не верно'
-            });
-        } else {
-            this.setState({
-                firstnameError: this.state.firstname
-            });
-        }
-    };
 
     renderImage = () => {
         return <img src={Bond} alt="bond approve" className="t-bond-image" />;
@@ -80,7 +81,7 @@ export default class Form extends Component {
     renderForm() {
         console.log(this.state.firstnameError);
           return (
-            <form className="form" onSubmit={this.onSubmit}>
+            <form className="form">
                 <h1>Введите свои данные, агент</h1>
 
                 <p className="field">
@@ -93,14 +94,43 @@ export default class Form extends Component {
                         name="firstname"
                         value={this.state.firstname}
                         onChange={this.changeInputMessage}
-                        onKeyPress={this.handleUserInput}
                     />
                     <span className="field__error field-error t-error-firstname">
-                        {this.state.firstname} 
+                        {this.state.firstnameError} 
                     </span>
-                </p>    
+                </p> 
+                <p className="field">
+                    <label className="field__label" htmlFor="lastname">
+                        <span className="field-label">Фамилия</span>
+                    </label>
+                    <input
+                        className="field__input field-input t-input-lastname"
+                        type="text"
+                        name="lastname"
+                        value={this.state.lastname}
+                        onChange={this.changeInputMessage}
+                    />
+                    <span className="field__error field-error t-error-lastname">
+                        {this.state.lastnameError} 
+                    </span>
+                </p>
+                <p className="field">
+                    <label className="field__label" htmlFor="password">
+                        <span className="field-label">Пароль</span>
+                    </label>
+                    <input
+                        className="field__input field-input t-input-password"
+                        type="text"
+                        name="password"
+                        value={this.state.password}
+                        onChange={this.changeInputMessage}
+                    />
+                    <span className="field__error field-error t-error-password">
+                        {this.state.passwordError} 
+                    </span>
+                </p>     
                 <div className={'form__buttons'}>
-                    <button className={'button t-submit'} onClick={this.handleUserInput}>Проверить</button>
+                    <button className={'button t-submit'} onClick={(e) => this.onSubmit(e)}>Проверить</button>
                 </div>
             </form>
         );
