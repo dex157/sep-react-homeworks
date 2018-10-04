@@ -9,10 +9,17 @@ class Show extends Component {
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        return {...prevState, showId: nextProps.showId};
+        const { showId } = nextProps;
+        const { showId: prevShowId } = prevState;
+
+        return (
+            showId !== prevShowId 
+                ? {...prevState, showId} 
+                : null
+        );
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate(prevProps) {
         const { showId } = this.props;
 
         if(showId !== prevProps.showId) {
@@ -25,7 +32,7 @@ class Show extends Component {
 
     render() {
         const { data } = this.state;
-
+            
         return ( data 
             ? <div className={'show'}>
                     <img
@@ -40,7 +47,7 @@ class Show extends Component {
                     </p>
                     <p className={'t-show-summary'} dangerouslySetInnerHTML={{ __html: data.summary }} />
                 </div>
-            : <p class="show-inforation t-show-info">Шоу не выбрано</p>
+            : <p className="show-inforation t-show-info">Шоу не выбрано</p>
         )
     }
 }
