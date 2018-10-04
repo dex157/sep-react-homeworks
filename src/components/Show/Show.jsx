@@ -10,37 +10,36 @@ class Show extends PureComponent {
 
   componentDidUpdate = (prevProp, prevState) => {
     const { showId } = this.props;
-    const { showId: oldId } = prevProp;
 
-    if (showId !== oldId) {
+    if (prevProp !== prevState) {
       getShowInfo(showId).then(data => {
-        this.setState({ data });
+        this.setState({
+          showId: showId,
+          data: data
+        });
       });
     }
   };
 
-  isEmpty(object) {
-    return JSON.stringify(object) === '{}';
-  }
-
   render() {
-    const {
-      data,
-      data: { image, name, genres, summary }
-    } = this.state;
+    const { data, showId } = this.state;
 
-    if (!this.isEmpty(data)) {
+    if (showId !== '') {
       return (
         <div className="show">
-          <img className="show-image" src={image.original} alt={name} />
-          <h2 className="show-label t-show-name">{name}</h2>
+          <img
+            className="show-image"
+            src={data.image.original}
+            alt={data.name}
+          />
+          <h2 className="show-label t-show-name">{data.name}</h2>
           <p className="show-text t-show-genre">
             <b>Жанр: </b>
-            {genres.join(', ')}
+            {data.genres.join(', ')}
           </p>
           <p
             className="show-text t-show-summary"
-            dangerouslySetInnerHTML={{ __html: summary }}
+            dangerouslySetInnerHTML={{ __html: data.summary }}
           />
         </div>
       );
