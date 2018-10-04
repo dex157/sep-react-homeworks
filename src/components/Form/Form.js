@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import './Form.css';
 import image from './assets/bond_approve.jpg';
-import './From.css';
 
 const fields = [
   {
@@ -43,8 +43,8 @@ class Form extends Component {
     isValid: false
   };
 
-  handleChange = event => {
-    const { name, value } = event.target;
+  handleChange = e => {
+    const { name, value } = e.target;
 
     this.setState(state => ({
       form: { ...state.form, ...{ [name]: value } },
@@ -59,7 +59,7 @@ class Form extends Component {
     this.validate(form);
   };
 
-  validate = ({ firstname, lastname, password }) => {
+  validate({ firstname, lastname, password }) {
     let errors = {};
 
     (!firstname && (errors.firstname = 'Нужно указать имя')) ||
@@ -74,19 +74,19 @@ class Form extends Component {
 
     this.setState(state => ({
       errors: { ...state.errors, ...errors },
-      valid: !Object.keys(errors).length
+      isValid: !Object.keys(errors).length
     }));
   };
 
   render() {
-    const { errors, isValid } = this.state;
+    const { form, errors, isValid } = this.state;
 
     return (
       <div className="app-container">
         {isValid ? (
           <img scr={image} alt="Картинка James Bond" className="t-bond-image" />
         ) : (
-          <form className="form" onChange={this.handleSubmit}>
+          <form className="form" onSubmit={this.handleSubmit}>
             <h1>Введите свои данные, агент</h1>
             {fields.map(field => (
               <p className="field" key={field.name}>
@@ -97,7 +97,8 @@ class Form extends Component {
                   className={`field__input field-input t-input-${field.name}`}
                   type={field.type}
                   name={field.name}
-                  onChange={this.handleChange}
+                  onChange={this.handleChange} 
+                  value={form[field.name]}
                 />
                 <span
                   className={`field__error field-error t-error-${field.name}`}
@@ -111,7 +112,7 @@ class Form extends Component {
                 type="submit"
                 className="button t-submit"
                 value="Проверить"
-                onClick={this.validate}
+                onClick={this.validate}                
               />
             </div>
           </form>
