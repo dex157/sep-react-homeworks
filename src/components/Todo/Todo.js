@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react';
 import Card from '../Card';
 import './Todo.css';
 import withLocalstorage from '../../HOCs/withLocalstorage';
-import { Object } from 'core-js';
 
 class Todo extends PureComponent {
   state = {
