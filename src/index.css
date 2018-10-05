@@ -5,6 +5,20 @@ body,
 }
 
 html {
+<<<<<<< HEAD
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: #202125;
 }
 

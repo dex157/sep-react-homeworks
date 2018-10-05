@@ -52,6 +52,7 @@ jobs:
             echo $CIRCLE_PR_NUMBER
 
       - run:
+
           name: Remove service workers
           command: rm ~/app/build/service-worker.js
 
