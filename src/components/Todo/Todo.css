@@ -36,11 +36,17 @@
 .todo-item__text {
   margin: 0;
   padding-right: 30px;
+  padding-left: 20px
 }
 
 .todo-item__flag {
   position: absolute;
   right: 10px;
+  top: 12px;
+  cursor: pointer;
+}
+.todo-item__minus {
+  position: absolute;
   top: 12px;
   cursor: pointer;
 }

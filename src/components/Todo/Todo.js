@@ -14,24 +14,110 @@ class Todo extends PureComponent {
     return biggest + 1;
   }
 
-  handleChange = event => {};
+  handleChange = event => {
+    this.setState({ inputValue: event.target.value });
+  };
 
-  createNewRecordByEnter = event => {};
+  createNewRecordByEnter = event => {
+    const { inputValue } = this.state;
 
-  toggleRecordComplete = event => {};
+    if (event.key === 'Enter' && inputValue) {
+      this.createNewRecord();
+    }
+  };
 
-  createNewRecord = () => {};
+  toggleRecordComplete = event => {
+    let { saveData, savedData } = this.props;
+    const id = parseInt(event.target.dataset.todoId, 10);
+
+    savedData = savedData.map(
+      record =>
+        record.id === id
+          ? { ...record, isComplete: !record.isComplete }
+          : record
+    );
+    saveData(savedData);
+  };
+
+  toggleRecordRemove = event => {
+    let { saveData, savedData } = this.props;
+    const id = parseInt(event.target.dataset.todoId, 10);
+
+    savedData = savedData.filter(record => record.id !== id);
+    saveData(savedData);
+  };
+
+  createNewRecord = () => {
+    let { saveData, savedData } = this.props;
+    const { inputValue } = this.state;
+
+    if (inputValue) {
+      var newRecord = { id: this.getId(), text: inputValue, isComplete: false };
+      var data = [...savedData, newRecord];
+
+      this.setState({ inputValue: '' });
+      saveData(data);
+    }
+  };
 
   render() {
-    return;
+    const { savedData: data } = this.props;
+
+    return (
+      <Card title="Список дел">
+        <div className="todo t-todo-list">
+          {this.renderEmptyRecord()}
+          {data
+            ? data.map(record => {
+                return this.renderRecord(record);
+              })
+            : null}
+        </div>
+      </Card>
+    );
   }
 
   renderEmptyRecord() {
-    return;
+    const { inputValue } = this.state;
+
+    return (
+      <div className="todo-item todo-item-new">
+        <input
+          className="todo-input t-input"
+          placeholder="Введите задачу"
+          value={inputValue}
+          onChange={this.handleChange}
+          onKeyPress={this.createNewRecordByEnter}
+        />
+        <span className="plus t-plus" onClick={this.createNewRecord}>
+          +
+        </span>
+      </div>
+    );
   }
 
   renderRecord = record => {
-    return;
+    const { id, text, isComplete } = record;
+
+    return (
+      <div className="todo-item t-todo" key={id}>
+        <span
+          className="todo-item__minus t-todo-minus"
+          data-todo-id={id}
+          onClick={this.toggleRecordRemove}
+        >
+          [-]
+        </span>
+        <p className="todo-item__text">{text}</p>
+        <span
+          className="todo-item__flag t-todo-complete-flag"
+          data-todo-id={id}
+          onClick={this.toggleRecordComplete}
+        >
+          {isComplete ? '[ x ]' : '[ ]'}
+        </span>
+      </div>
+    );
   };
 }
 

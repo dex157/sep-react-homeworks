@@ -34,6 +34,14 @@ describe('localstorage-hoc', () => {
 
       cy.get('.t-todo-complete-flag').should('not.contain', 'x')
     })
+
+    it('По клику на минус запись удаляется', () => {
+      cy.get('.t-input').type('Купить молоко')
+      cy.get('.t-plus').click()
+      cy.get('.t-todo-minus').click()
+
+      cy.get('.t-todo').should('not.exist')
+    })
   })
 
   describe('Localstorage', () => {
