@@ -40,38 +40,62 @@ export default class Form extends Component {
         }       
     }
 
-    // обновляем содержимое state при изменении поля Input
-    handleUserInput = (e) => {
-        const name = e.target.name;
-        const value = e.target.value;
-        this.setState({[name]: value}, 
-            () => { console.log('input'); });
-    }
-
-    // отслеживание изменений поля ввода
+    // отслеживание изменений поля ввода и запись их в State
     changeInputMessage = event => {
-        console.log(event.target.value);
         const { name, value } = event.target;
-        this.setState({ [name]: value });
-        
+        const currState = this.state.values;
+        let keys = Object.keys(currState);
+
+        for (let key of keys) {
+            if (key === name) {
+                currState[key] = value;                
+            }
+        };
+
+        if (keys.indexOf(name) !== -1) {
+            this.setState({ 
+                values: currState
+            });
+        }            
     };
     
     onSubmit(event) {
         event.preventDefault();
-               
-            if ( this.state.firstname.toLowerCase() !== 'james') {
-                this.state.firstname === '' ? this.setState({ firstnameError: 'Нужно указать имя' }) 
-                : this.setState({ firstnameError: 'Имя указано неверно' });
-            }; 
-            if ( this.state.lastname.toLowerCase() !== 'bond') {
-                this.state.lastname === '' ? this.setState({ lastnameError: 'Нужно указать фамилию' }) 
-                : this.setState({ lastnameError: 'Фамилия указана неверно' });
-            }; 
+        const currState = this.state.values;
+        const currErrors = this.state.errors;
+        
+        let keys = Object.keys(currState);               
 
-            if ( this.state.password !== '007') {
-                this.state.password === '' ? this.setState({ passwordError: 'Нужно указать пароль' }) 
-                : this.setState({ passwordError: 'Пароль указан неверно' });
-            };           
+        for (let key of keys) {
+            let input = this.state.values[key].toLowerCase();
+            
+            if ( input !== this.authData.correct[key]) {
+                console.log(currErrors);
+                (input === '') ? currErrors[key] = this.authData.empty[key] : currErrors[key] = this.authData.errors[key];                             
+            } else {
+                currErrors[key] = '';
+            }
+        };
+
+        this.setState({ 
+            errors: currErrors
+        });
+        
+        keys = Object.keys(currErrors);
+        let valid = true;
+
+        for (let key of keys) {
+            if (currErrors[key] !== '') {
+                valid = false;
+            }
+        }
+
+        if (valid === true) {
+            this.setState({ 
+                isValid: true
+            });
+        }
+
     }
 
     renderImage = () => {
@@ -79,7 +103,7 @@ export default class Form extends Component {
     };
 
     renderForm() {
-        console.log(this.state.firstnameError);
+        
           return (
             <form className="form">
                 <h1>Введите свои данные, агент</h1>
@@ -96,7 +120,7 @@ export default class Form extends Component {
                         onChange={this.changeInputMessage}
                     />
                     <span className="field__error field-error t-error-firstname">
-                        {this.state.firstnameError} 
+                        {this.state.errors.firstname} 
                     </span>
                 </p> 
                 <p className="field">
@@ -111,7 +135,7 @@ export default class Form extends Component {
                         onChange={this.changeInputMessage}
                     />
                     <span className="field__error field-error t-error-lastname">
-                        {this.state.lastnameError} 
+                        {this.state.errors.lastname} 
                     </span>
                 </p>
                 <p className="field">
@@ -126,7 +150,7 @@ export default class Form extends Component {
                         onChange={this.changeInputMessage}
                     />
                     <span className="field__error field-error t-error-password">
-                        {this.state.passwordError} 
+                        {this.state.errors.password} 
                     </span>
                 </p>     
                 <div className={'form__buttons'}>
