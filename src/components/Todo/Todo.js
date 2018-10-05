@@ -42,6 +42,7 @@ class Todo extends PureComponent {
   toggleRecordRemove = event => {
     let { saveData, savedData } = this.props;
     const id = parseInt(event.target.dataset.todoId, 10);
+
     savedData = savedData.filter(record => record.id !== id);
     saveData(savedData);
   };
@@ -61,6 +62,7 @@ class Todo extends PureComponent {
 
   render() {
     const { savedData: data } = this.props;
+
     return (
       <Card title="Список дел">
         <div className="todo t-todo-list">
@@ -96,6 +98,7 @@ class Todo extends PureComponent {
 
   renderRecord = record => {
     const { id, text, isComplete } = record;
+
     return (
       <div className="todo-item t-todo" key={id}>
         <span
