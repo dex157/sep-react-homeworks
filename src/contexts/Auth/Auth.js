@@ -4,16 +4,16 @@ const { Provider, Consumer: AuthConsumer } = React.createContext('');
 
 class AuthProvider extends PureComponent {
   state = {
+    isAuthorized: false,
     email: '',
-    isAthorized: false,
     authorizeError: ''
   };
 
   authorize = (email, password) => {
     if (email === 'stu@dent.com' && password === '123') {
       this.setState({
+        isAuthorized: true,
         email: email,
-        isAthorized: true,
         authorizeError: ''
       });
     } else {
@@ -25,18 +25,17 @@ class AuthProvider extends PureComponent {
 
   logout = () => {
     this.setState({
+      isAuthorized: false,
       email: '',
-      isAthorized: false,
       authorizeError: ''
     });
   };
 
   getProviderValue = () => {
-    const { email, isAuthorized, authorizeError } = this.state;
-
+    const { isAuthorized, email, authorizeError } = this.state;
     return {
-      email,
       isAuthorized,
+      email,
       authorizeError,
       authorize: this.authorize,
       logout: this.logout
@@ -45,7 +44,8 @@ class AuthProvider extends PureComponent {
 
   render() {
     const { children } = this.props;
-    return <Provider>{children}</Provider>;
+
+    return <Provider value={this.getProviderValue()}>{children}</Provider>;
   }
 }
 
