@@ -4,14 +4,19 @@ import bondImg from './assets/bond_approve.jpg'
 
 class Form extends Component {
     state = {
-        firstName: { value: '', error: false, errorText: '', truth: "James"},
-        lastName: { value: '', error: false, errorText: '', truth: "Bond"},
-        password: { value: '', error: false, errorText: '', truth: "007"},
+        firstname: { value: '', errorEmpty: false, errorIndent: false,  truth: "James"},
+        lastname: { value: '', errorEmpty: false, errorIndent: false,  truth: "Bond"},
+        password: { value: '', errorEmpty: false, errorIndent: false,  truth: "007"},
         bond: false
     };
     handleChange = (event) => {
         let value = event.target.value;
-        let name = event.target.name;     
+        let name = event.target.name;   
+        // this.setState({
+        //     firstname: { value: this.state.firstname.value, errorEmpty: this.state.firstname.errorEmpty, errorIndent: this.state.firstname.errorIndent,  truth: "James"},
+        //     lastname: { value: this.state.lastname.value, errorEmpty: this.state.lastname.errorEmpty, errorIndent: this.state.lastname.errorIndent,  truth: "Bond"},
+        //     password: { value: this.state.password.value, errorEmpty: this.state.password.errorEmpty, errorIndent: this.state.password.errorIndent,  truth: "007"},
+        // });  
         this.setState({
             [name]: {value: `${value}`, error: false, errorText: '', truth: this.state[name].truth}
         });
@@ -22,28 +27,44 @@ class Form extends Component {
         Object.keys(element).map((field) => {
             if(this.state[field].value === ''){
                 this.setState({
-                    [field]: {value: this.state[field].value, error: true, errorText: 'заполните поле', truth: this.state[field].truth},
+                    [field]: {value: this.state[field].value, errorEmpty: true, errorIndent: false, truth: this.state[field].truth},
                     bond: false
                 });
 
             } else if(this.state[field].value !== this.state[field].truth){
                 this.setState({
-                    [field]: {value: this.state[field].value, error: true, errorText: `значение поля ${field} не соответствует`, truth: this.state[field].truth},
+                    [field]: {value: this.state[field].value, errorEmpty: false, errorIndent: true, truth: this.state[field].truth},
                     bond: false
                 });
             } 
         });
-        if(!element.firstName.error && !element.lastName.error && !element.password.error){
-            this.setState({
-                bond: true
+        let isBond = (element) => {
+            let array = Object.keys(element).map((field) => {
+                let value = this.state[field].value;
+                if(value){
+                    if(this.state[field].value.toUpperCase()!== this.state[field].truth.toUpperCase()){
+                        return false;
+                    } else {
+                        return true;
+                    } 
+                }
+            });
+            delete array[3];
+            return array.every((field) => {
+                return field === true;
             })
         }
+
+        let state = this.state;
+        this.setState({
+            bond: isBond(state)
+        });
     }
     render (){
         const fieldInput = [
-            {name: 'firstName', transName: 'Имя', type: 'text'},
-            {name: 'lastName', transName: 'Фамилия', type: 'text'},
-            {name: 'password', transName: 'пороль', type: 'password'}
+            {name: 'firstname', transName: 'имя',transNameIndent: 'Имя указано не верно', type: 'text'},
+            {name: 'lastname', transName: 'фамилию',transNameIndent: 'Фамилия указана не верно', type: 'text'},
+            {name: 'password', transName: 'пароль',transNameIndent: 'Пароль указан не верно', type: 'password'}
 
         ]
         const {bond} = this.state;
@@ -58,17 +79,17 @@ class Form extends Component {
                         <span className="field-label">{field.transName}</span>
                     </label>
                     <input
-                    className="field__input field-input"
+                    className={`field__input field-input t-input-${field.name}`}
                     key={field.name}
                     name={field.name}
                     value={this.state[field.name].value}
                     type={field.type}
                     onChange={this.handleChange}
                     />
-                    {this.state[field.name].error ? (
-                    <span className="field__error field-error">{this.state[field.name].errorText}</span>): (
-                        <span className="field__error field-error"></span>
-                    )
+                    {this.state[field.name].errorEmpty ? (
+                    <span className={`field__error field-error t-error-${field.name}`}>Нужно указать {field.transName}</span>): (this.state[field.name].errorIndent ) ? (
+                        <span className={`field__error field-error t-error-${field.name}`}>{field.transNameIndent}</span>
+                    ): (<span className="field__error field-error"></span>)
                 }
                 </p>
             ))}
@@ -79,7 +100,7 @@ class Form extends Component {
         ): 
         (
             <div className="app-container">
-            <img src={bondImg} alt=""/>
+            <img className="t-bond-image" src={bondImg} alt=""/>
             </div>
         )
         
