@@ -11,15 +11,11 @@ class Show extends Component {
         return { showId: nextProps.showId };
     }
     componentDidUpdate(prevProps) {
-        console.log(prevProps);
         const { showId } = this.state;
-
-        getShowInfo(this.state.showId).then(data => {
-            //console.log(data.image.medium);
-            if (showId === prevProps.showId) return false;
+        if (showId === prevProps.showId) return false;
+        getShowInfo(showId).then(data => {
             this.setState({ data: data });
         });
-        // console.log();
     }
     render() {
         const { data } = this.state;
