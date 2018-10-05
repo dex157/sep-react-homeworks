@@ -26,6 +26,11 @@ class Form extends React.Component {
       lastname: 'bond',
       password: '007'
     },
+    errors: {
+        firstname: '',
+        lastname:'',
+        password: ''
+    },
     isLogIn: false
   };
 
@@ -33,40 +38,52 @@ class Form extends React.Component {
     if (e && e.type === 'submit') {
       e.preventDefault();
     }
-    const { inputs, admin } = this.state;
+    const { inputs} = this.state;
     Object.keys(inputs).map(field => {
-      let value = inputs[field].inputValue;
-      if (value) {
-        if (value.toLowerCase() === admin[field]) {
-          console.log(inputs[field].inputValue, 'true');
-          return '';
-        } else {
-          this.setState({
-            inputs: {
-              ...this.state.inputs,
-              [field]: {
-                ...inputs[field],
-                error: `неверно указано ${inputs[field].inputName}`
-              }
+        this.validationHandler(field);
+        return "";
+    });
+    console.log(this.state.errors);
+    
+  };
+
+  validationHandler = field => {
+    const { inputs, admin } = this.state;
+    let value = inputs[field].inputValue;
+    if (value) {
+      if (value.toLowerCase() === admin[field]) {
+        this.setState({
+            errors: {
+                ...this.state.errors,
+                [field]: true
             }
-          });
-          console.log(inputs[field].inputValue, 'false');
-          return '';
-        }
+        })
       } else {
-          console.log(inputs[field].inputName);
         this.setState({
           inputs: {
             ...this.state.inputs,
             [field]: {
-              ...this.state.inputs[field],
-              error: `необходимо указать ${inputs[field].inputName}`
+              ...inputs[field],
+              error: `неверно указано ${inputs[field].inputName}`
             }
           }
         });
-        return false;
+        console.log(inputs[field].inputValue, 'false');
+        return '';
       }
-    });
+    } else {
+      console.log(inputs[field].inputName);
+      this.setState({
+        inputs: {
+          ...this.state.inputs,
+          [field]: {
+            ...this.state.inputs[field],
+            error: `необходимо указать ${inputs[field].inputName}`
+          }
+        }
+      });
+      return false;
+    }
   };
   handleKeyPress = e => {
     if (e.key === 'Enter') {
