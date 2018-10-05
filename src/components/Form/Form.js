@@ -28,9 +28,9 @@ export default class Form extends Component {
                 password: '007'        
             },
             errors : {
-                firstname: 'Имя указано неверно',
-                lastname: 'Фамилия указана неверно',
-                password: 'Пароль указан неверно'        
+                firstname: 'Имя указано не верно',
+                lastname: 'Фамилия указана не верно',
+                password: 'Пароль указан не верно'        
             }, 
             empty : {
                 firstname: 'Нужно указать имя',
@@ -52,11 +52,15 @@ export default class Form extends Component {
             }
         };
 
-        if (keys.indexOf(name) !== -1) {
-            this.setState({ 
-                values: currState
-            });
-        }            
+        this.setState({ 
+            values: currState,
+            errors : {
+                firstname: '',
+                lastname: '',
+                password: '',        
+            },
+        });
+                   
     };
     
     onSubmit(event) {
@@ -64,24 +68,35 @@ export default class Form extends Component {
         const currState = this.state.values;
         const currErrors = this.state.errors;
         
+        this.validateFields(currState, currErrors);
+
+        this.setState({ 
+            errors: currErrors
+        });
+        
+        this.validateForm(currErrors);
+    }
+
+    //валидация полей - проверка данных во время ввода/при нажатии кнопки Submit
+    validateFields = (currState, currErrors) => {
         let keys = Object.keys(currState);               
 
         for (let key of keys) {
             let input = this.state.values[key].toLowerCase();
             
             if ( input !== this.authData.correct[key]) {
-                console.log(currErrors);
                 (input === '') ? currErrors[key] = this.authData.empty[key] : currErrors[key] = this.authData.errors[key];                             
             } else {
                 currErrors[key] = '';
             }
         };
 
-        this.setState({ 
-            errors: currErrors
-        });
-        
-        keys = Object.keys(currErrors);
+        return currErrors;
+    }
+
+    // валидация формы - проверка всех введенных данных на соответствие эталону
+    validateForm = (currErrors) => {
+        let keys = Object.keys(currErrors);
         let valid = true;
 
         for (let key of keys) {
@@ -95,7 +110,6 @@ export default class Form extends Component {
                 isValid: true
             });
         }
-
     }
 
     renderImage = () => {
