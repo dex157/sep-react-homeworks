@@ -70,7 +70,7 @@ export default class Form extends Component {
 
   isFormValid = errors => !errors.firstname && !errors.lastname && !errors.password;
 
-  validate = data => {
+  validate = () => {
     const errors = {};
 
     errors.firstname = this.checkField(this.state.firstname, 'firstname');
@@ -95,7 +95,7 @@ export default class Form extends Component {
   onFormSubmit = evt => {
     evt.preventDefault();
 
-    this.validate(this.state);
+    this.validate();
   };
 
   render() {
