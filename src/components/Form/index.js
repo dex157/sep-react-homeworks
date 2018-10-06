@@ -1,121 +1,123 @@
 import React, { Component } from 'react';
+import imageBond from './assets/bond_approve.jpg';
 import './Form.css';
-import imageSuccess from './assets/bond_approve.jpg';
 
-const data = {
-  firstName: {
-    value: 'james',
-    empty: 'Нужно указать имя',
-    error: 'Имя указано не верно'
+const fields = [
+  {
+    label: 'Имя',
+    name: 'firstname',
+    type: 'text'
   },
-  lastName: {
-    value: 'bond',
-    empty: 'Нужно указать фамилию',
-    error: 'Фамилия указана не верно'
+  {
+    label: 'Фамилия',
+    name: 'lastname',
+    type: 'text'
   },
-  password: {
-    value: '007',
-    empty: 'Нужно указать пароль',
-    error: 'Пароль указан не верно'
+  {
+    label: 'Пароль',
+    name: 'password',
+    type: 'password'
   }
+];
+
+const defaultErrors = {
+  firstname: '',
+  lastname: '',
+  password: ''
+};
+
+const validData = {
+  firstname: 'james',
+  lastname: 'bond',
+  password: '007'
 };
 
 class Form extends Component {
   state = {
-    firstName: '',
-    lastName: '',
-    password: '',
-    errors: {},
+    form: {
+      firstname: '',
+      lastname: '',
+      password: ''
+    },
+    errors: defaultErrors,
     isValid: false
   };
 
-  changeHandler = e => {
-    this.setState({
-      [e.target.name]: e.target.value,
-      errors: {}
-    });
+  handleChange = e => {
+    const { name, value } = e.target;
+
+    this.setState(state => ({
+      form: { ...state.form, ...{ [name]: value } },
+      errors: defaultErrors
+    }));
   };
 
-  dataValidate = e => {
+  handleSubmit = e => {
     e.preventDefault();
-    const errors = {};
-    for (let key in data) {
-      if (this.state[key] === '') {
-        errors[key] = data[key].empty;
-      } else if (this.state[key].toLowerCase() !== data[key].value) {
-        errors[key] = data[key].error;
-      }
-    }
-    this.setState({ errors, isValid: Object.keys(errors).length === 0 });
+    const { form } = this.state;
+
+    this.validate(form);
+  };
+
+  validate({ firstname, lastname, password }) {
+    let errors = {};
+
+    (!firstname && (errors.firstname = 'Нужно указать имя')) ||
+      (firstname.toLowerCase() !== validData.firstname &&
+        (errors.firstname = 'Имя указано не верно'));
+    (!lastname && (errors.lastname = 'Нужно указать фамилию')) ||
+      (lastname.toLowerCase() !== validData.lastname &&
+        (errors.lastname = 'Фамилия указана не верно'));
+    (!password && (errors.password = 'Нужно указать пароль')) ||
+      (password !== validData.password &&
+        (errors.password = 'Пароль указан не верно'));
+
+    this.setState(state => ({
+      errors: { ...state.errors, ...errors },
+      isValid: !Object.keys(errors).length
+    }));
   };
 
   render() {
-    const { errors, isValid } = this.state;
-    if (!isValid) {
-      return (
-        <div className="app-container">
-          <form className="form">
+    const { form, errors, isValid } = this.state;
+
+    return (
+      <div className="app-container">
+        {isValid ? (
+          <img scr={imageBond} alt="Картинка James Bond" className="t-bond-image" />
+        ) : (
+          <form className="form" onSubmit={this.handleSubmit}>
             <h1>Введите свои данные, агент</h1>
-            <p className="field">
-              <label htmlFor="firstName" className="field__label">
-                <span className="field-label">Имя</span>
-              </label>
-              <input
-                type="text"
-                name="firstName"
-                className="field__input field-input t-input-firstName"
-                onChange={this.changeHandler}
-              />
-              <span className="field__error field-error t-error-firstName">
-                {errors.firstName}
-              </span>
-            </p>
-            <p className="field">
-              <label htmlFor="lastName" className="field__label">
-                <span className="field-label">Фамилия</span>
-              </label>
-              <input
-                type="text"
-                name="lastName"
-                className="field__input field-input t-input-lastName"
-                onChange={this.changeHandler}
-              />
-              <span className="field__error field-error t-error-lastName">
-                {errors.lastName}
-              </span>
-            </p>
-            <p className="field">
-              <label htmlFor="password" className="field__label">
-                <span className="field-label">Пароль</span>
-              </label>
-              <input
-                type="text"
-                name="password"
-                className="field__input field-input t-input-password"
-                onChange={this.changeHandler}
-              />
-              <span className="field__error field-error t-error-password">
-                {errors.password}
-              </span>
-            </p>
+            {fields.map(field => (
+              <p className="field" key={field.name}>
+                <label className="field_label" htmlFor={field.name}>
+                  <span className="field-label">{field.label}</span>
+                </label>
+                <input
+                  className={`field__input field-input t-input-${field.name}`}
+                  type={field.type}
+                  name={field.name}
+                  onChange={this.handleChange}
+                  value={form[field.name]}
+                />
+                <span
+                  className={`field__error field-error t-error-${field.name}`}
+                >
+                  {errors[field.name]}
+                </span>
+              </p>
+            ))}
             <div className="form__buttons">
               <input
                 type="submit"
                 className="button t-submit"
                 value="Проверить"
-                onClick={this.dataValidate}
               />
             </div>
           </form>
-        </div>
-      );
-    } else {
-      return (
-        <div className="app-container">
-          <img className="t-bond-image" src={imageSuccess} alt="James Bond" />
-        </div>
-      );
-    }
+        )}
+      </div>
+    );
   }
 }
 
