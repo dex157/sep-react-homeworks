@@ -1,0 +1,47 @@
+.bg {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form {
+  width: 300px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+}
+
+.labelText {
+  display: inline-block;
+  width: 80px;
+}
+
+.input:-webkit-autofill,
+.input {
+  background-color: transparent !important;
+  color: white;
+  font-size: 16px;
+  padding: 5px;
+}
+
+.buttons {
+  padding-top: 20px;
+  margin: 0 auto;
+}
+
+.button {
+  font-size: 18px;
+  border-radius: 5px;
+  background-color: transparent;
+  color: white;
+  border-color: white;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.error {
+  color: red;
+  text-align: center;
+}
