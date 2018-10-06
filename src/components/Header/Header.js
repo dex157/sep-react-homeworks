@@ -5,7 +5,23 @@ import './Header.css';
 
 class Header extends PureComponent {
   render() {
-    return ('empty');
+    return (
+      <AuthConsumer>
+        {({isAuthorized, email, logout}) => 
+          !isAuthorized ? (
+            null
+          ) : (
+            <div className = "header-menu">
+              <p className = "header-menu__email header-email t-header-email">{email}</p>
+              <Button 
+                className = "header-menu__button t-logout"
+                onClick = {logout}
+              >Выйти</Button>
+            </div>
+          )
+        }
+      </AuthConsumer>
+    );
   }
 }
 
