@@ -6,13 +6,16 @@ class Form extends React.Component {
   state = {
     inputs: {
       firstname: {
-        inputValue: ''
+        inputValue: '',
+        inputName: 'Имя'
       },
       lastname: {
-        inputValue: ''
+        inputValue: '',
+        inputName: 'Фамилия'
       },
       password: {
-        inputValue: ''
+        inputValue: '',
+        inputName: 'Пароль'
       }
     },
     admin: {
@@ -52,13 +55,15 @@ class Form extends React.Component {
           });
         } else {
           this.setState({
-            [`${field}Error`]: `поле ${field} заполнено неверно`,
+            [`${field}Error`]: `${inputs[field].inputName} указано не верно`,
             [`${field}IsValid`]: false
           });
         }
       } else {
         this.setState({
-          [`${field}Error`]: `поле ${field} необходимо заполнить`,
+          [`${field}Error`]: `Нужно указать ${inputs[
+            field
+          ].inputName.toLowerCase()} `,
           [`${field}IsValid`]: false
         });
       }
@@ -78,6 +83,9 @@ class Form extends React.Component {
   };
   handleOnChange = e => {
     this.setState({
+      firstnameError: '',
+      lastnameError: '',
+      passwordError: '',
       inputs: {
         ...this.state.inputs,
         [e.target.name]: {
@@ -141,7 +149,7 @@ class Form extends React.Component {
               </label>
               <input
                 className="field__input t-input-password"
-                type="text"
+                type="password"
                 name="password"
                 value={inputs.password.inputValue}
                 onChange={this.handleOnChange}
