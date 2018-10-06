@@ -1,32 +1,11 @@
 import React, { Component } from 'react';
 import './Form.css'
 import Image from './assets/bond_approve.jpg';
-
-const values = [
-    {
-        emptyInput: 'Нужно указать имя',
-        invalidInput: 'Имя указано не верно',
-        value: 'James'
-    },
-    {
-        emptyInput: 'Нужно указать фамилию',
-        invalidInput: 'Фамилия указана не верно',
-        value: 'Bond' 
-    },
-    {
-        emptyInput: 'Нужно указать пароль',
-        invalidInput: 'Пароль указан не верно',
-        value: '007'
-    }
-];
-
+import {values, initialState} from './constants';
 
 class Form extends Component {
     state = {
-        firstName: {value: '', error: ''},
-        lastName: {value: '', error: ''},
-        password: {value: '', error: ''},
-        isValid: false
+        ...initialState
     }
 
     verifyBond = e => {
