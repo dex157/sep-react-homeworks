@@ -101,7 +101,7 @@ class Form extends React.Component {
     return (
       <div className="app-container">
         {isLogIn ? (
-          <img src={isLoginPic} alt="bond approve" className="t-bond-image" />
+          <img src={isLoginPic} alt="bond approve" className="img-bond t-bond-image" />
         ) : (
           <form
             className="form"
@@ -148,7 +148,7 @@ class Form extends React.Component {
                 <span className="field-label">Пароль</span>
               </label>
               <input
-                className="field__input t-input-password"
+                className="field__input field__input t-input-password"
                 type="password"
                 name="password"
                 value={inputs.password.inputValue}
