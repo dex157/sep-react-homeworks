@@ -4,7 +4,10 @@ import './Footer.css';
 
 class Footer extends PureComponent {
   render() {
-    return 'empty';
+    return (
+        <footer className="footer"><p className="header__title section-title">Footer</p><p
+            className="footer-message t-footer">Вы гость в этой системе</p></footer>
+    );
   }
 }
 
