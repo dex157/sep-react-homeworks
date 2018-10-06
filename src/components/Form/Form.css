@@ -33,8 +33,8 @@
   border-radius: 2px;
   padding: 3px 10px;
   font-size: 16px;
+  outline: none;
 }
-
 
 .field__error {
   display: block;
@@ -56,4 +56,5 @@
   font-size: 16px;
   font-weight: 500;
   padding: 5px 10px;
+  outline: none;
 }
