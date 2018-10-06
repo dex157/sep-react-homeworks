@@ -4,12 +4,12 @@ import Pic from './assets/bond_approve.jpg';
 
 const fields = [
   {
-    name: 'firstName',
+    name: 'firstname',
     label: 'Имя',
     type: 'text'
   },
   {
-    name: 'lastName',
+    name: 'lastname',
     label: 'Фамилия',
     type: 'text'
   },
@@ -21,11 +21,11 @@ const fields = [
 ];
 
 const errorsText = {
-  firstName: {
+  firstname: {
     errorEmpty: 'Нужно указать имя',
     errorInvalid: 'Имя указано не верно',
   },
-  lastName: {
+  lastname: {
     errorEmpty: 'Нужно указать фамилию',
     errorInvalid: 'Фамилия указана не верно',
   },
@@ -36,20 +36,20 @@ const errorsText = {
 };
 
 const correctLogin = {
-  firstName: 'james',
-  lastName: 'bond',
+  firstname: 'james',
+  lastname: 'bond',
   password: '007'
 };
 
 const inputsInitial = {
-  firstName: '',
-  lastName: '',
+  firstname: '',
+  lastname: '',
   password: ''
 };
 
 const errorsInitial = {
-  firstName: '',
-  lastName: '',
+  firstname: '',
+  lastname: '',
   password: ''
 };
 
@@ -68,13 +68,13 @@ export default class Form extends Component {
     }
   };
 
-  isFormValid = errors => !errors.firstName && !errors.lastName && !errors.password;
+  isFormValid = errors => !errors.firstname && !errors.lastname && !errors.password;
 
   validate = data => {
     const errors = {};
 
-    errors.firstName = this.checkField(this.state.firstName, 'firstName');
-    errors.lastName = this.checkField(this.state.lastName, 'lastName');
+    errors.firstname = this.checkField(this.state.firstname, 'firstname');
+    errors.lastname = this.checkField(this.state.lastname, 'lastname');
     errors.password = this.checkField(this.state.password, 'password');
 
     this.setState({
