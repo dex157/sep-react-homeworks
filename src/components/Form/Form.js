@@ -6,19 +6,13 @@ class Form extends React.Component {
   state = {
     inputs: {
       firstname: {
-        inputName: 'Имя',
-        inputValue: '',
-        error: ''
+        inputValue: ''
       },
       lastname: {
-        inputName: 'Фамилия',
-        inputValue: '',
-        error: ''
+        inputValue: ''
       },
       password: {
-        inputName: 'Пароль',
-        inputValue: '',
-        error: ''
+        inputValue: ''
       }
     },
     admin: {
@@ -26,11 +20,14 @@ class Form extends React.Component {
       lastname: 'bond',
       password: '007'
     },
-    errors: {
-        firstname: '',
-        lastname:'',
-        password: ''
-    },
+    firstnameIsValid: false,
+    lastnameIsValid: false,
+    passwordIsValid: false,
+
+    firstnameError: '',
+    lastnameError: '',
+    passwordError: '',
+
     isLogIn: false
   };
 
@@ -38,53 +35,42 @@ class Form extends React.Component {
     if (e && e.type === 'submit') {
       e.preventDefault();
     }
-    const { inputs} = this.state;
-    Object.keys(inputs).map(field => {
-        this.validationHandler(field);
-        return "";
-    });
-    console.log(this.state.errors);
-    
-  };
+    const {
+      admin,
+      inputs,
+      firstnameIsValid,
+      lastnameIsValid,
+      passwordIsValid
+    } = this.state;
 
-  validationHandler = field => {
-    const { inputs, admin } = this.state;
-    let value = inputs[field].inputValue;
-    if (value) {
-      if (value.toLowerCase() === admin[field]) {
-        this.setState({
-            errors: {
-                ...this.state.errors,
-                [field]: true
-            }
-        })
+    for (let field in inputs) {
+      if (inputs[field].inputValue) {
+        if (inputs[field].inputValue.toLowerCase() === admin[field]) {
+          this.setState({
+            [`${field}Error`]: ``,
+            [`${field}IsValid`]: true
+          });
+        } else {
+          this.setState({
+            [`${field}Error`]: `поле ${field} заполнено неверно`,
+            [`${field}IsValid`]: false
+          });
+        }
       } else {
         this.setState({
-          inputs: {
-            ...this.state.inputs,
-            [field]: {
-              ...inputs[field],
-              error: `неверно указано ${inputs[field].inputName}`
-            }
-          }
+          [`${field}Error`]: `поле ${field} необходимо заполнить`,
+          [`${field}IsValid`]: false
         });
-        console.log(inputs[field].inputValue, 'false');
-        return '';
       }
-    } else {
-      console.log(inputs[field].inputName);
+    }
+
+    if (firstnameIsValid && lastnameIsValid && passwordIsValid) {
       this.setState({
-        inputs: {
-          ...this.state.inputs,
-          [field]: {
-            ...this.state.inputs[field],
-            error: `необходимо указать ${inputs[field].inputName}`
-          }
-        }
+        isLogIn: true
       });
-      return false;
     }
   };
+
   handleKeyPress = e => {
     if (e.key === 'Enter') {
       this.handleOnSubmit();
@@ -116,23 +102,54 @@ class Form extends React.Component {
           >
             <h1>Введите свои данные, агент</h1>
 
-            {Object.keys(inputs).map((field, i) => (
-              <p className="field" key={i}>
-                <label className="field__label" htmlFor={field}>
-                  <span className="field-label">{inputs[field].inputName}</span>
-                </label>
-                <input
-                  className={`field__input t-input-${field}`}
-                  type="text"
-                  name={field}
-                  value={inputs[field].inputValue}
-                  onChange={this.handleOnChange}
-                />
-                <span className={`field__error field-error t-error-${field}`}>
-                  {inputs[field].error}
-                </span>
-              </p>
-            ))}
+            <p className="field">
+              <label className="field__label" htmlFor="firstname">
+                <span className="field-label">Имя</span>
+              </label>
+              <input
+                className="field__input t-input-firstname"
+                type="text"
+                name="firstname"
+                value={inputs.firstname.inputValue}
+                onChange={this.handleOnChange}
+              />
+
+              <span className="field__error field-error t-error-firstname">
+                {this.state.firstnameError}
+              </span>
+            </p>
+
+            <p className="field">
+              <label className="field__label" htmlFor="lastname">
+                <span className="field-label">Фамилия</span>
+              </label>
+              <input
+                className="field__input t-input-lastname"
+                type="text"
+                name="lastname"
+                value={inputs.lastname.inputValue}
+                onChange={this.handleOnChange}
+              />
+              <span className="field__error field-error t-error-lastname">
+                {this.state.lastnameError}
+              </span>
+            </p>
+
+            <p className="field">
+              <label className="field__label" htmlFor="password">
+                <span className="field-label">Пароль</span>
+              </label>
+              <input
+                className="field__input t-input-password"
+                type="text"
+                name="password"
+                value={inputs.password.inputValue}
+                onChange={this.handleOnChange}
+              />
+              <span className="field__error field-error t-error-password">
+                {this.state.passwordError}
+              </span>
+            </p>
 
             <div className="form__buttons">
               <input
