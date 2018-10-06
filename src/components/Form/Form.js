@@ -52,16 +52,16 @@ class Form extends Component {
 
   formSubmit = (e) => {
     e.preventDefault();
-    let objErrors = {};
+    const objErrors = {};
 
     Object.keys(objFieldsProps).forEach((key) => {
-      let fieldValue = this.state.values[key];
-      let fieldProps = objFieldsProps[key];
+      const fieldValue = this.state.values[key];
+      const fieldProps = objFieldsProps[key];
 
       if (!fieldValue) {
         objErrors[key] = fieldProps.warningMsg;
       } else {
-        let isEqual =
+        const isEqual =
           (key === 'password')
             ? fieldValue === fieldProps.validValue
             : fieldValue.toLowerCase().trim() === fieldProps.validValue.toLowerCase().trim();
