@@ -5,7 +5,7 @@ import withLocalstorage from '../../HOCs/withLocalstorage';
 
 class Todo extends PureComponent {
   state = {
-    inputValue: ''
+    inputValue: '',
   };
 
   getId() {
@@ -14,25 +14,70 @@ class Todo extends PureComponent {
     return biggest + 1;
   }
 
-  handleChange = event => {};
+  handleChange = event => {
+    this.setState({
+      inputValue: event.target.value,
+    });
+  };
 
-  createNewRecordByEnter = event => {};
+  createNewRecordByEnter = event => {
+    if (event.key === 'Enter') {
+     this.createNewRecord();
+    }
+  };
 
-  toggleRecordComplete = event => {};
+  toggleRecordComplete = event => {
+  const { savedData, saveData } = this.props;
+  const id = Number(event.target.parentNode.id);
+  const arr = [...savedData];
+  const el = arr.find(el => el.id === id);
+  let isComplete = el.complete;
+  el.complete = !isComplete;
+  saveData(arr);
+  };
 
-  createNewRecord = () => {};
+  createNewRecord = () => {
+  const { saveData, savedData } = this.props;
+  const { inputValue } = this.state;
+  const array = [...savedData];
+  const elem = {
+    id: this.getId(),
+    text: inputValue,
+    complete: false,
+  }
+  array.push(elem);
+  saveData(array); 
+  this.setState({
+    inputValue: '',
+  });
+  };
 
   render() {
-    return;
+    const { inputValue } = this.state;
+    const { savedData } = this.props;
+    return (
+      <Card>
+        <div className="todo t-todo-list">
+          {this.renderEmptyRecord(inputValue)}
+          {savedData.map(el => this.renderRecord(el))}          
+        </div>
+      </Card>
+    );
   }
 
-  renderEmptyRecord() {
-    return;
-  }
+  renderEmptyRecord = (inputValue) => (
+    <div className="todo-item todo-item-new">
+      <input className="todo-input t-input" placeholder="Введите задачу" onChange={this.handleChange} onKeyPress={this.createNewRecordByEnter} value={inputValue} />
+      <span className="plus t-plus" onClick={this.createNewRecord}>+</span>
+  </div>
+  );
 
-  renderRecord = record => {
-    return;
-  };
-}
+  renderRecord = record => (
+    <div key={record.id} className="todo-item t-todo" id={record.id}>
+      <p className="todo-item__text">{record.text}</p>
+      <span className="todo-item__flag t-todo-complete-flag" onClick={this.toggleRecordComplete}>{record.complete ? '[x]' : '[ ]'}</span>
+    </div> 
+  );
+};
 
 export default withLocalstorage('todo-app', [])(Todo);
