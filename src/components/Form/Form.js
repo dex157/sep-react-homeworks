@@ -2,163 +2,114 @@ import React from 'react';
 import './Form.css';
 import isLoginPic from './assets/bond_approve.jpg';
 
+const inputs = [
+  {
+    fieldName: 'Имя',
+    inputName: 'firstname'
+  },
+  {
+    fieldName: 'Фамилия',
+    inputName: 'lastname'
+  },
+  {
+    fieldName: 'Пароль',
+    inputName: 'password'
+  }
+];
+
 class Form extends React.Component {
   state = {
-    inputs: {
-      firstname: {
-        inputValue: '',
-        inputName: 'Имя'
-      },
-      lastname: {
-        inputValue: '',
-        inputName: 'Фамилия'
-      },
-      password: {
-        inputValue: '',
-        inputName: 'Пароль'
-      }
+    values: {
+      firstname: '',
+      lastname: '',
+      password: ''
     },
-    admin: {
-      firstname: 'james',
-      lastname: 'bond',
-      password: '007'
+    errors: {
+      firstname: '',
+      lastname: '',
+      password: ''
     },
-    firstnameIsValid: false,
-    lastnameIsValid: false,
-    passwordIsValid: false,
-
-    firstnameError: '',
-    lastnameError: '',
-    passwordError: '',
-
-    isLogIn: false
+    isLoggin: false
   };
 
-  handleOnSubmit = e => {
+  handelSubmit = e => {
     if (e && e.type === 'submit') {
       e.preventDefault();
     }
-    const {
-      admin,
-      inputs,
-      firstnameIsValid,
-      lastnameIsValid,
-      passwordIsValid
-    } = this.state;
 
-    for (let field in inputs) {
-      if (inputs[field].inputValue) {
-        if (inputs[field].inputValue.toLowerCase() === admin[field]) {
-          this.setState({
-            [`${field}Error`]: ``,
-            [`${field}IsValid`]: true
-          });
-        } else {
-          this.setState({
-            [`${field}Error`]: `${inputs[field].inputName} указано не верно`,
-            [`${field}IsValid`]: false
-          });
-        }
-      } else {
-        this.setState({
-          [`${field}Error`]: `Нужно указать ${inputs[
-            field
-          ].inputName.toLowerCase()} `,
-          [`${field}IsValid`]: false
-        });
-      }
+    const { values } = this.state;
+    const errorsEmptyMessage = {};
+    const errorsWrongMessage = {};
+
+    if (!values.firstname) errorsEmptyMessage.firstname = 'Нужно указать имя';
+    if (!values.lastname) errorsEmptyMessage.lastname = 'Нужно указать фамилию';
+    if (!values.password) errorsEmptyMessage.password = 'Нужно указать пароль';
+
+    const isLoggin =
+      values.firstname.toLowerCase() === 'james' &&
+      values.lastname.toLowerCase() === 'bond' &&
+      values.password === '007';
+
+    if (!isLoggin) {
+      if (values.firstname.toLowerCase() !== 'james')
+        errorsWrongMessage.firstname = 'Имя указано не верно';
+      if (values.lastname.toLowerCase() !== 'bond')
+        errorsWrongMessage.lastname = 'Фамилия указана не верно';
+      if (values.password !== '007')
+        errorsWrongMessage.password = 'Пароль указан не верно';
     }
 
-    if (firstnameIsValid && lastnameIsValid && passwordIsValid) {
-      this.setState({
-        isLogIn: true
-      });
-    }
+    this.setState(state => ({
+      errors: { ...state.errors, ...errorsWrongMessage, ...errorsEmptyMessage },
+      isLoggin
+    }));
+
+    // this.setState(state => ({
+    //   errors: { ...state.errors, ...errors }
+    // }));
   };
 
-  handleKeyPress = e => {
-    if (e.key === 'Enter') {
-      this.handleOnSubmit();
-    }
-  };
   handleOnChange = e => {
+    let { value, name } = e.target;
+    let { values } = this.state;
     this.setState({
-      firstnameError: '',
-      lastnameError: '',
-      passwordError: '',
-      inputs: {
-        ...this.state.inputs,
-        [e.target.name]: {
-          ...this.state.inputs[e.target.name],
-          inputValue: e.target.value
-        }
+      values: { ...values, [name]: value },
+      errors: {
+        firstname: '',
+        lastname: '',
+        password: ''
       }
     });
   };
 
   render() {
-    const { isLogIn, inputs } = this.state;
+    const { isLoggin, values, errors } = this.state;
+
     return (
       <div className="app-container">
-        {isLogIn ? (
-          <img src={isLoginPic} alt="bond approve" className="img-bond t-bond-image" />
+        {isLoggin ? (
+          <img src={isLoginPic} alt="bond approve" class="t-bond-image" />
         ) : (
-          <form
-            className="form"
-            onSubmit={this.handleOnSubmit}
-            onKeyPress={this.handleKeyPress}
-          >
+          <form className="form" onSubmit={this.handelSubmit}>
             <h1>Введите свои данные, агент</h1>
-
-            <p className="field">
-              <label className="field__label" htmlFor="firstname">
-                <span className="field-label">Имя</span>
-              </label>
-              <input
-                className="field__input t-input-firstname"
-                type="text"
-                name="firstname"
-                value={inputs.firstname.inputValue}
-                onChange={this.handleOnChange}
-              />
-
-              <span className="field__error field-error t-error-firstname">
-                {this.state.firstnameError}
-              </span>
-            </p>
-
-            <p className="field">
-              <label className="field__label" htmlFor="lastname">
-                <span className="field-label">Фамилия</span>
-              </label>
-              <input
-                className="field__input t-input-lastname"
-                type="text"
-                name="lastname"
-                value={inputs.lastname.inputValue}
-                onChange={this.handleOnChange}
-              />
-              <span className="field__error field-error t-error-lastname">
-                {this.state.lastnameError}
-              </span>
-            </p>
-
-            <p className="field">
-              <label className="field__label" htmlFor="password">
-                <span className="field-label">Пароль</span>
-              </label>
-              <input
-                className="field__input field__input t-input-password"
-                type="password"
-                name="password"
-                value={inputs.password.inputValue}
-                onChange={this.handleOnChange}
-              />
-              <span className="field__error field-error t-error-password">
-                {this.state.passwordError}
-              </span>
-            </p>
-
+            {inputs.map(({ inputName, fieldName }) => (
+              <p className="field" key={inputName}>
+                <label className="field__label" htmlFor={inputName}>
+                  <span className="field-label">{fieldName}</span>
+                </label>
+                <input
+                  className={`field__input t-input-${inputName}`}
+                  type="text"
+                  name={inputName}
+                  value={values[inputName]}
+                  onChange={this.handleOnChange}
+                />
+                <span className={`field__error field-error t-error-${inputName}`}>
+                  {errors[inputName]}
+                </span>
+                
+              </p>
+            ))}
             <div className="form__buttons">
               <input
                 type="submit"
