@@ -4,7 +4,7 @@ import { load, save } from '../../localstorage';
 const withLocalstorage = (key, defaultData) => (WrappedComponent) => {
   return class LocalStorageHOC extends Component {
     state = {
-      data: defaultData,
+      data: load(key) || defaultData,
     }
 
     saveData = (arr) => {
@@ -15,9 +15,9 @@ const withLocalstorage = (key, defaultData) => (WrappedComponent) => {
     }
 
     render() {
-      const savedData=load(key) || defaultData;
+      const { data } = this.state;
       return (
-        <WrappedComponent savedData={savedData} saveData={this.saveData} {...this.props} />
+        <WrappedComponent savedData={data} saveData={this.saveData} {...this.props} />
       );
     }
   }
