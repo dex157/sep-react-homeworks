@@ -1,0 +1,36 @@
+.field {
+  margin: 0;
+}
+
+.field__label {
+  width: 90px;
+  display: inline-block;
+}
+
+.field-label {
+  text-align: right;
+  width: 75px;
+  display: inline-block;
+}
+
+.field-input {
+  border: 1px solid #202125;
+  border-radius: 2px;
+  padding: 3px 10px;
+  font-size: 16px;
+}
+
+
+.field__error {
+  display: block;
+  height: 13px;
+  padding: 2px 0 5px 90px;
+  padding-bottom: 5px;
+  padding-left: 90px;
+}
+
+.field-error {
+  color: red;
+  font-size: 13px;
+  line-height: 13px;
+}
