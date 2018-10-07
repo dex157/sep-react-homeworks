@@ -36,10 +36,11 @@ class AuthProvider extends PureComponent {
     }
 
     getProviderValue() {
+        const { email, authorizeError, isAuthorized } = this.state;
         return {
-            email: this.state.email,
-            authorizeError: this.state.authorizeError,
-            isAuthorized: this.state.isAuthorized,
+            email,
+            authorizeError,
+            isAuthorized,
             authorize: this.authorize,
             logout: this.logout,
         }
