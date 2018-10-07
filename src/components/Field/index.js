@@ -8,7 +8,8 @@ class Field extends Component{
     }
 
     changeInputMessage = (event) => {
-        this.setState({textValue : event.target.value})
+        this.setState({textValue : event.target.value});
+        this.props.updateData(event.target.value, this.props.data.name);
     }
 
     render(){
@@ -16,7 +17,7 @@ class Field extends Component{
         return(
             <p className="field" >
                 <label className="field__label" htmlFor={data.name}>
-                    <span className="field-label">{data.labelText}</span>
+                    <span className="field-label" >{data.labelText}</span>
                 </label>
                 <input 
                     className={data.inputClass}
