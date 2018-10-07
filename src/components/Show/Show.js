@@ -6,7 +6,7 @@ import './Show.css'
 export default class Show extends Component {
 
     state = {
-        showId: this.props.showId,
+        showId: '',
         data: null
     }
 
