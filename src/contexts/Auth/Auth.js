@@ -3,24 +3,47 @@ import React, { PureComponent } from 'react';
 const { Provider, Consumer: AuthConsumer } = React.createContext('');
 
 class AuthProvider extends PureComponent {
-  authorize(mail, password) {
-      if(mail === 'stud@dent.com' && password === '123'){
-          this.setState({
-              isAuthorized: true
-          })
-      }
+    state = {
+        email: '',
+        authorizeError: '',
+        isAuthorized: false
+    };
 
-  }
-  logout() {
-      return;
-  }
-  getProviderValue() {
-      return;
-  }
-  render() {
-    const { children } = this.props;
-    return <Provider>{children}</Provider>;
-  }
+    authorize(mail, password) {
+        if (mail === 'stu@dent.com' && password === '123') {
+            this.setState({
+                email: mail,
+                authorizeError: '',
+                isAuthorized: true
+            })
+        } else {
+            this.setState({
+                authorizeError: 'Email или пароль введён не верно',
+            })
+        }
+    }
+
+    logout() {
+        this.setState({
+            isAuthorized: false
+        })
+    }
+
+    getProviderValue() {
+        return {
+            email: this.state.email,
+            authorizeError: this.state.authorizeError,
+            isAuthorized: this.state.isAuthorized,
+            authorize: this.authorize,
+            logout: this.logout,
+        }
+    }
+
+    render() {
+        console.log(this.state);
+        const {children} = this.props;
+        return <Provider value={this.getProviderValue()}>{children}</Provider>;
+    }
 }
 
 const TestProvider = Provider;
