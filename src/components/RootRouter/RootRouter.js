@@ -9,7 +9,7 @@ import { DataProvider } from '../../context/Data';
 class RootRouter extends Component {
   renderPrivateRoute() {
     return (
-      <PrivateRoute>
+      <PrivateRoute redirectPath="/login">
         <AppRouter />
       </PrivateRoute>
     );
