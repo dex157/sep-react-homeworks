@@ -1,23 +1,22 @@
-import React, {Fragment, PureComponent} from 'react';
-import {AuthConsumer, AuthProvider} from '../../contexts/Auth';
+import React, { PureComponent} from 'react';
+import {AuthConsumer} from '../../contexts/Auth';
 import Button from '../Button'
 import './Header.css';
-import SectionTitle from "../SectionTitle/SectionTitle";
 
 class Header extends PureComponent {
     render() {
         return (
             <AuthConsumer>
-                {(isAuthorized, email) =>
+                {({isAuthorized, email, logout}) =>
                     isAuthorized ?
-                        ''
-                    :
-                        <div className="header__content">
-                            <div className="header-menu">
-                                <p className="header-menu__email header-email t-header-email">{email}</p>
-                                <Button className={"header-menu__button t-logout button"} children={"Выйти"}/>
+                        (
+                            <div className="header__content">
+                                <div className="header-menu">
+                                    <p className="header-menu__email header-email t-header-email">{email}</p>
+                                    <Button onClick={logout} className={"header-menu__button t-logout button"} children={"Выйти"}/>
+                                </div>
                             </div>
-                        </div>
+                        ) : ('')
                 }
             </AuthConsumer>
         );

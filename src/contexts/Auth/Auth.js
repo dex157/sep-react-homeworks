@@ -9,6 +9,12 @@ class AuthProvider extends PureComponent {
         isAuthorized: false
     };
 
+    constructor(props){
+        super(props);
+        this.authorize = this.authorize.bind(this);
+        this.logout = this.logout.bind(this);
+    }
+
     authorize(mail, password) {
         if (mail === 'stu@dent.com' && password === '123') {
             this.setState({
@@ -40,7 +46,6 @@ class AuthProvider extends PureComponent {
     }
 
     render() {
-        console.log(this.state);
         const {children} = this.props;
         return <Provider value={this.getProviderValue()}>{children}</Provider>;
     }
