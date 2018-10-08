@@ -13,11 +13,12 @@ const withLocalstorage = (localStorageKey, value) => WrappedComponent => {
     };
 
     render() {
-      const { forwardedRef } = this.props;
+      const { forwardedRef, ...props } = this.props;
 
       return (
         <WrappedComponent
           ref={forwardedRef}
+          {...props}
           saveData={this.saveData}
           savedData={this.savedData()}
         />
