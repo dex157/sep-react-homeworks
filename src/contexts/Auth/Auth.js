@@ -25,7 +25,8 @@ class AuthProvider extends PureComponent {
         });
     };
     authorize = (email, password) => {
-        if (email === this.state.email && password === this.state.pass) {
+        const { email: mail, pass } = this.state;
+        if (email === mail && password === pass) {
             this.setState({
                 isAuthorized: true,
                 authorizeError: ''
