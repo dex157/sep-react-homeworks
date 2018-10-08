@@ -6,15 +6,8 @@ class Mail extends Component {
         const props = this.props;
         const { body } = props;
 
-        let type = null;
-        let email = null;
-        if (typeof props['from'] !== "undefined") {
-            type = 'From';
-            email = props['from'];
-        } else {
-            type = 'To';
-            email = props['to'];
-        }
+        let type = props['from'] ? 'From' : 'To';
+        let email = props['from'] ? props['from'] : props['to'];
 
         return (
             <div className={styles.container}>
