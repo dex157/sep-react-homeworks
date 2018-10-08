@@ -8,6 +8,7 @@ import { AuthProvider, AuthConsumer } from '../../contexts/Auth';
 
 class App extends PureComponent {
   render() {
+    console.log('s');
     return (
       <AuthProvider>
         <Layout header={Header} footer={Footer}>
