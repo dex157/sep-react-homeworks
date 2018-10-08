@@ -13,11 +13,12 @@ class Show extends PureComponent {
 
     componentDidMount() {
 
-        console.log(this.props);
+        
         const { show } = this.props;
         if (show !== '') {
             getShowInfo(show).then(data =>
-                this.setState({ data }),
+                this.setState({ data,
+                }),
             );
         }
     }
@@ -25,7 +26,7 @@ class Show extends PureComponent {
     render() {
         
         const {data} = this.state;
-
+        
         if(data === null) {
             return <p className="show-inforation t-show-info">Шоу не выбрано</p>
         }
