@@ -7,7 +7,7 @@ class App extends PureComponent {
     return (
       <main className="main">
         <div className="main__cell">
-          <Todo />
+            <Todo />
         </div>
       </main>
     );
