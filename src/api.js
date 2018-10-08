@@ -14,9 +14,9 @@ export const getShowInfo = showName => {
 
   return fetch(serialUrl).then(response => {
     if (response.status !== 200) {
-      return response
+      return response;
     } else {
-      return response.json()
+      return response.json();
     }
   });
 };
