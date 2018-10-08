@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { load, save } from '../../localstorage';
 
 const withLocalstorage = (key, defaultValue) => WrappedComponent => {
-    return class extends Component {
+    class ForwaredRef extends Component {
         savedData = () => {
             return load(key) || defaultValue;
         }
@@ -14,16 +14,20 @@ const withLocalstorage = (key, defaultValue) => WrappedComponent => {
 
         render() {
             const { savedData, saveData } = this;
+            const { forwaredRef, ...rest } = this.props;
 
             return (
                 <WrappedComponent 
                     savedData={savedData()}
                     saveData={saveData}
-                    {...this.props}
+                    ref={forwaredRef}
+                    {...rest}
                 />
             )
         };
     }
+
+    return React.forwardRef((props, ref) => <ForwaredRef {...props} forwaredRef={ref} />)
 } 
 
 export default withLocalstorage;
