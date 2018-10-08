@@ -80,10 +80,7 @@ class Form extends Component {
         ...this.state.values,
         [name]: value
       },
-      errors: {
-        ...this.state.errors,
-        [name]: ''
-      }
+      errors: {}
     });
   };
 
