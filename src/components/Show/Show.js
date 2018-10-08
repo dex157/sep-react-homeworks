@@ -7,29 +7,29 @@ function stripHTML(data) {
 }
 
 class Show extends PureComponent {
+
     state = {
         data: null
       };
 
-    componentDidUpdate() {
+    componentDidUpdate(prevProps) {
+        const { showId } = this.props;
 
-        console.log(this.props);
-        const { show } = this.props;
-        if (show !== '') {
-            getShowInfo(show).then(data =>
+        if (showId !== '' && showId !== prevProps.showId) {
+            getShowInfo(showId).then(data =>
                 this.setState({ data }),
             );
         }
     }
 
     render() {
-        
+        console.log('CDU - Component Did Update, 2 поля в state — showId и data');
         const {data} = this.state;
 
         if(data === null) {
             return <p className="show-inforation t-show-info">Шоу не выбрано</p>
         }
-        console.log('CDU - Component Did Update, 2 поля в state — showId и data');
+        
         return (
             <div className="show">
             
