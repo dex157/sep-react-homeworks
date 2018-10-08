@@ -27,20 +27,19 @@ class Show extends PureComponent {
         const {data} = this.state;
 
         if(data === null) {
-            return <p>Шоу не выбрано</p>
+            return <p className="show-inforation t-show-info">Шоу не выбрано</p>
         }
-        console.log(data);
+        console.log(data.genres);
         return (
             <div className="show">
             
                 <img className="show-image" src={data.image.original} alt={ data.name }></img>
                 <h2 className="show-label t-show-name">{data.name}</h2>
-                <p className="show-text t-show-jenre">
-                    <b>Жанр:&nbsp;</b>{ data.genres }
+                <p className="show-text t-show-genre">
+                    <b>Жанр:</b> { data.genres.join(', ') }
                 </p>
-                <p className="show-text t-show-summary">
-                    <div dangerouslySetInnerHTML={stripHTML(data.summary)} />
-                </p>
+                <p className="show-text t-show-summary" dangerouslySetInnerHTML={stripHTML(data.summary)} />
+                
 
             </div>
         );
