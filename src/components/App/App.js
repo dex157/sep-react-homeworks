@@ -1,5 +1,6 @@
-import './App.css';
 import React, { PureComponent } from 'react';
+import './App.css';
+
 import Show from '../Show';
 
 import bigBangImage from './assets/bigBang.jpg';
@@ -66,7 +67,7 @@ class App extends PureComponent {
             </div>
           ))}
         </div>
-        <Show show={selectedShow} key={selectedShow} />
+        <Show showId={selectedShow} />
       </div>
     );
   }

@@ -11,7 +11,7 @@ class Show extends PureComponent {
         data: null
       };
 
-    componentDidMount() {
+    componentDidUpdate() {
 
         console.log(this.props);
         const { show } = this.props;
