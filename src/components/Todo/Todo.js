@@ -14,9 +14,17 @@ class Todo extends PureComponent {
     return biggest + 1;
   }
 
-  handleChange = event => {};
+  handleChange = event => {
+    this.setState({
+      inputValue: event.target.value
+    });
+  };
 
-  createNewRecordByEnter = event => {};
+  createNewRecordByEnter = event => {
+    if (event.key === 'Enter') {
+      this.createNewRecord();
+    }
+  };
 
   toggleRecordComplete = event => {};
 
