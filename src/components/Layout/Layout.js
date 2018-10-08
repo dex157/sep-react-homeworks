@@ -8,7 +8,11 @@ class Layout extends PureComponent {
     return (
       <Fragment>
         {this.renderHeader(header)}
-        <main className="main main--with-header main--with-footer">
+        <main
+          className={`main ${header ? 'main--with-header' : ''} ${
+            footer ? 'main--with-footer' : ''
+          }`}
+        >
           <SectionTitle className="main__title" children="Main" />
           {children}
         </main>
@@ -18,20 +22,24 @@ class Layout extends PureComponent {
   }
 
   renderHeader(HeaderChild) {
-    return (
+    return HeaderChild ? (
       <header className="header">
         <SectionTitle className={'header__title'} children={'Header'} />
         <HeaderChild />
       </header>
+    ) : (
+      ''
     );
   }
 
   renderFooter(FooterChild) {
-    return (
+    return FooterChild ? (
       <footer className="footer">
         <SectionTitle className={'footer__title'} children={'Footer'} />
         <FooterChild />
       </footer>
+    ) : (
+      ''
     );
   }
 }
