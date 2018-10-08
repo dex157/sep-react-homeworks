@@ -9,7 +9,6 @@ class OutboxMail extends PureComponent {
               mail.id === dataId
               ));
 
-          console.log(mail);
     return (
       <div className={style.container}>
             <>

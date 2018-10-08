@@ -7,20 +7,19 @@ import { withData } from '../../context/Data';
 class MailList extends Component {
 
     render() {
-        const dataI = this.props.data.inbox,
-              dataO = this.props.data.outbox,
-              {location} = this.props;
+        const data = this.props,
+              {match} = this.props;
 
-        if(location.pathname === '/app/inbox') {
+        if(match.path === '/app/inbox') {
             return (
                 <div className={`${style.container} t-inbox-list`}>
-                    <InboxList style={style} dataI={dataI}/>
+                    <InboxList style={style} dataI={data.data.inbox}/>
                 </div>
             );
         } else {
             return (
                 <div className={`${style.container} t-outbox-list`}>
-                    <OutboxList style={style} dataO={dataO}/>
+                    <OutboxList style={style} dataO={data.data.outbox}/>
                 </div>
             );
         }
