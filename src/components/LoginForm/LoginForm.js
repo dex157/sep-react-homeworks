@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import './LoginForm.css';
-import Button from '../Button'
+import Button from '../Button';
 
 const fields = [
   {
@@ -35,7 +35,6 @@ class LoginForm extends PureComponent {
       values: { email, password }
     } = this.state;
     const { authorize } = this.props;
-
     authorize(email, password);
   };
 
