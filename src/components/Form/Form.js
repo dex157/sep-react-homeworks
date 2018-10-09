@@ -12,11 +12,6 @@ class Form extends Component {
     handleChange = (event) => {
         let value = event.target.value;
         let name = event.target.name;   
-        // this.setState({
-        //     firstname: { value: this.state.firstname.value, errorEmpty: this.state.firstname.errorEmpty, errorIndent: this.state.firstname.errorIndent,  truth: "James"},
-        //     lastname: { value: this.state.lastname.value, errorEmpty: this.state.lastname.errorEmpty, errorIndent: this.state.lastname.errorIndent,  truth: "Bond"},
-        //     password: { value: this.state.password.value, errorEmpty: this.state.password.errorEmpty, errorIndent: this.state.password.errorIndent,  truth: "007"},
-        // });  
         this.setState({
             [name]: {value: `${value}`, error: false, errorText: '', truth: this.state[name].truth}
         });
