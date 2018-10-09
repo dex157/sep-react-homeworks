@@ -22,11 +22,11 @@ class Show extends Component {
     componentDidUpdate(prevProps, prevState) {
         const { showId, data } = this.state;
 
-        if (data === null) (
+        if (data === null) {
             getShowInfo(showId).then(data => {
                 this.setState({ data: data });
             })
-        )
+        }
     }
 
     renderPoster = (data) => {
