@@ -12,7 +12,6 @@ class Show extends PureComponent {
       };
 
     componentDidMount() {
-
         
         const { show } = this.props;
         if (show !== '') {
