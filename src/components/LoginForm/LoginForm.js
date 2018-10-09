@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import './LoginForm.css';
-import Button from '../Button'
+import Button from '../Button';
 
 const fields = [
   {
