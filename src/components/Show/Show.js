@@ -12,12 +12,11 @@ class Show extends Component {
         const { showId } = this.props;
         const oldShowId = prevProps.showId;
 
-        if (showId !== oldShowId){
+        if (showId !== oldShowId) {
             getShowInfo(showId).then(data => {
                 this.setState({ data: data });
             })
         }
-
     }
 
     renderPoster = (data) => {
