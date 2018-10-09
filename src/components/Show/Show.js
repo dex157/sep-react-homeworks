@@ -29,7 +29,7 @@ class Show extends PureComponent {
         if(data === null) {
             return <p className="show-inforation t-show-info">Шоу не выбрано</p>
         }
-        console.log('CDU - Component Did Mount, 2 поля в state — showId и data');
+        console.log('key - Component Did Mount, 2 поля в state — showId и data');
         return (
             <div className="show">
             
