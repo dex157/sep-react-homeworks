@@ -14,20 +14,88 @@ class Todo extends PureComponent {
     return biggest + 1;
   }
 
-  handleChange = event => {};
+  handleChange = event => {
+    const value = event.target.value;
 
-  createNewRecordByEnter = event => {};
+    this.setState({
+      inputValue: value
+    });
+  };
 
-  toggleRecordComplete = event => {};
+  createNewRecordByEnter = event => {
+    if (event.key === 'Enter') this.createNewRecord();
+  };
 
-  createNewRecord = () => {};
+  toggleRecordComplete = event => {
+    const value = +event.target.getAttribute('data-todo-id'),
+      { savedData, saveData } = this.props,
+      newDate = savedData.map(
+        data =>
+          data.id === value ? { ...data, isComplete: !data.isComplete } : data
+      );
+
+    saveData(newDate);
+  };
+
+  createNewRecord = () => {
+    const { inputValue } = this.state,
+      { saveData, savedData } = this.props;
+
+    if (inputValue !== '') {
+      saveData([
+        {
+          id: this.getId(),
+          isComplete: false,
+          text: inputValue
+        },
+        ...savedData
+      ]);
+      this.setState({
+        inputValue: ''
+      });
+    }
+  };
 
   render() {
-    return;
+    const { savedData } = this.props;
+
+    return (
+      <Card title="Список дел">
+        <div className="todo t-todo-list">
+          {this.renderEmptyRecord()}
+          {savedData.map(task => (
+            <div key={task.id} className="todo-item t-todo">
+              <p className="todo-item__text">{task.text}</p>
+              <span
+                className="todo-item__flag t-todo-complete-flag"
+                onClick={this.toggleRecordComplete}
+                data-todo-id={task.id}
+              >
+                [{task.isComplete ? 'x' : ''}]
+              </span>
+            </div>
+          ))}
+        </div>
+      </Card>
+    );
   }
 
   renderEmptyRecord() {
-    return;
+    const { inputValue } = this.state;
+    return (
+      <div className="todo-item todo-item-new">
+        <input
+          className="todo-input t-input"
+          placeholder="Введите задачу"
+          onChange={this.handleChange}
+          onKeyDown={this.createNewRecordByEnter}
+          value={inputValue}
+        />
+        <span className="plus t-plus" onClick={this.createNewRecord}>
+          +
+        </span>
+      </div>
+    );
   }
 
   renderRecord = record => {
@@ -36,3 +104,4 @@ class Todo extends PureComponent {
 }
 
 export default withLocalstorage('todo-app', [])(Todo);
+//export default Todo;
