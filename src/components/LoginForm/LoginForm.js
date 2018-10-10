@@ -28,33 +28,44 @@ class LoginForm extends Component {
   handleAuth = () => {
     const { email, password } = this.state;
     const { authorize } = this.props;
-
+    
     authorize(email, password);
   };
 
+  componentDidUpdate(prevProps) {
+    const { isAuthorized, history } = this.props;
+
+    if(prevProps.isAuthorized !== isAuthorized) {
+      history.push('/app');
+    }
+  }
+
   render() {
-    const { isAuthorized, authError } = this.props;
+    const { authError } = this.props;
+    const { ...state } = this.state;
 
     return (
       <div className={styles.bg}>
-        <div className={styles.form}>
+        <div className={`${styles.form} t-form`}>
           {inputs.map(input => (
             <p key={input.name}>
-              <label htmlFor={input.name} className={styles.labelText}>
-                {input.label}
+              <label htmlFor={input.name}>
+                <span className={styles.labelText}>
+                  {input.label}
+                </span>
               </label>
               <input
                 type={input.name}
                 name={input.name}
-                className={styles.input}
+                className={`${styles.input} t-input-${input.name}`}
                 onChange={this.handleChange}
-                value={this.state[input.name]}
+                value={state[input.name]}
               />
             </p>
           ))}
           {authError && <p className={styles.error}>{authError}</p>}
           <div className={styles.buttons}>
-            <button className={styles.button} onClick={this.handleAuth}>
+            <button className={`${styles.button} t-login`} onClick={this.handleAuth}>
               Войти
             </button>
           </div>
