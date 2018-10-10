@@ -1,105 +1,164 @@
-import React,  { Component } from 'react';
-import './Form.css';
-import bondImg from './assets/bond_approve.jpg'
+import React, { Component } from 'react';
+import ImageBond from './assets/bond_approve.jpg';
 
+const validParams = {
+  firstname: 'james',
+  lastname: 'bond',
+  password: '007'
+};
+const fields = [
+    {
+      name: 'firstname',
+      label: 'Имя',
+      type: 'text'
+    },
+    {
+      name: 'lastname',
+      label: 'Фамилия',
+      type: 'text'
+    },
+    {
+      name: 'password',
+      label: 'Пароль',
+      type: 'password'
+    }
+  ];
+  const errorsText = {
+    firstname: {
+      errorEmpty: 'Нужно указать имя',
+      errorInvalid: 'Имя указано не верно',
+    },
+    lastname: {
+      errorEmpty: 'Нужно указать фамилию',
+      errorInvalid: 'Фамилия указана не верно',
+    },
+    password: {
+      errorEmpty: 'Нужно указать пароль',
+      errorInvalid: 'Пароль указан не верно',
+    }
+  };
 class Form extends Component {
-    state = {
-        firstname: { value: '', errorEmpty: false, errorIndent: false,  truth: "James"},
-        lastname: { value: '', errorEmpty: false, errorIndent: false,  truth: "Bond"},
-        password: { value: '', errorEmpty: false, errorIndent: false,  truth: "007"},
-        bond: false
-    };
-    handleChange = (event) => {
-        let value = event.target.value;
-        let name = event.target.name;   
-        this.setState({
-            [name]: {value: `${value}`, error: false, errorText: '', truth: this.state[name].truth}
-        });
+  state = {
+    firstname: '',
+    lastname: '',
+    password: '',
+    errors: {
+      firstname: '',
+      lastname: '',
+      password: ''
     }
-    handleOnClick = (event) => {
-        event.preventDefault();
-        let element =  this.state;
-        Object.keys(element).map((field) => {
-            if(this.state[field].value === ''){
-                this.setState({
-                    [field]: {value: this.state[field].value, errorEmpty: true, errorIndent: false, truth: this.state[field].truth},
-                    bond: false
-                });
+  };
 
-            } else if(this.state[field].value !== this.state[field].truth){
-                this.setState({
-                    [field]: {value: this.state[field].value, errorEmpty: false, errorIndent: true, truth: this.state[field].truth},
-                    bond: false
-                });
-            } 
-        });
-        let isBond = (element) => {
-            let array = Object.keys(element).map((field) => {
-                let value = this.state[field].value;
-                if(value){
-                    if(this.state[field].value.toUpperCase()!== this.state[field].truth.toUpperCase()){
-                        return false;
-                    } else {
-                        return true;
-                    } 
-                }
-            });
-            delete array[3];
-            return array.every((field) => {
-                return field === true;
-            })
+  // Валидатор возвращает пустой текст или текст ошибки
+  validation(fieldName) {
+    const elementError = {};
+    if (this.state[fieldName]) {
+      if (this.state[fieldName] === validParams[fieldName]) {
+        return false; 
+      } else {
+        elementError.errorValid = true
+      }
+    } else {
+      elementError.errorEmpty = true
+    }
+    return elementError;
+  }
+
+  inputChange = event => {
+    this.setState({
+      errors: {
+        firstname: '',
+        lastname: '',
+        password: ''
+      },
+      [event.target.name]: event.target.value
+    });
+  };
+  errorTextExtends(errors){
+    const errorsTextState = {}
+    for (const items in errors) {
+      if(errors[items].errorEmpty){
+        errorsTextState[items] = errorsText[items].errorEmpty
         }
-
-        let state = this.state;
-        this.setState({
-            bond: isBond(state)
-        });
+      if(errors[items].errorValid){
+        errorsTextState[items] = errorsText[items].errorInvalid
+        }
     }
-    render (){
-        const fieldInput = [
-            {name: 'firstname', transName: 'имя',transNameIndent: 'Имя указано не верно', type: 'text'},
-            {name: 'lastname', transName: 'фамилию',transNameIndent: 'Фамилия указана не верно', type: 'text'},
-            {name: 'password', transName: 'пароль',transNameIndent: 'Пароль указан не верно', type: 'password'}
+    return errorsTextState;
+  }
+  validSubmit = event => {
+    event.preventDefault();
+    let errors = {};
+    for (const item of fields) {
+      if (this.validation(item.name))
+        errors[item.name] = this.validation(item.name);
+    }
+    let result = this.errorTextExtends(errors);
+    if(Object.keys(result).length === 0){
+      this.setState({
+        formValid: true
+      })
+    } else {
+      this.setState({
+        errors: {...result}
+      })
+    }
+  };
 
-        ]
-        const {bond} = this.state;
-        return (
-            
-        !bond ? (
-            <div className="app-container">
-            <h1>Введите свои данные, агент</h1>
-            {fieldInput.map(field => (
-                <p key={field.name} className="field">
-                    <label className="field__label" htmlFor={field.name}>
-                        <span className="field-label">{field.transName}</span>
-                    </label>
-                    <input
-                    className={`field__input field-input t-input-${field.name}`}
-                    key={field.name}
-                    name={field.name}
-                    value={this.state[field.name].value}
-                    type={field.type}
-                    onChange={this.handleChange}
-                    />
-                    {this.state[field.name].errorEmpty ? (
-                    <span className={`field__error field-error t-error-${field.name}`}>Нужно указать {field.transName}</span>): (this.state[field.name].errorIndent ) ? (
-                        <span className={`field__error field-error t-error-${field.name}`}>{field.transNameIndent}</span>
-                    ): (<span className="field__error field-error"></span>)
-                }
-                </p>
+  render() {
+    const { formValid } = this.state;
+    // Return у метода рендер может быть таким для этого ДЗ
+    return (
+      <div className="app-container">
+        {formValid ? (
+          <Approve />
+        ) : (
+          <form className="form">
+            <h1> Введите свои данные, агент </h1> {/* Импуты ввода данных */}
+            {fields.map(fieldName => (
+              <p className="field" key={fieldName.name}>
+                <label className="field__label" htmlFor={fieldName.name}>
+                  <span className="field-label"> {fieldName.label} </span>
+                </label>
+                <input
+                  className={`field__input field-input t-input-${
+                    fieldName.name
+                  }`}
+                  type={fieldName.type}
+                  name={fieldName.name}
+                  onChange={this.inputChange}
+                  value={this.state[fieldName.name]}
+                />
+                <span
+                  className={`field__error field-error t-error-${
+                    fieldName.name
+                  }`}
+                >
+                  {this.state.errors[fieldName.name]}
+                </span>
+              </p>
             ))}
-                <div className="form__buttons">
-                    <button type="submit" className="button t-submit" onClick={this.handleOnClick}>Проверить</button>
-                </div>
-        </div>
-        ): 
-        (
-            <div className="app-container">
-            <img className="t-bond-image" src={bondImg} alt=""/>
+            <div className="form__buttons">
+              <input
+                onClick={this.validSubmit}
+                className="button t-submit"
+                type="submit"
+                value="Проверить"
+              />
             </div>
-        )
-        
-        );
-    }
+          </form>
+        )}
+      </div>
+    );
+  }
 }
+
+class Approve extends Component {
+  render() {
+    return (
+      <img scr={ImageBond} alt="Картинка James Bond" className="t-bond-image" />
+    );
+  }
+}
+
 export default Form;
