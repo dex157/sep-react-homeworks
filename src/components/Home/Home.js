@@ -1,9 +1,9 @@
 import React from 'react';
-import style from './Home.module.css';
+import styles from './Home.module.css';
 
 const Home = () => {
   return (
-    <div className={style.container}>
+    <div className={styles.container}>
       <p className="t-greeting">Приветствуем в почтовом клиенте!</p>
     </div>
   );

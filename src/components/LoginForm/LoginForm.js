@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styles from './LoginForm.module.css';
+import { withAuth } from '../../context/Auth';
 import cls from 'classnames';
 import { Redirect } from 'react-router-dom';
 
@@ -23,7 +24,7 @@ class LoginForm extends Component {
       inputs: { email, password }
     } = this.state;
 
-    authorize(email.value, password.value);
+    authorize(email.Inputvalue, password.Inputvalue);
   };
 
   handleChange = e => {
@@ -34,16 +35,10 @@ class LoginForm extends Component {
         ...inputs,
         [e.target.name]: {
           ...inputs[e.target.name],
-          value: e.target.value
+          inputValue: e.target.value
         }
       }
     });
-  };
-
-  enterPress = e => {
-    if (e.key === 'Enter') {
-      this.handleSubmit();
-    }
   };
 
   render() {
@@ -68,7 +63,6 @@ class LoginForm extends Component {
                 name={[input]}
                 className={cls(styles.input, ` t-input-${[input]}`)}
                 value={inputs[input].inputValue}
-                onKeyPress={this.enterPress}
                 onChange={this.handleChange}
               />
             </p>
@@ -90,4 +84,4 @@ class LoginForm extends Component {
   }
 }
 
-export default LoginForm;
+export default withAuth(LoginForm);

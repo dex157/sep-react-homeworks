@@ -1,5 +1,5 @@
 import React from 'react';
-//import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import PrivateRoute from '../PrivateRoute';
 import LoginForm from '../LoginForm';
 import AppRouter from '../AppRouter';
@@ -9,13 +9,17 @@ import { DataProvider } from '../../context/Data';
 export default () => (
   <DataProvider>
     <AuthProvider>
-      {/* <BrowserRouter>
+      <BrowserRouter>
         <Switch>
-          <Redirect from="/" to="/login" exact />
           <Route path="/login" component={LoginForm} />
           <PrivateRoute path="/app" component={AppRouter} />
+          <Redirect to="/login" />
+          {/* <Redirect from="/" to="/login" exact />
+          <Route path="/login" component={LoginForm} />
+          <PrivateRoute path="/app" component={AppRouter} />
+          <Redirect from="*" to="/login" exact /> */}
         </Switch>
-      </BrowserRouter> */}
+      </BrowserRouter>
     </AuthProvider>
   </DataProvider>
 );
