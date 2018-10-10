@@ -35,7 +35,6 @@ class AppRouter extends Component {
 
   render() {
     const { match } = this.props;
-    // console.log(match);
 
     return (
       <div className={styles.wrapper}>
@@ -59,15 +58,6 @@ class AppRouter extends Component {
           <div className={styles.content}>
             <h3 className={styles.title}>
               <Switch>
-                {/* <Route
-                  path={`${match.url}*`}
-                  render={({ match }) => {
-                    const menu = navMenus.find(
-                      menuItem => menuItem.path === match.params[0]
-                    )
-                    return menu.title;
-                  }}
-                /> */}
                   <Route exact path='/app' render={() => ('Home')}/>
                   <Route path='/app/inbox' render={() => ('Inbox')}/>
                   <Route path='/app/outbox' render={() => ('Outbox')}/>
