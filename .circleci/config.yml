@@ -32,9 +32,16 @@ jobs:
           command: yarn run lint
 
       - run:
+          name: Set PR number
+          command: |
+            echo 'export CIRCLE_PR_NUMBER="${CIRCLE_PR_NUMBER:-${CIRCLE_PULL_REQUEST##*/}}"' >> $BASH_ENV
+            source $BASH_ENV
+            echo $CIRCLE_PR_NUMBER
+
+      - run:
           name: Start background app
           command: |
-            if [[ -f ./cypress/integration/homework.spec.js ]] && [[ -s ./cypress/integration/homework.spec.js ]]
+            if [[ -f ./cypress/integration/homework.spec.js ]] && [[ -s ./cypress/integration/homework.spec.js ]] && [[ $CIRCLE_PR_NUMBER ]]
               then yarn start
             fi
           background: true
@@ -42,16 +49,9 @@ jobs:
       - run:
           name: Cypress tests
           command: |
-            if [[ -f ./cypress/integration/homework.spec.js ]] && [[ -s ./cypress/integration/homework.spec.js ]]
+            if [[ -f ./cypress/integration/homework.spec.js ]] && [[ -s ./cypress/integration/homework.spec.js ]] && [[ $CIRCLE_PR_NUMBER ]]
               then yarn run cypress:run
             fi
-
-      - run:
-          name: Set PR number
-          command: |
-            echo 'export CIRCLE_PR_NUMBER="${CIRCLE_PR_NUMBER:-${CIRCLE_PULL_REQUEST##*/}}"' >> $BASH_ENV
-            source $BASH_ENV
-            echo $CIRCLE_PR_NUMBER
 
       - run:
           name: Build app
