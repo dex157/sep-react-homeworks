@@ -1,0 +1,24 @@
+.previewList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.searchPanel {
+  padding-bottom: 20px;
+}
+
+.buttonWrapper {
+  padding-left: 10px;
+}
+
+.button {
+  font-size: 18px;
+  border-radius: 4px;
+  border: 1px solid #666;
+  padding: 3px 20px;
+}
+
+.input {
+  font-size: 16px;
+}
