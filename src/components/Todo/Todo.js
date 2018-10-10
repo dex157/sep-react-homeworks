@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, {Fragment, PureComponent} from 'react';
 import Card from '../Card';
 import './Todo.css';
 import withLocalstorage from '../../HOCs/withLocalstorage';
@@ -23,7 +23,11 @@ class Todo extends PureComponent {
   createNewRecord = () => {};
 
   render() {
-    return;
+    return(
+        <Fragment>
+            <Card title={"Список Дел"} children={""}/>
+        </Fragment>
+    );
   }
 
   renderEmptyRecord() {
