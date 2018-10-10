@@ -38,8 +38,6 @@ class LoginForm extends PureComponent {
         const { state } = this;
         const { isAuthorized, authError } = this.props;
 
-        console.log('render LoginForm')
-
         if(isAuthorized) {
             return <Redirect to='/app' />
         }
