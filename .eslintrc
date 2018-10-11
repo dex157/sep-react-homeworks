@@ -13,7 +13,13 @@
     "max-params": ["error", 3],
     "react/destructuring-assignment": ["error", "always"],
     "react/no-array-index-key": "error",
-    "react/jsx-no-bind": "error",
+    "react/jsx-no-bind": ["error", {
+        "ignoreDOMComponents": true,
+        "ignoreRefs": true,
+        "allowArrowFunctions": true,
+        "allowFunctions": true,
+        "allowBind": true
+    }],
     "react-perf/jsx-no-new-object-as-prop": "error",
     "react-perf/jsx-no-new-array-as-prop": "error"
   }
