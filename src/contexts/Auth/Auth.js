@@ -42,9 +42,10 @@ class AuthProvider extends PureComponent {
       isAuthorized: false
     })
   }
-  
+
   render() {
     const { children } = this.props;
+    
     return <Provider value={this.getProviderValue()}>{children}</Provider>;
   }
 }
