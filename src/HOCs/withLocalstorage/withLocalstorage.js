@@ -1,10 +1,24 @@
 import React, { Component } from 'react';
 import { load, save } from '../../localstorage';
 
-const withLocalstorage = (localStorageKey, value) => WrappedComponent => {
-  return class extends Component {
+const withLocalstorage = (storageKey, storageData) => WrappedComponent => {
+  return class HOCWrapper extends Component {
+    saveData = data => {
+      save(storageKey, data);
+      this.forceUpdate();
+    };
+
+    savedData() {
+      return load(storageKey) || storageData;
+    }
+
     render() {
-      return <WrappedComponent />;
+      return (
+        <WrappedComponent
+          saveData={this.saveData}
+          savedData={this.savedData()}
+        />
+      );
     }
   };
 };
