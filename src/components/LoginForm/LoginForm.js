@@ -1,79 +1,73 @@
 import React, { Component } from 'react';
-import styles from './LoginForm.module.css';
 import { withAuth } from '../../context/Auth';
-import cls from 'classnames';
+import styles from './LoginForm.module.css';
 import { Redirect } from 'react-router-dom';
+
+const inputs = [
+  {
+    name: 'email',
+    inputName: 'Почта',
+    type: 'text'
+  },
+  {
+    name: 'password',
+    inputName: 'Пароль',
+    type: 'password'
+  }
+];
 
 class LoginForm extends Component {
   state = {
-    inputs: {
-      email: {
-        inputName: 'Почта',
-        inputValue: ''
-      },
-      password: {
-        inputName: 'Пароль',
-        inputValue: ''
-      }
-    }
+    email: '',
+    password: ''
   };
 
-  handleSubmit = () => {
-    const { authorize } = this.props;
-    const {
-      inputs: { email, password }
-    } = this.state;
+  formSubmit = () => {
+    const { email, password } = this.state,
+      { authorize } = this.props;
 
-    authorize(email.Inputvalue, password.Inputvalue);
+    authorize(email, password);
   };
 
-  handleChange = e => {
-    const { inputs } = this.state;
+  changeHandler = e => {
+    const value = e.target.value,
+      name = e.target.name;
 
     this.setState({
-      inputs: {
-        ...inputs,
-        [e.target.name]: {
-          ...inputs[e.target.name],
-          inputValue: e.target.value
-        }
-      }
+      [name]: value
     });
   };
 
   render() {
-    const { inputs } = this.state;
-    const { authError, isAuthorized } = this.props;
+    const state = this.state,
+      { isAuthorized, authError } = this.props;
 
-    if (isAuthorized) {
-      return <Redirect to="/app" />;
-    }
     return (
       <div className={styles.bg}>
-        <div className={cls(styles.form, ' t-form')}>
-          {Object.keys(inputs).map(input => (
-            <p key={[input]}>
-              <label htmlFor={[input]}>
-                <span className={styles.labelText}>
-                  {inputs[input].inputName}
-                </span>
+        <div className={`${styles.form} t-form`}>
+          {inputs.map(input => (
+            <p key={input.name}>
+              <label htmlFor={input.name}>
+                <span className={styles.labelText}>{input.inputName}</span>
               </label>
               <input
-                type="text"
-                name={[input]}
-                className={cls(styles.input, ` t-input-${[input]}`)}
-                value={inputs[input].inputValue}
-                onChange={this.handleChange}
+                type={input.type}
+                name={input.name}
+                className={`${styles.input} t-input-${input.name}`}
+                onChange={this.changeHandler}
+                value={state[input.name]}
               />
             </p>
           ))}
-
-          {authError && <p className={styles.error}>{authError}</p>}
-
+          {isAuthorized ? (
+            <Redirect to="/app" />
+          ) : authError !== '' ? (
+            <p className={styles.error}>{authError}</p>
+          ) : null}
           <div className={styles.buttons}>
             <button
-              className={cls(styles.button, ' t-login')}
-              onClick={this.handleSubmit}
+              className={`${styles.button} t-login`}
+              onClick={this.formSubmit}
             >
               Войти
             </button>

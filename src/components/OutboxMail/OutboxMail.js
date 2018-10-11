@@ -1,15 +1,19 @@
 import React, { PureComponent } from 'react';
 import { withData } from '../../context/Data';
-import MailList from '../MailList';
+import Mail from '../Mail';
 
-class OutboxList extends PureComponent {
+class OutboxMail extends PureComponent {
   render() {
     const {
-      data: { outbox },
-      match: { path }
+      match: {
+        params: { id }
+      },
+      data
     } = this.props;
-    return <MailList className={'t-outbox-list'} mails={outbox} path={path} />;
+    const mail = data.outbox.find(mail => mail.id === id);
+
+    return <Mail {...mail} />;
   }
 }
 
-export default withData(OutboxList);
+export default withData(OutboxMail);
