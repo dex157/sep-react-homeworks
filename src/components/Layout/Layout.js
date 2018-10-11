@@ -8,10 +8,10 @@ class Layout extends PureComponent {
     let {header, footer, children} = this.props;
     return(
     <Fragment>
-      {header ? this.renderHeader : null}
+      {header ? this.renderHeader(header) : null}
       <main className={`main
-      ${header ? 'main-with-header' : ''}
-      ${footer ? 'main-with-footer' : ''}
+      ${header ? 'main--with-header' : ''}
+      ${footer ? 'main--with-footer' : ''}
       `}>
       <SectionTitle className="main__title" children="MAIN"/>
       {children}

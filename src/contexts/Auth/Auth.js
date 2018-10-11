@@ -19,7 +19,7 @@ class AuthProvider extends PureComponent {
       this.setState({
         email: '',
         authorizeError: 'Email или пароль введён не верно',
-        isAuthorized: true
+        isAuthorized: false
       })
     }
   }
@@ -30,8 +30,8 @@ class AuthProvider extends PureComponent {
     let {email, authorizeError, isAuthorized} = this.state;
     return {
       email: email,
-      isAuthorized: authorizeError,
-      authorizeError: isAuthorized,
+      isAuthorized: isAuthorized,
+      authorizeError: authorizeError,
       authorize: this.authorize,
       logout: this.logout
     }
@@ -45,7 +45,7 @@ class AuthProvider extends PureComponent {
   }
   render() {
     const { children } = this.props;
-    return <Provider value={this.getProviderValue}>{children}</Provider>;
+    return <Provider value={this.getProviderValue()}>{children}</Provider>;
   }
 }
 
