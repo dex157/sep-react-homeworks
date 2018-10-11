@@ -1,4 +1,5 @@
 version: 2
+
 jobs:
   build:
     working_directory: ~/app
@@ -6,43 +7,29 @@ jobs:
       - image: cypress/base:8
         environment:
           TERM: xterm
-
     steps:
       - checkout
-
       - restore_cache:
           keys:
-            - yarn-packages-v2-{{ checksum "yarn.lock" }}
-            - v2-deps-{{ .Branch }}
-            - v2-deps
+            - yarn-packages-v12-{{ checksum "yarn.lock" }}
+            - yarn-packages-v12-
 
       - run:
           name: Install Dependencies
-          command: yarn install
+          command: |
+            yarn install
+            yarn autoclean --force
 
       - save_cache:
           name: Save Yarn Package Cache
-          key: yarn-packages-v2-{{ checksum "yarn.lock" }}
+          key: yarn-packages-v12-{{ checksum "yarn.lock" }}
           paths:
-            - ~/.npm
-            - ~/.cache
+            - ~/.cache/Cypress
+            - node_modules
 
       - run:
-          name: Build app
-          command: yarn build
-
-      - run:
-          name: Unit tests
-          command: yarn test
-
-      - run:
-          name: Start background app
-          command: yarn start
-          background: true
-
-      - run:
-          name: Cypress tests
-          command: yarn run cypress:run
+          name: Run linters
+          command: yarn run lint
 
       - run:
           name: Set PR number
@@ -52,23 +39,44 @@ jobs:
             echo $CIRCLE_PR_NUMBER
 
       - run:
-          name: Remove service workers
-          command: rm ~/app/build/service-worker.js
+          name: Start background app
+          command: |
+            if [[ -f ./cypress/integration/homework.spec.js ]] && [[ -s ./cypress/integration/homework.spec.js ]] && [[ $CIRCLE_PR_NUMBER ]]
+              then yarn start
+            fi
+          background: true
+
+      - run:
+          name: Cypress tests
+          command: |
+            if [[ -f ./cypress/integration/homework.spec.js ]] && [[ -s ./cypress/integration/homework.spec.js ]] && [[ $CIRCLE_PR_NUMBER ]]
+              then yarn run cypress:run
+            fi
+
+      - run:
+          name: Build app
+          command: |
+            if [[ $CIRCLE_PR_NUMBER ]]
+              then yarn build
+            fi
 
       - run:
           name: Remove old build
-          command:
-            ssh -o StrictHostKeyChecking=no root@51.15.83.43 rm -rf
-            /var/www/sep-pr-$CIRCLE_PR_NUMBER
+          command: |
+            if [[ $CIRCLE_PR_NUMBER ]]
+              then ssh -o StrictHostKeyChecking=no root@51.15.83.43 rm -rf /var/www/sep-pr-$CIRCLE_PR_NUMBER
+            fi
 
       - run:
           name: Copy new build
-          command:
-            scp -v -o StrictHostKeyChecking=no -r ~/app/build
-            root@51.15.83.43:/var/www/sep-pr-$CIRCLE_PR_NUMBER
+          command: |
+            if [[ $CIRCLE_PR_NUMBER ]]
+              then scp -v -o StrictHostKeyChecking=no -r build root@51.15.83.43:/var/www/sep-pr-$CIRCLE_PR_NUMBER
+            fi
 
       - run:
           name: Create dns zone
-          command:
-            ssh -o StrictHostKeyChecking=no root@51.15.83.43
-            "/var/www/setup-server/index.js --address sep-pr-$CIRCLE_PR_NUMBER"
+          command: |
+            if [[ $CIRCLE_PR_NUMBER ]]
+              then ssh -o StrictHostKeyChecking=no root@51.15.83.43 "/var/www/setup-server/index.js --address sep-pr-$CIRCLE_PR_NUMBER"
+            fi
