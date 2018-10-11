@@ -25,7 +25,7 @@ class App extends PureComponent {
           </AuthConsumer>
         </Layout>
       </AuthProvider>
-    );
+    )
   }
 }
 
