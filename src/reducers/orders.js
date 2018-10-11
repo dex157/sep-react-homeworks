@@ -58,15 +58,11 @@ export function changePosition(state, payload, move) {
   let currentOrder = state.find(order => order.id === payload);
   let positionIndex = positions.indexOf(currentOrder.position);
   if (move === 'next') {
-    let arrayComparison = true;
+    let arrayComparison = [];
     if (positions[positionIndex + 1] === 'finish') {
-      currentOrder.recipe.filter(element => {
-        if (!currentOrder.ingredients.includes(element)) {
-          arrayComparison = false;
-        }
-      });
+      arrayComparison = checkForIngredients(currentOrder);
     }
-    if (arrayComparison)
+    if (arrayComparison.length === 0)
       currentOrder.position = positions[positionIndex + 1];
   } else if (move === 'back') {
     if (positions[positionIndex - 1] !== 'clients') {
@@ -74,4 +70,10 @@ export function changePosition(state, payload, move) {
     }
   }
   return currentOrder;
+}
+
+export function checkForIngredients(currentOrder) {
+  return currentOrder.recipe.filter(element =>
+    !currentOrder.ingredients.includes(element)
+  );
 }
