@@ -38,7 +38,7 @@ class Todo extends PureComponent {
 
   createNewRecord = () => {    
     const { savedData, saveData } = this.props;
-    const inputValue = this.state.inputValue;
+    const {inputValue} = this.state;
 
     if(inputValue !== ""){
       const id = this.getId();
@@ -61,7 +61,8 @@ class Todo extends PureComponent {
   }
 
   renderEmptyRecord() {
-    const inputValue = this.state.inputValue
+    const {inputValue} = this.state
+    
     return (
     <div className="todo-item todo-item-new">
       <input
