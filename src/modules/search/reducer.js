@@ -26,7 +26,7 @@ const result = handleActions(
 const error = handleActions(
   {
     [searchRequest]: () => null,
-    [searchSuccess]: (_state, action) => action.payload,
+    [searchFailure]: (_state, action) => action.payload,
   },
   null,
 );

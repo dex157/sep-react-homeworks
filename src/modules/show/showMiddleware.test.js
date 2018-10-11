@@ -1,4 +1,4 @@
-import {searchMiddleware} from './searchMiddleware';
+import {searchMiddleware} from './showMiddleware';
 
 jest.mock('../../api');
 

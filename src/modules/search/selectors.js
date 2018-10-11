@@ -5,9 +5,9 @@ export const getError = state => state.search.error;
 export const getResult = createSelector(
   state => state.search.result,
   elements =>
-    elements.map(({ id, image: { medium }, name, summary }) => ({
+    elements.map(({ id, image, name, summary }) => ({
       id,
-      image: medium,
+      image,
       name,
       summary
     }))

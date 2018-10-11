@@ -6,8 +6,15 @@ import {
   isFetching,
   getError,
   getResult,
-  searchSeries
+  searchRequest
 } from '../../modules/search';
+
+const mapStateToProps = state => ({
+  isFetching: isFetching(state),
+  result: getResult(state),
+  error: getError(state)
+});
+const mapDispatchToProps = { searchRequest };
 
 class Search extends PureComponent {
   state = {
@@ -19,17 +26,24 @@ class Search extends PureComponent {
   };
 
   handleClick = () => {
-    console.log('click');
-    this.props.searchSeries(this.state.searchString);
+    const { searchRequest } = this.props;
+    const { searchString } = this.state;
+
+    if (searchString) {
+      searchRequest(searchString);
+    }
   };
 
-  componentDidMount() {
-    // const { searchSeries } = this.props;
-    // searchSeries('13');
-  }
+  handleKeyPress = event => {
+    if (event.key === 'Enter') {
+      this.handleClick();
+    }
+  };
 
   render() {
     const { searchString } = this.state;
+    const { result, isFetching, error } = this.props;
+
     return (
       <Fragment>
         <div className={styles.previewList}>
@@ -39,6 +53,7 @@ class Search extends PureComponent {
             placeholder="Название сериала"
             onChange={this.handleChange}
             value={searchString}
+            onKeyPress={this.handleKeyPress}
           />
           <div className={styles.buttonWrapper}>
             <button
@@ -49,21 +64,22 @@ class Search extends PureComponent {
             </button>
           </div>
         </div>
-        <div className={'t-search-result' + styles.searchPanel}>
-          <ShowPreview />
-        </div>
+        {error && <p>Ошибка: {error}</p>}
+        {isFetching ? (<p>Данные загружаются</p>) : (<div className={'t-search-result' + styles.searchPanel}>
+          {result.map(item => (
+            <ShowPreview
+              key={item.id}
+              image={item.image}
+              name={item.name}
+              id={item.id}
+              summary={item.summary}
+            />
+          ))}
+        </div>)}
       </Fragment>
     );
   }
 }
-
-const mapStateToProps = state => ({
-  isFetching: isFetching(state),
-  result: getResult(state),
-  error: getError(state)
-});
-
-const mapDispatchToProps = { searchSeries };
 
 export default connect(
   mapStateToProps,
