@@ -11,8 +11,8 @@ const createAppStore = () => {
       applyMiddleware(showMiddleware),
       window.__REDUX_DEVTOOLS_EXTENSION__
         ? window.__REDUX_DEVTOOLS_EXTENSION__()
-        : noop => noop,
-    ),
+        : noop => noop
+    )
   );
 
   return store;
