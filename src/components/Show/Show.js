@@ -13,6 +13,8 @@ class Show extends PureComponent {
         data: null
       };
 
+    static getDerivedStateFromProps() {}  
+
     componentDidUpdate(prevProp, prevState) {
         const { showId } = this.props;
         console.log(showId);
