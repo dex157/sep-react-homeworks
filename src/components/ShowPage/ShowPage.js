@@ -1,5 +1,6 @@
 import React, { PureComponent, Fragment } from 'react';
 import styles from './ShowPage.module.css';
+import CastCard from '../CastCard';
 import { connect } from 'react-redux';
 import {
   isFetching,
@@ -20,48 +21,52 @@ class ShowPage extends PureComponent {
     currentShow: null
   };
   componentDidMount() {
-    const { id, showRequest } = this.props;
-
+    const {
+      match: {
+        params: { id }
+      },
+      showRequest
+    } = this.props;
     showRequest(id);
+  }
+
+  getCastCards(cast) {
+    cast.forEach(element => {
+      const {
+        person: { id, name, image }
+      } = element;
+
+      return (
+        <div key={id} className="t-person">
+          <p>{name}</p>
+          {image && <img src={image.medium} alt={name} />}
+        </div>
+      );
+    });
   }
 
   getShowById(id) {
     const { entities } = this.props;
+    let currentShow = entities.find(entity => entity.id === parseInt(id));
 
-    let currentShow;
-    currentShow = entities.filter(entity => (entity.id === id ? entity : null));
     if (!currentShow) {
       showRequest(id);
     } else {
+      const { name, image, summary, cast } = currentShow;
+
       return (
         <Fragment>
-          <p>Warehouse 13</p>
-          <img
-            src="http://static.tvmaze.com/uploads/images/medium_portrait/160/402219.jpg"
-            alt="Warehouse 13"
-          />
-          <div>
-            <p>
-              After saving the life of the President, two Secret Service agents
-              find themselves abruptly transferred to Warehouse 13 -- a massive,
-              top-secret storage facility in windswept South Dakota that houses
-              every strange artifact, mysterious relic, fantastical object and
-              supernatural souvenir ever collected by the U.S. government. The
-              Warehouse's caretaker Artie charges Pete and Myka with chasing
-              down reports of supernatural and paranormal activity in search of
-              new objects to cache at the Warehouse, as well as helping him to
-              control the warehouse, itself. Rounding out the team is technology
-              specialist Claudia and former ATF Steve Jinks.
-            </p>
-          </div>
+          <p>{name}</p>
+          {image && <img src={image.medium} alt={name} />}
+
+          <div dangerouslySetInnerHTML={{ __html: summary }} />
+
           <div className={styles.cast}>
-            <div className="t-person">
-              <p>Joanne Kelly</p>
-              <img
-                src="http://static.tvmaze.com/uploads/images/medium_portrait/3/9088.jpg"
-                alt="Joanne Kelly"
-              />
-            </div>
+            {cast.length
+              ? cast.map((person, key) => (
+                  <CastCard person={person} key={person.person.id} />
+                ))
+              : null}
           </div>
         </Fragment>
       );
@@ -69,7 +74,13 @@ class ShowPage extends PureComponent {
   }
 
   render() {
-    const { id, isFetching, error } = this.props;
+    const {
+      match: {
+        params: { id }
+      },
+      isFetching,
+      error
+    } = this.props;
 
     return (
       <Fragment>

@@ -65,7 +65,7 @@ class Search extends PureComponent {
           </div>
         </div>
         {error && <p>Ошибка: {error}</p>}
-        {isFetching ? (<p>Данные загружаются</p>) : (<div className={'t-search-result' + styles.searchPanel}>
+        {isFetching ? (<p>Данные загружаются</p>) : (<div className={'t-search-result ' + styles.searchPanel}>
           {result.map(item => (
             <ShowPreview
               key={item.id}

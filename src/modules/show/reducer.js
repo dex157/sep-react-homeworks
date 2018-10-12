@@ -17,8 +17,7 @@ const isFetching = handleActions(
 
 const entities = handleActions(
   {
-    [showRequest]: () => [],
-    [showSuccess]: (_state, action) => action.payload,
+    [showSuccess]: (_state, action) => [..._state, action.payload],
   },
   [],
 );
