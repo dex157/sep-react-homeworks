@@ -15,9 +15,9 @@ class Show extends PureComponent {
 
     componentDidUpdate(prevProp, prevState) {
         const { showId } = this.props;
-        console.log(prevProp);
+        console.log(showId);
 
-        if (prevProp !== prevState) {
+        if (showId !== prevState.showId) {
             getShowInfo(showId).then(data =>
                 this.setState({ 
                     showId,
