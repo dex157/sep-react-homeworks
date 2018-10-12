@@ -11,7 +11,7 @@ export default () => (
     <AuthProvider>
       <BrowserRouter>
         <Switch>
-
+          <LoginForm />
         </Switch>
       </BrowserRouter>
     </AuthProvider>
