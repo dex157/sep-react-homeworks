@@ -12,7 +12,7 @@ class Show extends PureComponent {
         data: null
       };
 
-    static getDerivedStateFromProps() {};  
+    static getDerivedStateFromProps() {return null;};  
 
     componentDidMount() {
         const  { show }  = this.props ;
