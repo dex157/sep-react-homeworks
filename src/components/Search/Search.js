@@ -52,10 +52,13 @@ class Search extends Component {
 
   render() {
     const { inputValue } = this.state;
-    const { isLoading } = this.props;
+    const { isLoading, error } = this.props;
 
     if (isLoading) {
       return <div>Загрузка...</div>;
+    }
+    if (error) {
+      return <div>{error}</div>;
     }
 
     return (

@@ -30,11 +30,15 @@ class ShowPage extends Component {
   };
 
   render() {
-    const { isLoading, show } = this.props;
+    const { isLoading, show, error } = this.props;
 
+    if (error) {
+      return <div>{error}</div>;
+    }
     if (isLoading || !show) {
       return <div>Загрузка...</div>;
     }
+
     const { name, image, summary } = show;
 
     return (
