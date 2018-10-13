@@ -12,7 +12,7 @@ export default ({ name, id, image, summary }) => {
         </Link>
         {image && <img src={image} alt={name} />}
       </div>
-      <div>
+      <div className={styles.containerTop}>
         {summary && <div dangerouslySetInnerHTML={{ __html: summary }} />}
       </div>
     </div>

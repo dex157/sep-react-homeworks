@@ -19,6 +19,7 @@ class ShowPage extends Component {
     const {
       show: { cast }
     } = this.props;
+
     return cast.map(({ id, name, image }) => (
       <div className="t-person" key={id}>
         <p>{name}</p>
