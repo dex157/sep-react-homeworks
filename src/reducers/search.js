@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux';
 import { handleActions } from 'redux-actions';
-import { createSelector } from 'reselect';
 import {
   searchRequest,
   searchSucess,
@@ -36,11 +35,3 @@ export default combineReducers({
   error,
   isLoading
 });
-
-export const getLoading = state => state.isLoading;
-export const getError = state => state.error;
-export const getData = createSelector(
-  state => state.data,
-  shows =>
-    shows.map(({ id, image, summary, name }) => ({ id, image, summary, name }))
-);

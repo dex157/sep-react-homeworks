@@ -3,7 +3,7 @@ import styles from './Search.module.css';
 import { connect } from 'react-redux';
 import cx from 'classnames';
 import { searchRequest } from '../../actions/searchActions';
-import { getData, getError, getLoading } from '../../reducers/search';
+import { getShows, getError, getLoading } from '../../reducers/selectors';
 import ShowPreview from '../ShowPreview';
 
 class Search extends Component {
@@ -86,7 +86,7 @@ class Search extends Component {
 }
 
 const mapStateToProps = ({ search }) => ({
-  shows: getData(search),
+  shows: getShows(search),
   error: getError(search),
   isLoading: getLoading(search)
 });

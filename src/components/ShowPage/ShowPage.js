@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import styles from './ShowPage.module.css';
 import { connect } from 'react-redux';
 import { showRequest } from '../../actions/showActions';
-import { getInfo, getError, getLoading } from '../../reducers/shows';
+import { getShowInfo, getError, getLoading } from '../../reducers/selectors';
 
 class ShowPage extends Component {
   componentDidMount() {
@@ -49,7 +49,7 @@ class ShowPage extends Component {
 }
 
 const mapStateToProps = ({ shows }) => ({
-  show: getInfo(shows),
+  show: getShowInfo(shows),
   error: getError(shows),
   isLoading: getLoading(shows)
 });
