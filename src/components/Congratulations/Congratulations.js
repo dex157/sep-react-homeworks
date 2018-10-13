@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react';
 class Congratulations extends PureComponent {
   render() {
     return (
-      <p class="t-congratulation">
+      <p className="t-congratulation">
         <span role="img" aria-label="congratulations!">
           🎉
         </span>
