@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Home",
+    "url": ""
+  },
+  {
+    "name": "Inbox",
+    "url": "/inbox"
+  },
+  {
+    "name": "Outbox",
+    "url": "/outbox"
+  }
+]

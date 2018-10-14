@@ -12,7 +12,7 @@ class InboxMail extends PureComponent {
     } = this.props;
     const mail = data.inbox.find(mail => mail.id === id);
 
-    return <Mail {...mail} />;
+    return <Mail mail={mail} type="From" />;
   }
 }
 
