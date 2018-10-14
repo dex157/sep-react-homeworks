@@ -36,8 +36,8 @@ class AppRouter extends Component{
                         <Route path="/app" component={Home} exact/>
                         <Route path="/app/inbox" component={InboxList}  exact/>
                         <Route path="/app/outbox" component={OutboxList}  exact/>
-                        <Route path="/app/inbox/*" component={InboxMail}  />
-                        <Route path="/app/outbox/*" component={OutboxMail}  />
+                        <Route path="/app/inbox/:id" component={InboxMail}  />
+                        <Route path="/app/outbox/:id" component={OutboxMail}  />
                     </div>
                 </div>
             </div>
