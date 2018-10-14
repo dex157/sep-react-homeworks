@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import style from './AppRouter.module.css'
 import { withAuth } from '../../context/Auth'
-import {Route, Link, Redirect} from 'react-router-dom';
+import {Route, Redirect} from 'react-router-dom';
 import Home from '../Home'
 import InboxList from '../InboxList'
 import OutboxList from '../OutboxList'
