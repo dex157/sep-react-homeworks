@@ -7,17 +7,18 @@ import InboxList from '../InboxList'
 import OutboxList from '../OutboxList'
 import InboxMail from '../InboxMail'
 import OutboxMail from '../OutboxMail'
+import AppNav from './AppNav'
 
 
 
 class AppRouter extends Component{
     
     getTitle = () => {
-        var url = this.props.match.url.substring(5);
+        const {match} = this.props;
+        var url = match.url.substring(5);
         url = url ? url : "Home";
         return (url);
     }
-
 
     render(){
        const {isAuthorized} =  this.props;
@@ -26,19 +27,7 @@ class AppRouter extends Component{
        isAuthorized ?
        <div className={style.wrapper}>
             <div className={style.container}>
-                <nav className={style.nav} >
-                    <ul className={`${style.navList} t-nav-list`}>
-                        <li className={style.navElement}>
-                            <Link className={`${style.navElement} t-link-home active`} to="/app" >Home</Link>
-                        </li>
-                        <li className={style.navElement}>
-                            <Link className={`${style.navElement} t-link-inbox`} to="/app/inbox">Inbox</Link>
-                        </li>
-                        <li className={style.navElement}>
-                            <Link className={`${style.navElement} t-link-outbox`} to="/app/outbox">Outbox</Link>
-                        </li>
-                    </ul>
-                </nav>
+                <AppNav/>
                 <div className={style.content}>
                     <h3 className={style.title}>
                         {this.getTitle()}

@@ -4,14 +4,13 @@ import style from './Mail.module.css'
 class Mail extends Component{
 
     render(){
-        const input = this.props.from;
-        const output = this.props.to;
+        const {from, to, body} = this.props;
         return (
             <div className={style.container}>            
-                <p className={input ? "t-mail-from": "t-mail-to"}>
-                    {input ? "From": "To"} : {input ? input : output}
+                <p className={from ? "t-mail-from": "t-mail-to"}>
+                    {from ? "From": "To"} : {from ? from : to}
                 </p>                
-                <p className="t-mail-body">{this.props.body}</p>
+                <p className="t-mail-body">{body}</p>
             </div>
        );
     }
