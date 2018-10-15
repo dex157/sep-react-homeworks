@@ -27,10 +27,19 @@ class Todo extends PureComponent {
     };
 
     toggleRecordComplete = event => {
+
     };
 
     createNewRecord = () => {
-        console.log(this);
+        const {savedData, saveData} = this.props;
+        console.log(this.props)
+
+        saveData([this.state.inputValue, ...savedData()]);
+        this.setState({
+            inputValue: ''
+        });
+
+
     };
 
     render() {
@@ -38,6 +47,7 @@ class Todo extends PureComponent {
             <Fragment>
                 <Card title={"Список Дел"} >
                     {this.renderEmptyRecord()}
+                    {this.renderRecord()}
                 </Card>
             </Fragment>
         );
@@ -53,12 +63,15 @@ class Todo extends PureComponent {
     }
 
     renderRecord = record => {
+        const {savedData} = this.props;
         return (
+
             <div className="todo-item t-todo">
-                <p className="todo-item__text">{record}</p>
+                <p className="todo-item__text">{record}{savedData()}</p>
                 <span className="todo-item__flag t-todo-complete-flag"
-                      data-todo-id={this.getId}
+                      // data-todo-id={this.getId}
                       onClick={this.toggleRecordComplete}>
+
                     [ ]
                 </span>
             </div>
