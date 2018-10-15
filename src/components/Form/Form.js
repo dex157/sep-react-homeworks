@@ -95,9 +95,29 @@ class PasswordField extends Component {
 
 export default class Form extends Component {
 
-  state = {display: "", bondik: false};
+ // state = {display: "", bondik: false};
 
+  constructor(props) {
+    super(props);
+    this.state = {display: "", bondik: false}; 
+    this.firstNameField = React.createRef();
+    this.lastNameField = React.createRef();
+    this.passwordField = React.createRef();
+   
+    this.status = {};
   
+  }
+
+  componentDidMount() {
+    this.status = {
+      firstStat: this.firstNameField.current.state.statusFirst,
+      lastStat: this.lastNameField.current.state.statusLast,
+      passwordStat: this.passwordField.current.state.statusPassword
+    };
+    console.log(this.status); 
+  } 
+
+
   onChangeForm = (e) => {
     this.setState({display: "none"});
   }
@@ -105,7 +125,7 @@ export default class Form extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.setState({display: "block"});
-    if (this.refs.firstNameField.state.statusFirst === "correct" && this.refs.lastNameField.state.statusLast === "correct" && this.refs.passwordField.state.statusPassword === "correct") {
+    if (this.firstNameField.current.state.statusFirst === "correct" && this.lastNameField.current.state.statusLast === "correct" && this.passwordField.current.state.statusPassword === "correct") {
       this.setState({bondik: true});
     } else {
       this.setState({bondik: false});     
@@ -113,26 +133,22 @@ export default class Form extends Component {
   }   
   
   render() {
+    let display = this.state.display;
     var  firstStatus = {empty: 'Нужно указать имя', wrong: 'Имя указано неверно', correct: ''};
     var  lastStatus = {empty: 'Нужно указать фамилию', wrong: 'Фамилия указано неверно', correct: ''};
-    var  passwordStatus = {empty: 'Нужно указать пароль', wrong: 'Пароль указан неверно', correct: ''};
-    let status = {
-      display: this.state.display,
-      firstStat: this.refs.firstNameField.state.statusFirst,
-      lastStat: this.refs.lastNameField.state.statusLast,
-      passwordStat: this.refs.passwordField.state.statusPassword
-    }; 
-    let {display, firstStat, lastStat, passwordStat} =  status;
-
+    var  passwordStatus = {empty: 'Нужно указать пароль', wrong: 'Пароль указан неверно', correct: ''};  
+    console.log(this.status);
+    let {firstStat, lastStat, passwordStat} = this.status;
+    console.log(display); 
     return (
        (this.state.bondik === false) ? (
          <div className="app-container">
            <form onChange={this.onChangeForm} onSubmit={this.handleSubmit}>
-             <FirstNameField  ref="firstNameField" />
+             <FirstNameField  ref={this.firstNameField} />
              <p className = "field__error t-error-firstname" style={{display: display}}>{firstStatus[firstStat]}</p>                
-             <LastNameField  ref="lastNameField" />
+             <LastNameField  ref={this.lastNameField} />
              <p className = "field__error t-error-lastname" style={{display: display}}>{lastStatus[lastStat]}</p>                
-             <PasswordField  ref="passwordField" />
+             <PasswordField  ref={this.passwordField} />
              <p className = "field__error t-error-password" style={{display: display}}>{passwordStatus[passwordStat]}</p>                
              <div className="form__buttons">
                <input className="button t-submit" type="submit" value="Проверить" />
