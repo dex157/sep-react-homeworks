@@ -5,16 +5,17 @@ import {
     fetchSuccess,
     fetchFailure, 
 } from './actions';
+import { getApiKey } from '../Auth/selectors';
 
 function* fetchFollowersWatcher() {
   yield takeLatest(fetchRequest, fetchFollowersFlow);
 }
 
 export function* fetchFollowersFlow(action) {
-  const state = yield select();
+  const state = yield select(getApiKey);
 
   try {
-    const response = yield call(getFollowersInfo, action.payload, state.auth.key);
+    const response = yield call(getFollowersInfo, state, action.payload);
     yield put(fetchSuccess(response));
   } catch (error) {
     yield put(fetchFailure(error));

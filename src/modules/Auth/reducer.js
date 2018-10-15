@@ -4,7 +4,7 @@ import {
     addApiKey,
 } from './actions';
 
-const key = handleActions(
+const apiKey = handleActions(
     {
         [addApiKey]: (_state, action) => action.payload,
     },
@@ -19,7 +19,7 @@ const isAuthorized = handleActions(
 );
 
 export default combineReducers({
-    key,
+    apiKey,
     isAuthorized,
 });
 
