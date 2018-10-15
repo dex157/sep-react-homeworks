@@ -25,8 +25,6 @@ class Followers extends PureComponent {
         </p>
       )
     } else {
-      console.log(user)
-      console.log(followers)
       return (
         <div className={cx(styles.root, 't-followers')}>
           {followers.map(follower => (
