@@ -7,9 +7,10 @@ import Search from '../Search';
 class Router extends Component {
   render() {
     return (
-        <div className="App">
+      <div className="App">
         <Switch>
-        <Route path="/" component={Login} />
+          <Redirect from='/' to="/login" exact />
+          <Route path="/login" component={Login} />
           <PrivateRoute component={Search} />
           <Redirect from="*" to="/" />
         </Switch>
