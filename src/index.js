@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Chat from 'components/Chat';
+import App from './components/App';
 import './index.css';
 
-ReactDOM.render(<Chat />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
