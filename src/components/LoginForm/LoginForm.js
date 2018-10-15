@@ -36,6 +36,7 @@ class LoginForm extends Component {
 
   render() {
     const { isAuthorized, authError } = this.props;
+    const state = this.state;
     return (
       <div className={style.bg}>
         <div className={cls(style.form, 't-form')}>
@@ -49,7 +50,7 @@ class LoginForm extends Component {
                 name={input.name}
                 className={cls(style.input, `t-input-${input.name}`)}
                 onChange={this.handlerChange}
-                value={this.state[input.name]}
+                value={state[input.name]}
               />
             </p>
           ))}
