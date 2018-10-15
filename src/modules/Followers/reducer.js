@@ -37,7 +37,7 @@ export default combineReducers({
 export const getFollowers = createSelector(
   state => state.followers.data,
   followers => {
-    if (!followers || !Array.isArray(followers)) {
+    if (!followers) {
       return followers;
     }
     return (followers = followers.map(({ id, login, avatar_url }) => ({
