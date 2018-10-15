@@ -2,25 +2,24 @@ import React, { Component } from 'react';
 import { withAuth } from '../../context/Auth';
 import style from './LoginForm.module.css';
 import cls from 'classnames';
-import AppRouter from '../AppRouter';
 import { Redirect } from 'react-router-dom';
 
 const inputs = [
   {
     name: 'email',
-    text: 'Почта',
+    label: 'Почта',
     type: 'text'
   },
   {
     name: 'password',
-    text: 'Пароль',
+    label: 'Пароль',
     type: 'password'
   }
 ];
 
 class LoginForm extends Component {
   state = {
-    login: '',
+    email: '',
     password: ''
   };
 
@@ -40,29 +39,30 @@ class LoginForm extends Component {
     return (
       <div className={style.bg}>
         <div className={cls(style.form, 't-form')}>
-          {inputs.map(input => {
-            return (
-              <p key={input.name}>
-                <label htmlFor={input.name}>
-                  <span className={style.labelText}>{input.text}</span>
-                </label>
-                <input
-                  type={input.type}
-                  name={input.name}
-                  className={cls(style.input, 't-input-email')}
-                  onChange={this.handlerChange}
-                  value={this.state[input.name]}
-                />
-              </p>
-            );
-          })}
+          {inputs.map(input => (
+            <p key={input.name}>
+              <label htmlFor={input.name}>
+                <span className={style.labelText}>{input.label}</span>
+              </label>
+              <input
+                type={input.type}
+                name={input.name}
+                className={cls(style.input, `t-input-${input.name}`)}
+                onChange={this.handlerChange}
+                value={this.state[input.name]}
+              />
+            </p>
+          ))}
           {isAuthorized ? (
-            <Redirect to="app" component={AppRouter} />
+            <Redirect to="/app" />
           ) : (
             <p className={style.error}>{authError}</p>
           )}
           <div className={style.buttons}>
-            <button onClick={this.submitForm} className={style.button}>
+            <button
+              onClick={this.submitForm}
+              className={cls(style.button, 't-login')}
+            >
               Войти
             </button>
           </div>
