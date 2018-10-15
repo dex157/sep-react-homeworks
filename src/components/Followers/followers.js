@@ -10,7 +10,6 @@ import { getUser } from '../../modules/User';
 import { connect } from 'react-redux';
 import cx from 'classnames'
 
-////f2a90646e6718ad1621b189bf5e59a95c168f552
 class Followers extends PureComponent {
   renderFollowers = (user, followers) => {
     if  ((followers.length === 0) && (user.length === 0)) {
