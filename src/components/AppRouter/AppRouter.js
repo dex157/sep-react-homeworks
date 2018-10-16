@@ -1,6 +1,5 @@
 import React from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
-import { style } from 'ansi-colors';
 import styles from './AppRouter.module.css';
 import Home from '../Home';
 import InboxList from '../InboxList';
