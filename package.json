@@ -6,7 +6,6 @@
     "classnames": "^2.2.6",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
-    "react-router-dom": "^4.3.1",
     "react-scripts": "2.0.4",
     "truncate": "^2.0.1"
   },
@@ -25,7 +24,8 @@
     "enzyme-adapter-react-16": "^1.5.0",
     "eslint-plugin-cypress": "^2.0.1",
     "eslint-plugin-react": "^7.11.1",
-    "eslint-plugin-react-perf": "^2.0.9"
+    "eslint-plugin-react-perf": "^2.0.9",
+    "react-router-dom": "^4.3.1"
   },
   "browserslist": [
     ">0.2%",
