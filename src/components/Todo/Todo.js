@@ -73,6 +73,7 @@ class Todo extends PureComponent {
   render() {
     const { inputValue } = this.state;
     const { savedData } = this.props;
+    console.log('withLocalstorage(Todo)->',this.props);
 
     return (
       <Card title="Список дел">
