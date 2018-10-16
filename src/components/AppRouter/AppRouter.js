@@ -18,7 +18,7 @@ class AppRouter extends Component {
   ];
 
   render() {
-    const { match, location } = this.props;
+    const { location } = this.props;
 
     return (
       <div className={styles.wrapper}>

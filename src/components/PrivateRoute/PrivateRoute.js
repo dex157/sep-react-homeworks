@@ -4,7 +4,7 @@ import { Route, Redirect } from 'react-router-dom';
 
 class PrivateRoute extends Component {
   render() {
-    const { isAuthorized, component, ...rest } = this.props;
+    const { isAuthorized, component } = this.props;
 
     return isAuthorized ? (
       <Route component={component} />
