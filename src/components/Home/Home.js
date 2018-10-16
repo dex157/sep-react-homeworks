@@ -3,7 +3,7 @@ import styles from './Home.module.css';
 
 const Home = () => (
   <div className={styles.container}>
-    <p classList="t-greeting">
+    <p className="t-greeting">
       Приветствуем в почтовом клиенте!
     </p>
   </div>  

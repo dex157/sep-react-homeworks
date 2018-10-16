@@ -46,7 +46,7 @@ class LoginForm extends React.Component {
 
     return (
       <div className={styles.bg}>
-        <div className={styles.form}>
+        <div className={`${styles.form} t-form`}>
           {fields.map(({ id, label, type }) => (
             <p key={id} className="field">
               <label className="field__label" htmlFor={id}>
@@ -66,7 +66,7 @@ class LoginForm extends React.Component {
             <p className={styles.error}>{authorizeError}</p>
           )}
           <div className={styles.buttons}>
-            <button onClick={this.handleSubmit} className={styles.button}>
+            <button onClick={this.handleSubmit} className={`${styles.button} t-login`}>
               Войти
             </button>
           </div>
