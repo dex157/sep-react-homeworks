@@ -35,7 +35,7 @@ jobs:
           name: Start background app
           command: |
             if [[ -f ./cypress/integration/homework.spec.js ]] && [[ -s ./cypress/integration/homework.spec.js ]]
-              then yarn start:run
+              then yarn start
             fi
           background: true
 
