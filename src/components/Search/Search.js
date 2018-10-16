@@ -40,7 +40,7 @@ class Search extends PureComponent {
         <Input
           ref={this.input}
           value={user}
-          className='t-search-input'
+          className="t-search-input"
           placeholder="Ник пользователя"
           onChange={this.handleChange}
           onKeyPress={this.handleKeyPress}
