@@ -2,7 +2,7 @@ import searchMiddleware from './searchMiddleware';
 
 jest.mock('../api');
 
-const search = require('../api').search;
+const search = require('../../api').search;
 search.mockImplementation(() => new Promise(r => r(['test', 'data'])));
 
 describe('searchMiddleware', () => {
