@@ -21,7 +21,6 @@ class Search extends PureComponent {
   handleKeyPress = event => {
     const { fetchUserRequest, fetchFollowersRequest } = this.props;
     const { user } = this.state;
-
     if (event.key === 'Enter' && user.length > 0) {
       fetchUserRequest(user);
       fetchFollowersRequest(user);
@@ -40,7 +39,7 @@ class Search extends PureComponent {
         <Input
           ref={this.input}
           value={user}
-          className='t-search-input'
+          className="t-search-input"
           placeholder="Ник пользователя"
           onChange={this.handleChange}
           onKeyPress={this.handleKeyPress}
