@@ -1,0 +1,9 @@
+import reducer from './{{name}}';
+
+const randomAction = {
+  type: `RANDOM_ACTION_${parseInt(Math.random() * 1000, 10)}`
+};
+
+describe('Reducer {{name}}', () => {
+  const state0 = reducer(undefined, randomAction);
+});

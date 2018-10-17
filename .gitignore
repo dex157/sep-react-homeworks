@@ -28,6 +28,3 @@ cypress/screenshots
 
 .vscode
 .idea
-
-plopfile.js
-/plop-templates
