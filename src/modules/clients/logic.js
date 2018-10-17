@@ -1,6 +1,6 @@
 import { createNewOrder } from './actions';
 import ingredients from '../../ingredients';
-import uniqueId from 'lodash/uniqueId'
+import uniqueId from 'lodash/uniqueId';
 
 const ingredientNames = ingredients.map(({ name }) => name);
 
