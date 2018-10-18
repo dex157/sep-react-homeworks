@@ -7,8 +7,9 @@ const withLocalstorage = (localStorageKey, defaultData) => (WrappedComponent) =>
     }
 
     render() {
+        const { savedData } = this.state;
         return (
-            <WrappedComponent {...this.props} savedData = { this.state.savedData } saveData = { this.saveData } />
+            <WrappedComponent {...this.props} savedData = { savedData } saveData = { this.saveData } />
         );
     }
 
