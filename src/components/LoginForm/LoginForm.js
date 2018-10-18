@@ -31,7 +31,7 @@ class LoginForm extends Component {
         if (!isAuthorized) {
             return(
                 <div className = {styles.bg}>
-                    <div className = {styles.form}>
+                    <div className = { `${styles.form} t-form`}>
                         <p key = "email">
                             <label htmlFor = "email">
                                 <span className = { styles.labelText }>Почта</span>
@@ -49,7 +49,7 @@ class LoginForm extends Component {
                         { authError && <p className = { styles.error } >{ authError }</p> }
 
                         <div className = { styles.buttons }>
-                            <button className = { styles.button } onClick = { this.handlerSubmit } >Войти</button>
+                            <button className = {`${ styles.button } t-login`} onClick = { this.handlerSubmit } >Войти</button>
                         </div>
                     </div>  
                 </div>

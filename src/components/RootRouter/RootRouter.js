@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route, Redirect, Router } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import PrivateRoute from '../PrivateRoute';
 import LoginForm from '../LoginForm';
 import AppRouter from '../AppRouter';
