@@ -1,0 +1,10 @@
+import { takeLatest, put, call, fork } from 'redux-saga/effects';
+
+export default function* () {
+  yield fork(watcher);
+};
+
+
+function* watcher () {
+
+};
