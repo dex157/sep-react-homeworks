@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { load, save } from '../../localstorage';
 
 const withLocalstorage = (key, initValue) => (WrappedComponent) => {
-    // console.log(key, initValue);
-// save(key, initValue)
     return class extends Component {
 
         saveData = (value) => {
@@ -13,7 +11,7 @@ const withLocalstorage = (key, initValue) => (WrappedComponent) => {
             }
         };
         savedData = () => {
-            return load(key);
+            return load(key) || initValue;
         };
 
         render(){

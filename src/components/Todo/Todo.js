@@ -27,13 +27,20 @@ class Todo extends PureComponent {
     };
 
     toggleRecordComplete = event => {
+        const {savedData} = this.props;
+        let aid = parseInt(event.target.dataset.todoId);
+        let result = savedData.filter(obj=>{
+            return obj.id === aid;
+        });
 
+        result[0].isComplete = result[0].isComplete === false;
+
+        this.forceUpdate();
     };
 
     createNewRecord = () => {
         const {inputValue} = this.state;
         const {savedData, saveData} = this.props;
-        console.log(this.props)
 
         if(inputValue !== ''){
             saveData([{
@@ -41,6 +48,7 @@ class Todo extends PureComponent {
                 text: inputValue,
                 isComplete: false
             }, ...savedData]);
+
             this.setState({
                 inputValue: ''
             });
@@ -51,33 +59,35 @@ class Todo extends PureComponent {
         const {savedData} = this.props;
 
         return (
-            <Fragment>
                 <Card title={"Список Дел"} >
                     {this.renderEmptyRecord()}
                     {savedData.map(this.renderRecord)}
                 </Card>
-            </Fragment>
         );
     }
 
     renderEmptyRecord() {
         return(
             <div className="todo-item todo-item-new">
-                <input className="todo-input t-input" placeholder="Введите задачу" value={this.state.inputValue} onChange={this.handleChange} onKeyPress={this.createNewRecordByEnter} />
+                <input className="todo-input t-input"
+                       placeholder="Введите задачу"
+                       value={this.state.inputValue}
+                       onChange={this.handleChange}
+                       onKeyPress={this.createNewRecordByEnter} />
                 <span className="plus t-plus" onClick={this.createNewRecord}>+</span>
             </div>
         );
     }
 
     renderRecord = record => {
+        let doneState = record.isComplete === true ? 'x' : ' ';
         return (
             <div className="todo-item t-todo">
                 <p className="todo-item__text">{record.text}</p>
                 <span className="todo-item__flag t-todo-complete-flag"
                       data-todo-id={record.id}
                       onClick={this.toggleRecordComplete}>
-
-                    [ ]
+                    [{doneState}]
                 </span>
             </div>
         )
