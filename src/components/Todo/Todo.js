@@ -39,13 +39,14 @@ class Todo extends PureComponent {
   };
 
   createNewRecord = () => {
-    const { savedData, saveData } = this.props;
+    const { savedData, saveData } = this.props,
+          { inputValue } = this.state;
 
     saveData([
       {
         id: this.getId(),
         isComplite: false,
-        text: this.state.inputValue
+        text: inputValue
       },
       ...savedData
     ]);
@@ -71,9 +72,11 @@ class Todo extends PureComponent {
   }
 
   renderEmptyRecord() {
+    const { inputValue } = this.state;
+
     return (
       <div className = "todo-item todo-item-new">
-        <input className = "todo-input t-input" value = {this.state.inputValue} placeholder = "Введите задачу" onChange = {this.handleChange} onKeyPress = {this.createNewRecordByEnter} ></input>
+        <input className = "todo-input t-input" value = {inputValue} placeholder = "Введите задачу" onChange = {this.handleChange} onKeyPress = {this.createNewRecordByEnter} ></input>
         <span className = "plus t-plus" onClick = {this.createNewRecord} >+</span>
       </div>
     );
