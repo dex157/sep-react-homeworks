@@ -1,4 +1,4 @@
-import React, {Fragment, PureComponent} from 'react';
+import React, {PureComponent} from 'react';
 import Card from '../Card';
 import './Todo.css';
 import withLocalstorage from '../../HOCs/withLocalstorage';
@@ -28,9 +28,9 @@ class Todo extends PureComponent {
 
     toggleRecordComplete = event => {
         const {savedData} = this.props;
-        let aid = parseInt(event.target.dataset.todoId);
+        let id = parseInt(event.target.dataset.todoId, 10);
         let result = savedData.filter(obj=>{
-            return obj.id === aid;
+            return obj.id === id;
         });
 
         result[0].isComplete = result[0].isComplete === false;
@@ -67,11 +67,12 @@ class Todo extends PureComponent {
     }
 
     renderEmptyRecord() {
+        const {inputValue} = this.state;
         return(
             <div className="todo-item todo-item-new">
                 <input className="todo-input t-input"
                        placeholder="Введите задачу"
-                       value={this.state.inputValue}
+                       value={inputValue}
                        onChange={this.handleChange}
                        onKeyPress={this.createNewRecordByEnter} />
                 <span className="plus t-plus" onClick={this.createNewRecord}>+</span>
