@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { AuthConsumer } from '../../contexts/Auth';
 
+
 class Congratulations extends PureComponent {
   render() {
     return (
