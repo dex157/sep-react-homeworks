@@ -92,9 +92,9 @@ export default class Form extends Component {
     checkFields () {
         let errObj = {};
         
-        errObj['firstname'] = !this.state.values.firstname ? 'Нужно указать имя' : this.state.values.firstname !== 'James' ? 'Имя указано не верно' : '';
-        errObj['lastname'] = !this.state.values.lastname ? 'Нужно указать фамилию' : this.state.values.lastname !== 'Bond' ? 'Фамилия указана не верно' : '';
-        errObj['password'] = !this.state.values.password ? 'Нужно указать пароль' : this.state.values.password !== '007' ? 'Пароль указан не верно' : '';
+        errObj['firstname'] = !this.state.values.firstname ? 'Нужно указать имя' : this.state.values.firstname.toUpperCase() !== 'JAMES' ? 'Имя указано не верно' : '';
+        errObj['lastname'] = !this.state.values.lastname ? 'Нужно указать фамилию' : this.state.values.lastname.toUpperCase() !== 'BOND' ? 'Фамилия указана не верно' : '';
+        errObj['password'] = !this.state.values.password ? 'Нужно указать пароль' : this.state.values.password.toUpperCase() !== '007' ? 'Пароль указан не верно' : '';
 
         if (errObj['firstname'] || errObj['lastname']  || errObj['password']) {
             this.setState({errors: Object.assign({}, this.state.errors, errObj), isSubmited: false});
