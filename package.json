@@ -3,9 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^3.2.2",
+    "@material-ui/lab": "^3.0.0-alpha.20",
+    "debounce": "^1.2.0",
+    "immer": "^1.7.2",
+    "ramda": "^0.25.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
-    "react-scripts": "2.0.4"
+    "react-redux": "^5.0.7",
+    "react-scripts": "2.0.4",
+    "redux": "^4.0.1",
+    "redux-actions": "^2.6.1",
+    "redux-saga": "^0.16.2",
+    "reselect": "^4.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
