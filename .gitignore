@@ -8,12 +8,16 @@
 
 # production
 /build
+dist/
+out/
 
 # course utils
 /course_scripts
 
 # misc
 .DS_Store
+.idea/
+.vscode/
 .env.local
 .env.development.local
 .env.test.local
@@ -22,6 +26,10 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+*.log
+
+!yarn.lock
+*.lock
 
 cypress/videos
 cypress/screenshots
