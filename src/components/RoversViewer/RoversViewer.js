@@ -46,7 +46,7 @@ class RoverViewers extends Component {
         return <div>{currentPhotos.error}</div>;
       }
 
-      return <RoverPhotos name={rover} photos={roverPhotos} />;
+      return <RoverPhotos name={rover} photos={roverPhotos} key={rover} />;
     });
   };
 
