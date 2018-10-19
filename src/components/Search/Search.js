@@ -1,12 +1,12 @@
 import React, {Component} from 'react'
 import style from './Search.module.css'
 import  {connect} from 'react-redux'
-import {
-    getSerials,
-    getIsLoading,
-    getError,
-  } from '../../selectors/selectors';
-  import { showRequest} from '../../actions/actions'
+// import {
+//     getSerials,
+//     getIsLoading,
+//     getError,
+//   } from '../../selectors/selectors';
+import { searchRequest} from '../../actions/actions'
 
 class Search extends Component{
 
@@ -19,8 +19,9 @@ class Search extends Component{
     }
 
     searchButtonClick= () => {
-        const { getSerials } = this.props;
-        getSerials();
+        // const { getSerials } = this.props;
+        console.log("searchButtonClick");
+        searchRequest();
     }
 
     render(){
@@ -49,14 +50,14 @@ class Search extends Component{
 }
 
 const mapStateToProps = state => ({
-    serials: getSerials(state),
-    isLoading: getIsLoading(state),
-    error: getError(state),
+    // serials: getSerials(state),
+    // isLoading: getIsLoading(state),
+    // error: getError(state),
   });
 
-const mapDispatchToProps = { showRequest };
+const mapDispatchToProps = { searchRequest };
   
 export default connect(
     mapStateToProps,
     mapDispatchToProps,
-  )(Search);
+)(Search);

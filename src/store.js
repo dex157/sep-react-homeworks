@@ -1,20 +1,20 @@
 import { createStore, compose, applyMiddleware } from 'redux';
-// import { tvmazeFetchMiddleware } from './modules/series';
-// import rootReducer from './modules';
+import { searchMiddleware } from './middlewares/middlewares';
+import rootReducer from './reducers/index';
 
-const getStore = () => {
-    console.log("getStore");
+const createAppStore = () => {
+  console.log("createAppStore");
   const store = createStore(
-    // rootReducer,
+    rootReducer,
     compose(
-    //   applyMiddleware(tvmazeFetchMiddleware),
-    //   window.__REDUX_DEVTOOLS_EXTENSION__
-    //     ? window.__REDUX_DEVTOOLS_EXTENSION__()
-    //     : noop => noop,
+      applyMiddleware(searchMiddleware),
+      window.__REDUX_DEVTOOLS_EXTENSION__
+        ? window.__REDUX_DEVTOOLS_EXTENSION__()
+        : noop => noop,
     ),
   );
 
   return store;
 };
 
-export default getStore;
+export default createAppStore;

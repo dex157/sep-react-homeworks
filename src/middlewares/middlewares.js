@@ -1,14 +1,15 @@
-import { showRequest, showSuccess, showFailure} from '../actions/actions'
+import { searchRequest, searchSuccess, searchFailure} from '../actions/actions'
 import {show, search} from '../api'
-  
-export const tvmazeFetchMiddleware = store => next => action => {
-    if (action.type === showRequest.toString()) {
-      show
+
+export const searchMiddleware = store => next => action => {
+  console.log("searchMiddleware");
+    if (action.type === searchRequest.toString()) {
+      search()
         .then(shows => {
-          store.dispatch(showSuccess(shows));
+          store.dispatch(searchSuccess(shows));
         })
         .catch(error => {
-          store.dispatch(showFailure(error));
+          store.dispatch(searchFailure(error));
         });
     }
     return next(action);
