@@ -12,3 +12,17 @@ export const getSerials = createSelector(
       summary
     })),
 );
+
+export const getIsLoadingShow = state => state.shows.isLoading;
+export const getErrorShow = state => state.shows.error;
+export const getCast = createSelector(
+    state => state.shows.elements,
+    elements => {
+        if (elements.length === 0) {
+            return elements;
+        }
+        const { id, image, summary, name, _embedded: { cast } } = elements;                
+        return { id, image: image ? image.medium : "", summary, name, cast };
+    }
+    
+);

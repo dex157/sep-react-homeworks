@@ -29,8 +29,10 @@ class Search extends Component{
     render(){
         const { search } =  this.state;
         const { isLoading, error, shows } = this.props;
-        console.log(shows);
-        console.log(isLoading);
+        
+        if (isLoading) return <p>Идет поиск...</p>;
+        if (error) return <p>Произошла ошибка</p>;
+        
         return (
             <div>
                 <div className={style.previewList}>
