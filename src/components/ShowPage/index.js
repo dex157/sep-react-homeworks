@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import style from './ShowPage.module.css'
-import { Link } from 'react-router-dom'
 import  {connect} from 'react-redux'
 import {
     getCast,
@@ -16,7 +15,7 @@ class ShowPage extends Component{
     }
 
     render(){
-        const {match:{params: {id}}, castList, isLoading, error } = this.props;
+        const { castList, isLoading, error } = this.props;
         const cast = castList.cast !== undefined ? castList.cast : []
 
         if (isLoading) return <p>Данные загружаются...</p>;
