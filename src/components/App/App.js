@@ -3,10 +3,10 @@ import './App.css';
 import Todo from '../Todo';
 
 class App extends PureComponent {
-  constructor(props) {
-    super(props);
-    // this.todoForwardRef = React.createRef();
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.todoForwardRef = React.createRef();
+  // }
 
   // checkForwardRef = () => {
   //   console.log(this.todoForwardRef);
