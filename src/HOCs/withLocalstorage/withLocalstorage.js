@@ -19,7 +19,13 @@ const withLocalstorage = (keyStorage, defaultStorage) => WrappedComponent => {
       const { savedData } = this.state;
       const { ...rest } = this.props;
       // const { forwardRef, ...rest } = this.props;
-      console.log('withLocalstorage->', rest);
+      // console.log('withLocalstorage->', rest);
+      // <WrappedComponent
+      //   ref={forwardRef}
+      //   {...rest}
+      //   saveData={this.saveData}
+      //   savedData={savedData}
+      // />
 
       return (
         <WrappedComponent
@@ -27,12 +33,6 @@ const withLocalstorage = (keyStorage, defaultStorage) => WrappedComponent => {
           saveData={this.saveData}
           savedData={savedData}
         />
-        // <WrappedComponent
-        //   ref={forwardRef}
-        //   {...rest}
-        //   saveData={this.saveData}
-        //   savedData={savedData}
-        // />
       );
     }
   }

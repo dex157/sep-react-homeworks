@@ -9,15 +9,16 @@ class App extends PureComponent {
   // }
 
   // checkForwardRef = () => {
-  //   console.log(this.todoForwardRef);
+  //   console.log(this.todoForwardRef); onClick={this.checkForwardRef}
   // };
 
   render() {
+    // <Todo ref={this.todoForwardRef} test2="t-hoc-props" />
+
     return (
-      <main className="main" onClick={this.checkForwardRef}>
+      <main className="main">
         <div className="main__cell">
           <Todo />
-          {/*<Todo ref={this.todoForwardRef} test2="t-hoc-props" />*/}
         </div>
       </main>
     );
