@@ -9,7 +9,7 @@ class Login extends PureComponent {
   // на время разработки свой access token можно вставить сюда, чтобы
   // не вводить каждый раз
   state = {
-    key: ''
+    key: 'bab27549a0395fb8b6f93c01b3ba46081524300c'
   };
 
   input = React.createRef();
@@ -55,7 +55,7 @@ class Login extends PureComponent {
           ref={this.input}
           value={key}
           placeholder="access token"
-          className='t-login-input'
+          className="t-login-input"
           onChange={this.handleChange}
           onKeyPress={this.handleKeyPress}
         />
