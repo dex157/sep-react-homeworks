@@ -7,11 +7,12 @@ import {
     getError,
   } from '../../selectors/selectors';
 import { searchRequest} from '../../actions/actions'
+import ShowPreview from '../ShowPreview'
 
 class Search extends Component{
 
     state = {
-        searge : ""
+        search : ""
     }
 
     inputChange = (event) => {
@@ -20,8 +21,9 @@ class Search extends Component{
 
     searchButtonClick = () => {
         const { searchRequest } = this.props;
-        const {searge} = this.state;
-        searchRequest(searge);
+        const {search} = this.state;
+        searchRequest(search);
+        this.setState({search : ""})
     }
 
     render(){
@@ -33,7 +35,7 @@ class Search extends Component{
             <div>
                 <div className={style.previewList}>
                     <input
-                        name = "searge"
+                        name = "search"
                         className= {`${style.input} t-input`}
                         placeholder='Название сериала'
                         onChange={this.inputChange}
@@ -47,11 +49,9 @@ class Search extends Component{
                         </button>
                     </div>
                 </div>
-                <div className={style.searchPanel}>
+                <div className={`${style.searchPanel} t-search-result`}>
                     {shows.map(show => (
-                    <div key={show.id}>
-                        <p>{show.name}</p>
-                    </div>
+                        <ShowPreview show={show} key={show.id}/>
                     ))}
                 </div>
             </div>);

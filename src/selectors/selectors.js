@@ -1,14 +1,14 @@
 import { createSelector } from 'reselect';
 
-export const getIsLoading = state => state.shows.isLoading;
-export const getError = state => state.shows.error;
+export const getIsLoading = state => state.search.isLoading;
+export const getError = state => state.search.error;
 export const getSerials = createSelector(
-    state => state.shows.elements,
+    state => state.search.elements,
     elements =>
-    elements.map(({ id, name, image: { medium }, summary }) => ({
+    elements.map(({ id, name, image, summary }) => ({
       id,
       name,
-      image: medium,
+      image: image ? image.medium : "",
       summary
     })),
 );
