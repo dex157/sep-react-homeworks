@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
 import style from './Search.module.css'
 import  {connect} from 'react-redux'
-// import {
-//     getSerials,
-//     getIsLoading,
-//     getError,
-//   } from '../../selectors/selectors';
+import {
+    getSerials,
+    getIsLoading,
+    getError,
+  } from '../../selectors/selectors';
 import { searchRequest} from '../../actions/actions'
 
 class Search extends Component{
@@ -18,14 +18,17 @@ class Search extends Component{
         this.setState({[event.target.name]:event.target.value})
     }
 
-    searchButtonClick= () => {
-        // const { getSerials } = this.props;
-        console.log("searchButtonClick");
-        searchRequest();
+    searchButtonClick = () => {
+        const { searchRequest } = this.props;
+        const {searge} = this.state;
+        searchRequest(searge);
     }
 
     render(){
-        const {search} =  this.state;
+        const { search } =  this.state;
+        const { isLoading, error, shows } = this.props;
+        console.log(shows);
+        console.log(isLoading);
         return (
             <div>
                 <div className={style.previewList}>
@@ -33,7 +36,7 @@ class Search extends Component{
                         name = "searge"
                         className= {`${style.input} t-input`}
                         placeholder='Название сериала'
-                        onChange={this.changeInput}
+                        onChange={this.inputChange}
                         value={search}
                     />
                     <div className={style.buttonWrapper}>
@@ -44,16 +47,22 @@ class Search extends Component{
                         </button>
                     </div>
                 </div>
-                <div className={style.searchPanel}></div>
+                <div className={style.searchPanel}>
+                    {shows.map(show => (
+                    <div key={show.id}>
+                        <p>{show.name}</p>
+                    </div>
+                    ))}
+                </div>
             </div>);
     }
 }
 
 const mapStateToProps = state => ({
-    // serials: getSerials(state),
-    // isLoading: getIsLoading(state),
-    // error: getError(state),
-  });
+    shows: getSerials(state),
+    isLoading: getIsLoading(state),
+    error: getError(state),
+});
 
 const mapDispatchToProps = { searchRequest };
   
