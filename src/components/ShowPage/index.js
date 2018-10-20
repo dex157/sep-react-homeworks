@@ -16,7 +16,7 @@ class ShowPage extends Component{
     }
 
     render(){
-        const {match:{params: {id}}, castList, isLoading, eroor } = this.props;
+        const {match:{params: {id}}, castList, isLoading, error } = this.props;
         const cast = castList.cast !== undefined ? castList.cast : []
 
         if (isLoading) return <p>Данные загружаются...</p>;
