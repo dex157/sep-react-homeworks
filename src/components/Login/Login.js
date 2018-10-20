@@ -9,7 +9,7 @@ class Login extends PureComponent {
   // на время разработки свой access token можно вставить сюда, чтобы
   // не вводить каждый раз
   state = {
-    key: 'bab27549a0395fb8b6f93c01b3ba46081524300c'
+    key: ''
   };
 
   input = React.createRef();
