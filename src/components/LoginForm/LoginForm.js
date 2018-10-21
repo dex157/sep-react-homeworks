@@ -11,9 +11,18 @@ class LoginForm extends Component {
     }
         onChange = event => {
         //let field = event.target.name;
-        console.log(event.target.name);
+        console.log(event.target.value);
         this.setState({
-          
+          email: event.target.value
+        });
+    }
+
+    onSubmit = event => {
+        event.preventDefault();
+        //let field = event.target.name;
+        console.log(event.target.value);
+        this.setState({
+          name: event.target.value
         });
     }
 
@@ -38,7 +47,7 @@ class LoginForm extends Component {
                     </p>
                     <p>
                     <label htmlFor="password">
-                        <span className="LoginForm_labelText">Почта</span>                            
+                        <span className="LoginForm_labelText">Пароль</span>                            
                     </label>
                     <input 
                         type="password" 
@@ -55,7 +64,7 @@ class LoginForm extends Component {
               </div>
  
               <div className="LoginForm__buttons">
-                  <button className="button t-submit" onClick={(e) => this.onSubmit(e)}>Проверить</button>
+                  <button className="button t-submit" onClick={this.onSubmit}>Проверить</button>
               </div>
           </form>
         )
