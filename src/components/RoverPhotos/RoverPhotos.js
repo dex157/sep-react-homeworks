@@ -18,11 +18,12 @@ const styles = {
 
 class RoverPhotos extends PureComponent {
   render() {
-    const { classes, photos, name } = this.props;
+    const { classes, photos, name, error } = this.props;
     return (
       <Paper className={classes.root}>
         <Typography className={classes.title} component="h2">{name}</Typography>
         <GridList cols={3}>
+          {error ? <div>Код ошибки - {error}</div> : null}
           {photos.map(photo => (
             <GridListTile
               key={photo.id}
