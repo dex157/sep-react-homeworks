@@ -7,13 +7,15 @@ import { AuthProvider } from '../../context/Auth';
 import { DataProvider } from '../../context/Data';
 
 export default () => (
-  <DataProvider>
-    <AuthProvider>
-      <BrowserRouter>
-        <Switch>
-
-        </Switch>
-      </BrowserRouter>
-    </AuthProvider>
-  </DataProvider>
+    <DataProvider>
+        <AuthProvider>
+            <BrowserRouter>
+                <Switch>
+                    <Route path='/login' component={LoginForm} />
+                    <PrivateRoute path="/app" component={AppRouter} />
+                    <Redirect to='/login' />
+                </Switch>
+            </BrowserRouter>
+        </AuthProvider>
+    </DataProvider>
 );
