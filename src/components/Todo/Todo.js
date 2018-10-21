@@ -21,7 +21,7 @@ class Todo extends PureComponent {
   };
 
   createNewRecordByEnter = event => {
-    if (event.keyCode === 13) this.createNewRecord();
+    if (event.key === 'Enter') this.createNewRecord();
   };
 
   toggleRecordComplete = event => {
