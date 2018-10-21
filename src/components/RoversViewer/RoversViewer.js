@@ -19,25 +19,12 @@ class RoversViewer extends Component {
     componentDidMount() {
         const { fetchPhotosRequest } = this.props;
         const { current } = this.props.sol;
-/*
+
         rowsName.forEach(name => {
             fetchPhotosRequest({
                 name: name,
                 sol: current
             });
-        });*/
-        
-        fetchPhotosRequest({
-            name: 'curiosity',
-            sol: current
-        });
-        fetchPhotosRequest({
-            name: 'opportunity',
-            sol: current
-        });
-        fetchPhotosRequest({
-            name: 'spirit',
-            sol: current
         });
     }
 
@@ -54,12 +41,9 @@ class RoversViewer extends Component {
     renderRoversPhoto = () => {
         const { photos } = this.props;
         const { current } = this.props.sol;
-        console.log("this.props");
-        console.log(this.props);
 
         return rowsName.map(name => {
             const currentPhotos = photos[name][current];
-            //console.log(currentPhotos);
             if (currentPhotos !== undefined) {
                 if (currentPhotos.error)
                     return <RoverPhotos 
@@ -79,12 +63,11 @@ class RoversViewer extends Component {
       };
 
     render() {
-        console.log(this.props);
         const { current } = this.props.sol;
 
         return (
-            <div>
-                <SelectSol 
+            <div className={styles.root}>
+                <SelectSol
                     minSol={minValue} 
                     maxSol={maxValue} 
                     selectedSol={current} 
