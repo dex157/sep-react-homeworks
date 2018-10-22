@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 class ShowPreview extends PureComponent {
     render() {
         const { name, summary, image, id } = this.props.preview;
-        console.log(this.props.preview);
+
         return (
             <div className={`t-preview ${css.container}`}>
                 <div>
