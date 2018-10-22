@@ -6,40 +6,50 @@ import {
   fetchPhotosFailure,
   changeSol
 } from './actions';
+import {minSol, maxSol, defaultSol, rovers} from './selectors'
 
 const sol = handleActions(
   {
-    [changeSol]: (_state, action) => ({ current: action.payload })
+    [changeSol]: (_state, action) => ({..._state, current: action.payload })
   },
   {
-    current: 3,
-    min: 1,
-    max: 100
+    current: defaultSol,
+    min: minSol,
+    max: maxSol
   }
 );
 
 const photos = handleActions(
   {
+    
     [fetchPhotosRequest]: (_state, action) => ({
-      [action.payload.name]: {
+      ..._state,
+      [action.payload.name]: {..._state[action.payload.name],
         [action.payload.sol]: { isLoading: true, photos: [], isLoaded: false }
       }
     }),
     [fetchPhotosSuccess]: (_state, action) => ({
-      [action.payload.name]: {
+      ..._state,
+      [action.payload.name]: {..._state[action.payload.name],
         [action.payload.sol]: {
           isLoading: false,
           photos: action.payload.photos,
           isLoaded: true
         }
       }
+    }),
+    [fetchPhotosFailure]: (_state, action) => ({
+      ..._state,
+      [action.payload.name]: {..._state[action.payload.name],
+        [action.payload.sol]: {
+          isLoading: false,
+          photos: [],
+          isLoaded: false
+        }
+      }
     })
   },
-  {
-    curiosity: {},
-    opportunity: {},
-    spirit: {}
-  }
+  rovers
 );
 
 export default combineReducers({
