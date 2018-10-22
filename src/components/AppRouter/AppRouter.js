@@ -9,20 +9,20 @@ import OutboxList from '../OutboxList';
 import OutboxMail from '../OutboxMail';
 
 class AppRouter extends Component{
-    // title = () => {
-    //     const {
-    //       location: { pathname }
-    //     } = this.props;
-    //     const string = pathname.split('/')[2] || 'home';
+    title = () => {
+        const {
+          location: { pathname }
+        } = this.props;
+        const string = pathname.split('/')[2] || 'home';
     
-    //     return string.charAt(0).toUpperCase() + string.slice(1);
-    //   };
+        return string.charAt(0).toUpperCase() + string.slice(1);
+      };
     render(){
         return(
             <div className={styles.wrapper}>
                 <div className={styles.container}>
-                    <nav className={styles.navigation}>
-                        <ul className={cls(styles.link, 't-nav-list')}>
+                    <nav className={styles.navList}>
+                        <ul className={cls(styles.link, 't-nav-list', 'navList')}>
                             <li className={styles.navElement}>
                                 <Link className={cls(styles.link, 't-link-home')} to="/app">
                                     Home
@@ -43,11 +43,12 @@ class AppRouter extends Component{
                     <div className={styles.content}>
                         <h3 className={styles.title}>{this.title()}</h3>
                         <Switch>
-                            <Route path="/app" component={Home}/>
                             <Route path="/app/inbox" component={InboxList} exact />
                             <Route path="/app/inbox/:id" component={InboxMail}/>
                             <Route path="/app/outbox" component={OutboxList} exact />
                             <Route path="/app/outbox/:id" component={OutboxMail}/>
+                            <Route path="/app" component={Home}/>
+
                         </Switch>
                     </div>
                 </div>

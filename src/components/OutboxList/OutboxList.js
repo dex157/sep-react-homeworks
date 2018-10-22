@@ -6,7 +6,7 @@ class OutboxList extends Component {
     render() {
         const {data} = this.props;
         return (
-            <MailList className={'t-outbox-list'} mails={data.outbox} type="inbox"/>
+            <MailList className={'t-outbox-list'} mails={data.outbox} type="outbox"/>
         )
     }
 }
