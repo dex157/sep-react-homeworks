@@ -3,7 +3,7 @@ import {
   compose,
   applyMiddleware
 } from 'redux';
-import { searchMiddleware } from './middlewares/searchMiddleware'
+import { searchMiddleware, showMiddleware } from './middlewares'
 import rootReducer from './reducers'
 
 
@@ -11,7 +11,7 @@ const getStore = () => {
   const store = createStore(
     rootReducer,
     compose(
-      applyMiddleware(searchMiddleware),
+      applyMiddleware(searchMiddleware, showMiddleware),
       window.__REDUX_DEVTOOLS_EXTENSION__
         ? window.__REDUX_DEVTOOLS_EXTENSION__() 
         : noop => noop

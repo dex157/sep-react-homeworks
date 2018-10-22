@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 // import { Link } from 'react-router-dom';
 import styles from './Search.module.css';
 import { connect } from 'react-redux';
-import { fetchShowRequest } from '../../actions/actions'
-import { getShows, getIsLoading } from '../../reducers/selectors';
+import { fetchSearchRequest } from '../../actions/actions'
+import { getSearchShows, getSearchIsLoading, getSearchError } from '../../reducers/selectors';
 import ShowPreview from '../ShowPreview'
 
 class Search extends Component {
@@ -18,10 +18,10 @@ class Search extends Component {
   };
 
   onClickSearch = event => {
-    const { fetchShowRequest } = this.props;
+    const { fetchSearchRequest } = this.props;
     const { inputText } = this.state;
 
-    fetchShowRequest(inputText);
+    fetchSearchRequest(inputText);
     this.setState({
       inputText: ''
     });
@@ -29,46 +29,46 @@ class Search extends Component {
   
   render () {
     const { inputText } = this.state;
-    const { elements, isLoading, match } = this.props;
+    const { elements, isLoading, match, error } = this.props;
 
+    if (isLoading) return <p>Данные загружаются...</p>;
+    if (error) return <p>Произошла сетевая ошибка</p>;
+    
     return (
-      isLoading ? (
-        <p>Данные загружаются...</p>
-      ) : (
-        <div>
-          <div className={styles.previewList}>
-            <input 
-              className={`${styles.input} t-input`}
-              placeholder='Название сериала'
-              onChange={this.handleChange}
-              value={inputText}
-            />
-            <div className={styles.buttonWrapper}>
-              <button
-                className={`${styles.button} t-search-button`} 
-                onClick={this.onClickSearch}
-              >
-                Найти
-              </button>
-            </div>
-          </div>
-          <div className={`t-search-result ${styles.searchPanel}`}>
-            {elements.map(el => (
-              <ShowPreview key={el.id} match={match} show={el}/>
-            ))}
+      <div>
+        <div className={styles.previewList}>
+          <input 
+            className={`${styles.input} t-input`}
+            placeholder='Название сериала'
+            onChange={this.handleChange}
+            value={inputText}
+          />
+          <div className={styles.buttonWrapper}>
+            <button
+              className={`${styles.button} t-search-button`} 
+              onClick={this.onClickSearch}
+            >
+              Найти
+            </button>
           </div>
         </div>
-      )
+        <div className={`t-search-result ${styles.searchPanel}`}>
+          {elements.map(el => (
+            <ShowPreview key={el.id} match={match} show={el}/>
+          ))}
+        </div>
+      </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  elements: getShows(state),
-  isLoading: getIsLoading(state),
+  elements: getSearchShows(state),
+  isLoading: getSearchIsLoading(state),
+  error: getSearchError(state),
 });
 
-const mapDispatchToProps = { fetchShowRequest };
+const mapDispatchToProps = { fetchSearchRequest };
 
 export default connect(
   mapStateToProps,

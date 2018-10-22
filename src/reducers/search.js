@@ -5,60 +5,38 @@ import {
   combineReducers
 } from 'redux';
 import {
-  fetchShowRequest,
-  fetchShowSuccess,
-  fetchShowFailure
+  fetchSearchRequest,
+  fetchSearchSuccess,
+  fetchSearchFailure,
 } from '../actions/actions';
 
 const elements = handleActions(
   {
-    [fetchShowRequest]: () => [],
-    [fetchShowSuccess]: (_state, action) => action.payload,
+    [fetchSearchRequest]: () => [],
+    [fetchSearchSuccess]: (_state, action) => action.payload,
   },
   []
 )
 
 const isLoading = handleActions(
   {
-    [fetchShowRequest]: () => true,
-    [fetchShowSuccess]: () => false,
-    [fetchShowFailure]: () => false,
+    [fetchSearchRequest]: () => true,
+    [fetchSearchSuccess]: () => false,
+    [fetchSearchFailure]: () => false,
   },
   false
+)
+
+const error = handleActions(
+  {
+      [fetchSearchRequest]: () => null,
+      [fetchSearchFailure]: (_state, action) => action.payload
+  },
+  null
 )
 
 export default combineReducers({
   elements,
   isLoading,
+  error,
 })
-
-// const initialState = {
-//   elements: [],
-// };
-
-// export default (state = initialState, action) => {
-//   switch (action.type) {
-//     case fetchShowRequest.toString():
-//     return {
-//       ...state,
-//       elements: [],
-//     };
-    
-//     case fetchShowSuccess.toString():
-//     // console.log(action.payload)
-//     return {
-//         ...state,
-//         elements: action.payload,
-//       };
-
-// //     case fetchSeriesFailure.toString():
-// //       return {
-// //         ...state,
-// //         error: action.payload,
-// //         isLoading: false,
-// //       };
-
-//     default:
-//       return state;
-//   }
-// };
