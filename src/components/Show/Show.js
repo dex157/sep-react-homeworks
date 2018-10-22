@@ -1,0 +1,55 @@
+import React, { PureComponent } from 'react';
+import './Show.css';
+import { getShowInfo } from '../../api';
+
+function stripHTML(data) {
+    return {__html: data};
+}
+
+class Show extends PureComponent {
+    state = {
+        showId: '',
+        data: null
+      };
+
+    static getDerivedStateFromProps() {return null;};  
+
+    componentDidMount() {
+        const  { show }  = this.props ;
+        
+        if (show !== '') {
+            getShowInfo(show).then(data =>
+                this.setState({ 
+                    showId: show,
+                    data
+                }),
+            );
+        } 
+    }
+
+    render() {
+        
+        const { data,  showId } = this.state;
+        console.log(showId);
+        if(showId !== '') {
+        
+            return (
+                <div className="show">
+                
+                    <img className="show-image" src={ data.image.original } alt={ data.name }></img>
+                    <h2 className="show-label t-show-name">{ data.name }</h2>
+                    <p className="show-text t-show-genre">
+                        <b>Жанр:</b> { data.genres.join(', ') }
+                    </p>
+                    <p className="show-text t-show-summary" dangerouslySetInnerHTML={ stripHTML(data.summary) } />
+                    
+
+                </div>
+            );
+        } else {
+            return <p className="show-inforation t-show-info">Шоу не выбрано</p>
+        } 
+    }
+}
+
+export default Show;
