@@ -23,11 +23,5 @@
     "eslint-plugin-cypress": "^2.0.1",
     "eslint-plugin-react": "^7.11.1",
     "eslint-plugin-react-perf": "^2.0.9"
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  }
 }
