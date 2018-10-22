@@ -15,12 +15,12 @@ class Show extends PureComponent {
     static getDerivedStateFromProps() {return null;};  
 
     componentDidMount() {
-        const  { show }  = this.props ;
+        const  { showId }  = this.props ;
         
-        if (show !== '') {
-            getShowInfo(show).then(data =>
+        if (showId !== '') {
+            getShowInfo(showId).then(data =>
                 this.setState({ 
-                    showId: show,
+                    showId: showId,
                     data
                 }),
             );
