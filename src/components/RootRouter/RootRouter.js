@@ -11,7 +11,8 @@ export default () => (
     <AuthProvider>
       <BrowserRouter>
         <Switch>
-
+            <Route path="/login" component={LoginForm} />
+            <Redirect from="*" to="/login" />
         </Switch>
       </BrowserRouter>
     </AuthProvider>
