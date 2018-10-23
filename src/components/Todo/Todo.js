@@ -61,8 +61,7 @@ class Todo extends PureComponent {
         <div className="todo t-todo-list">
           {this.renderEmptyRecord()}
           {savedData.map(this.renderRecord)}
-          {console.log(savedData)}
-        </div>
+         </div>
       </Card>
     );
   }
