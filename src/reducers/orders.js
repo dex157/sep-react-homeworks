@@ -2,6 +2,15 @@ import { CREATE_NEW_ORDER } from '../modules/clients';
 import { MOVE_ORDER_NEXT, MOVE_ORDER_BACK } from '../actions/moveOrder';
 import { ADD_INGREDIENT } from '../actions/ingredients';
 
+const stages = [
+  'clients',
+  'conveyor_1',
+  'conveyor_2',
+  'conveyor_3',
+  'conveyor_4',
+  'finish'
+];
+
 export default (state = [], action) => {
   switch (action.type) {
     case CREATE_NEW_ORDER:
@@ -11,59 +20,47 @@ export default (state = [], action) => {
       else return [...state.orders, order];
 
     case MOVE_ORDER_NEXT:
-      const newState1 = JSON.parse(JSON.stringify(state));
-      const index1 = parseInt(action.payload, 10) - 1;
-      switch (state[index1].position) {
-        case 'clients':
-          newState1[index1].position = 'conveyor_1';
-          break;
-        case 'conveyor_1':
-          newState1[index1].position = 'conveyor_2';
-          break;
-        case 'conveyor_2':
-          newState1[index1].position = 'conveyor_3';
-          break;
-        case 'conveyor_3':
-          newState1[index1].position = 'conveyor_4';
-          break;
-        case 'conveyor_4':
-          const { recipe, ingredients } = newState1[index1];
-          for (let r of recipe)
-            if (ingredients.includes(r) !== true) return state;
-          newState1[index1].position = 'finish';
-          break;
-        default:
-      }
-      return newState1;
+      return state.map(order => {
+        if (order.id === action.payload) {
+          const newStage = stages.indexOf(order.position) + 1;
+          if (stages[newStage] === 'finish') {
+            const { recipe, ingredients } = order;
+            for (let r of recipe)
+              if (ingredients.includes(r) !== true) return order;
+          }
+          return { ...order, position: stages[newStage] };
+        }
+        return order;
+      });
 
     case MOVE_ORDER_BACK:
-      const newState2 = JSON.parse(JSON.stringify(state));
-      const index2 = parseInt(action.payload, 10) - 1;
-      switch (state[index2].position) {
-        case 'conveyor_4':
-          newState2[index2].position = 'conveyor_3';
-          break;
-        case 'conveyor_3':
-          newState2[index2].position = 'conveyor_2';
-          break;
-        case 'conveyor_2':
-          newState2[index2].position = 'conveyor_1';
-          break;
-        default:
-      }
-      return newState2;
+      return state.map(order => {
+        if (order.id === action.payload) {
+          let newStage = stages.indexOf(order.position) - 1;
+          if (newStage === 0) return order;
+          return { ...order, position: stages[newStage] };
+        }
+        return order;
+      });
 
     case ADD_INGREDIENT:
+      let notFound = true;
       const { from, ingredient } = action.payload;
-      const newState3 = JSON.parse(JSON.stringify(state));
-      for (const el of newState3) {
-        if (el.position === from) {
-          el.ingredients.includes(ingredient) === false &&
-            el.ingredients.push(ingredient);
-          break;
+      return state.map(order => {
+        if (order.position === from && notFound) {
+          if (
+            order.recipe.includes(ingredient) === true &&
+            order.ingredients.includes(ingredient) === false
+          ) {
+            notFound = false;
+            return {
+              ...order,
+              ingredients: [...order.ingredients, ingredient]
+            };
+          }
         }
-      }
-      return newState3;
+        return order;
+      });
 
     default:
       return state;
