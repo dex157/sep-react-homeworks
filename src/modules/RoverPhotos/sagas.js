@@ -14,7 +14,7 @@ export function* PhotosFlow(action) {
 
     try {
         const state = yield select(getApiKey);
-        const response = yield call(getPhotos, state, action.payload);
+        const response = yield call(getPhotos, state, name, sol);
         yield put(fetchPhotosSuccess({sol: sol, name: name, photos: response.photos}));
     } catch (error) {
         yield put(fetchPhotosSuccess({sol: sol, name: name, error: error.status}));

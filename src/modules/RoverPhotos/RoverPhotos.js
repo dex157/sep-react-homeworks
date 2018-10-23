@@ -6,32 +6,30 @@ import { rovers, minSol, maxSol } from '../../rovers';
 const photos = combineReducers(rovers.reduce((rover, name) => {
     rover[name] = handleActions(
         {
-            [fetchPhotosRequest]: (_state, action) => ({
-                ..._state,
-                [action.payload.name]: {..._state[action.payload.name],
-                [action.payload.sol]: { isLoading: true, photos: [], isLoaded: false }
-                }
-            }),
-            [fetchPhotosSuccess]: (_state, action) => ({
-                ..._state,
-                [action.payload.name]: {..._state[action.payload.name],
-                    [action.payload.sol]: {
-                        isLoading: false,
-                        photos: action.payload.photos,
-                        isLoaded: true
+            [fetchPhotosRequest]: (_state, action) => (
+                action.payload.name === name 
+                    ? { 
+                        ..._state, 
+                        [action.payload.sol]: { isLoading: true, photos: [], isLoaded: false }
                     }
-                }
-            }),
-            [fetchPhotosFailure]: (_state, action) => ({
-                ..._state,
-                [action.payload.name]: {..._state[action.payload.name],
-                    [action.payload.sol]: {
-                        isLoading: false,
-                        photos: [],
-                        isLoaded: false
+                    : _state
+            ),
+            [fetchPhotosSuccess]: (_state, action) => (
+                action.payload.name === name 
+                    ? {
+                        _state,
+                        [action.payload.sol]: { isLoading: false, photos: action.payload.photos, isLoaded: true }
                     }
-                }
-            })
+                    : _state
+            ),
+            [fetchPhotosFailure]: (_state, action) => (
+                action.payload.name === name 
+                    ? {
+                        ..._state,
+                        [action.payload.sol]: { isLoading: false, error: action.payload.error, isLoaded: true }
+                    } 
+                    : _state
+            )
         },
         {}
     );

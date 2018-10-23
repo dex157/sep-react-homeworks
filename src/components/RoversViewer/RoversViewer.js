@@ -8,7 +8,8 @@ import { rovers, minSol, maxSol } from '../../rovers';
 
 class RoversViewer extends Component {
     componentDidMount() {
-        const { fetchPhotosRequest, currentSol } = this.props;
+        const { fetchPhotosRequest, sol } = this.props;
+        const { current: currentSol } = sol;
   
         rovers.forEach(rover => {
             fetchPhotosRequest({
@@ -19,8 +20,9 @@ class RoversViewer extends Component {
     }
   
     changeSol = value => {
-        const { changeSol, currentSol } = this.props;
-    
+        const { changeSol, sol } = this.props;
+        const { current: currentSol } = sol;
+
         if (value === currentSol) {
             return;
         }
@@ -28,7 +30,9 @@ class RoversViewer extends Component {
     };
   
     renderRoversPhoto = () => {
-        const { photos, currentSol } = this.props;
+        const { photos, sol } = this.props;
+        const { current: currentSol } = sol;
+
         return rovers.map(rover => {
             const currentPhotos = photos[rover][currentSol];
             const roverPhotos = !currentPhotos || !currentPhotos.isLoaded 
@@ -41,9 +45,9 @@ class RoversViewer extends Component {
         });
     };
     
-  
     render() {
-      const { currentSol } = this.props;
+      const { sol } = this.props;
+      const { current: currentSol } = sol;
   
       return (
         <div className={styles.root}>
