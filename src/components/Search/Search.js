@@ -9,7 +9,7 @@ import Followers from '../Followers';
 
 class Search extends PureComponent {
   state = {
-    user: ''
+    user: 'vostack13'
   };
 
   input = React.createRef();
