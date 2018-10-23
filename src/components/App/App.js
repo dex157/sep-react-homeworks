@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import './App.css';
 
-import Show from '../Show';
+import Show from '../Show/Show';
 
 import bigBangImage from './assets/bigBang.jpg';
 import houseImage from './assets/house.jpg';
