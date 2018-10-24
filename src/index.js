@@ -8,8 +8,8 @@ import { Provider } from 'react-redux';
 const store = createStore();
 
 ReactDOM.render(
-  <Provider store={store}>
-    <Router />
-  </Provider>,
-  document.getElementById('root')
+    <Provider store={store}>
+        <Router />
+    </Provider>,
+    document.getElementById('root')
 );
