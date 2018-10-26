@@ -7,6 +7,6 @@ import user, { sagas as userSagas } from './User';
 export default combineReducers({ auth, followers, user });
 
 export function* rootSaga() {
-  yield fork(followersSagas);
-  yield fork(userSagas);
+    yield fork(followersSagas);
+    yield fork(userSagas);
 }

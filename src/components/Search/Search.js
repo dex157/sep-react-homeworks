@@ -8,51 +8,51 @@ import UserInfo from '../UserInfo';
 import Followers from '../Followers';
 
 class Search extends PureComponent {
-  state = {
-    user: ''
-  };
+    state = {
+        user: ''
+    };
 
-  input = React.createRef();
+    input = React.createRef();
 
-  handleChange = event => {
-    this.setState({ user: event.target.value });
-  };
+    handleChange = event => {
+        this.setState({ user: event.target.value });
+    };
 
-  handleKeyPress = event => {
-    const { fetchUserRequest, fetchFollowersRequest } = this.props;
-    const { user } = this.state;
+    handleKeyPress = event => {
+        const { fetchUserRequest, fetchFollowersRequest } = this.props;
+        const { user } = this.state;
 
-    if (event.key === 'Enter' && user.length > 0) {
-      fetchUserRequest(user);
-      fetchFollowersRequest(user);
+        if (event.key === 'Enter' && user.length > 0) {
+            fetchUserRequest(user);
+            fetchFollowersRequest(user);
+        }
+    };
+
+    componentDidMount() {
+        this.input.current.focus();
     }
-  };
 
-  componentDidMount() {
-    this.input.current.focus();
-  }
+    render() {
+        const { user } = this.state;
 
-  render() {
-    const { user } = this.state;
-
-    return (
-      <div className={styles.root}>
-        <Input
-          ref={this.input}
-          value={user}
-          className='t-search-input'
-          placeholder="Ник пользователя"
-          onChange={this.handleChange}
-          onKeyPress={this.handleKeyPress}
-        />
-        <UserInfo />
-        <Followers />
-      </div>
-    );
-  }
+        return (
+            <div className={styles.root}>
+                <Input
+                    ref={this.input}
+                    value={user}
+                    className="t-search-input"
+                    placeholder="Ник пользователя"
+                    onChange={this.handleChange}
+                    onKeyPress={this.handleKeyPress}
+                />
+                <UserInfo />
+                <Followers />
+            </div>
+        );
+    }
 }
 
 export default connect(
-  undefined,
-  { fetchUserRequest, fetchFollowersRequest }
+    undefined,
+    { fetchUserRequest, fetchFollowersRequest }
 )(Search);
