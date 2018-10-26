@@ -43,6 +43,7 @@ class SelectSol extends PureComponent {
   render() {
     const { minSol, maxSol, classes } = this.props;
     const { sol } = this.state;
+
     return (
       <Paper className={classes.root}>
         <Slider

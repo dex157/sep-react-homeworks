@@ -33,7 +33,8 @@ class App extends PureComponent {
         container
       >
         <NasaCard />
-        <Login onEnter={this.handleEnterApiKey} />
+        <Login onEnter={this.handleEnterApiKey}
+        />
       </Grid>
     );
   }

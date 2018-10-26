@@ -22,7 +22,7 @@ const styles = theme => ({
 
 class Login extends PureComponent {
   state = {
-    inputValue: ''
+    inputValue: 'Iy8Dpkn6idKHTs3Wstu9YExNi6HRpyPQS2eGKrFE',
   };
   handleChange = event => {
     this.setState({ inputValue: event.target.value });
