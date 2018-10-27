@@ -3,15 +3,18 @@ import SectionTitle from "../SectionTitle";
 import "./Layout.css";
 
 class Layout extends PureComponent {
+
+
   render() {
+    const {header, footer, children} = this.props;
     return (
       <Fragment>
-        {this.renderHeader(this.props.header)}
-        <main className={this.getClassForMain(this.props.header, this.props.footer)}>
+        {this.renderHeader(header)}
+        <main className={this.getClassForMain(header, footer)}>
           <SectionTitle className={"main__title"}>Main</SectionTitle>
-          {this.props.children}
+          {children}
         </main>
-        {this.renderFooter(this.props.footer)}
+        {this.renderFooter(footer)}
       </Fragment>
     );
   }
