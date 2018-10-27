@@ -1,25 +1,25 @@
-import React, { PureComponent } from 'react';
-import './LoginForm.css';
-import Button from '../Button'
+import React, { PureComponent } from "react";
+import "./LoginForm.css";
+import Button from "../Button";
 
 const fields = [
   {
-    id: 'email',
-    label: 'Почта',
-    type: 'text'
+    id: "email",
+    label: "Почта",
+    type: "text"
   },
   {
-    id: 'password',
-    label: 'Пароль',
-    type: 'password'
+    id: "password",
+    label: "Пароль",
+    type: "password"
   }
 ];
 
 class LoginForm extends PureComponent {
   state = {
     values: {
-      email: '',
-      password: ''
+      email: "",
+      password: ""
     }
   };
 
@@ -63,7 +63,7 @@ class LoginForm extends PureComponent {
           </p>
         ))}
 
-        {authorizeError !== '' && (
+        {authorizeError !== "" && (
           <p className="login-form-error t-login-error">{authorizeError}</p>
         )}
 
