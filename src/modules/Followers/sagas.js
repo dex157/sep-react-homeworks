@@ -1,4 +1,4 @@
-import { takeLatest, select, put, call, fork } from 'redux-saga/effects';
+import { takeLatest, select, put, call } from 'redux-saga/effects';
 import { getFollowersInfo } from './api';
 import { fetchSuccess } from "./actions";
 import { getApiKey } from "../Auth";
