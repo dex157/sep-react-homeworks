@@ -24,18 +24,18 @@ class LoginForm extends Component{
         const { authError, isAuthorized } = this.props;
         return(
             <div className={styles.bg}>
-                <div className={`${styles.form}`}>
+                <div className={`${styles.form} t-form`}>
                     <p>
                         <label htmlFor="email">
                             <span className={`${styles.labelText}`}>Почта</span>
                         </label>
-                        <input type="text" name="email" className={`${styles.input}`} value={state.email} onChange={this.handleChange} />
+                        <input type="text" name="email" className={`${styles.input} t-input-email`} value={state.email} onChange={this.handleChange} />
                     </p>
                     <p>
                         <label htmlFor="password">
                             <span className={`${styles.labelText}`}>Пароль</span>
                         </label>
-                        <input type="password" name="password" className={`${styles.input}`} value={state.password} onChange={this.handleChange} />
+                        <input type="password" name="password" className={`${styles.input} t-input-password`} value={state.password} onChange={this.handleChange} />
                     </p>
                     {isAuthorized ? (
                         <Redirect to="/app" />
@@ -44,7 +44,7 @@ class LoginForm extends Component{
                     ) : null
                     }
                     <div className={`${styles.buttons}`}>
-                        <button className={`${styles.button}`} onClick={this.handleSubmit}>Войти</button>
+                        <button className={`${styles.button} t-login`} onClick={this.handleSubmit}>Войти</button>
                     </div>
                 </div>
             </div>
