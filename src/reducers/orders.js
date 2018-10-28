@@ -2,76 +2,84 @@ import { CREATE_NEW_ORDER } from '../modules/clients';
 import { MOVE_ORDER_NEXT, MOVE_ORDER_BACK } from '../actions/moveOrder';
 import { ADD_INGREDIENT } from '../actions/ingredients';
 
-const positions = [
-  'clients',
-  'conveyor_1',
-  'conveyor_2',
-  'conveyor_3',
-  'conveyor_4',
-  'finish'
-];
-
 export default (state = [], action) => {
   switch (action.type) {
     case CREATE_NEW_ORDER:
-    return [
-      ...state,
-      {
-        id: action.payload.id,
-        position: 'clients',
-        recipe: action.payload.recipe,
-        ingredients: []
-      }
-    ];
-    case MOVE_ORDER_NEXT:
-    return state.map(item => {
-        if(item.id === action.payload){
-          let position = positions.indexOf(item.position);
-          if(positions[position + 1] === 'finish'){
-            let index = 0;
-            item.ingredients.map(riceptIngred => {
-              item.recipe.map(ing => {
-                index = (ing === riceptIngred) ? index + 1 : index;
-              })
-            })
-            item.position = (index === item.recipe.length) ? positions[position + 1] : item.position;
-          } else{
-          item.position = positions[position + 1];
-          }
+      return [
+        ...state,
+        {
+          id: action.payload.id,
+          recipe: [...action.payload.recipe],
+          ingredients: [],
+          position: 'clients'
         }
-      return item;
-  
-    });
-    
-    case MOVE_ORDER_BACK:
-    return state.map(item => {
-        if(item.id === action.payload){
-          let position = positions.indexOf(item.position);
-          if(positions[position - 1] !== 'clients'){
-            item.position = positions[position - 1];
-          }
-        }
-      return item;
-  
-    });
-    case ADD_INGREDIENT:
-    console.log(action);
-    console.log(state);
-    let iteration = true;
-    return state.map(item => {
-      if(item.position === action.payload.from && iteration){
-        // item.ingredients.push(action.payload.ingredient);
-        item.ingredients = [
-          ...item.ingredients,
-          action.payload.ingredient
-        ];
-        iteration = false;
-      }
-      return item;
-    })
-    
-    // return state;
+      ];
 
+    case MOVE_ORDER_NEXT: {
+      return state.map(order => {
+        if (order.id === action.payload) {
+          switch (order.position) {
+            case 'clients':
+              return { ...order, position: 'conveyor_1' };
+            case 'conveyor_1':
+              return { ...order, position: 'conveyor_2' };
+            case 'conveyor_2':
+              return { ...order, position: 'conveyor_3' };
+            case 'conveyor_3':
+              return { ...order, position: 'conveyor_4' };
+            case 'conveyor_4':
+              const isEveryIngredientsPresent = order.recipe.every(i =>
+                order.ingredients.includes(i)
+              );
+              if (isEveryIngredientsPresent)
+                return { ...order, position: 'finish' };
+              else return order;
+            default:
+              return order;
+          }
+        } else {
+          return order;
+        }
+      });
+    }
+
+    case MOVE_ORDER_BACK: {
+      return state.map(order => {
+        if (order.id === action.payload) {
+          switch (order.position) {
+            case 'conveyor_2':
+              return { ...order, position: 'conveyor_1' };
+            case 'conveyor_3':
+              return { ...order, position: 'conveyor_2' };
+            case 'conveyor_4':
+              return { ...order, position: 'conveyor_3' };
+            default:
+              return order;
+          }
+        } else {
+          return order;
+        }
+      });
+    }
+
+    case ADD_INGREDIENT: {
+      const firstOrder = state.find(
+        order => order.position === action.payload.from
+      );
+
+      if (!firstOrder) return state;
+
+      return state.map(order => {
+        if (order.id === firstOrder.id) {
+          return {
+            ...order,
+            ingredients: [...order.ingredients, action.payload.ingredient]
+          };
+        } else {
+          return order;
+        }
+      });
+    }
     default:
       return state;
   }
