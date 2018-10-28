@@ -29,7 +29,7 @@ class ConveyorElement extends PureComponent {
   };
 
   render() {
-    const { title, name, ingredients, orders } = this.props;
+    const { title, name, ingredients, orders} = this.props;
 
     return (
       <Box
@@ -68,3 +68,4 @@ export default connect(
     moveOrderNext
   }
 )(ConveyorElement);
+ 
