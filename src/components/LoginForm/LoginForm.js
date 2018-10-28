@@ -3,7 +3,7 @@ import { withAuth } from '../../context/Auth';
 import { Redirect } from 'react-router-dom';
 import styles from './LoginForm.module.css';
 
-const fields = [
+let fields = [
   {
     id: 1,
     name: 'email',
@@ -37,6 +37,7 @@ class LoginForm extends Component {
 
   render() {
     const { isAuthorized, authError } = this.props;
+    const state = this.state;
 
     if (isAuthorized) {
       return <Redirect to="/app" />;
@@ -55,7 +56,7 @@ class LoginForm extends Component {
                 className={`${styles.input} t-input-${name}`}
                 type={type}
                 name={name}
-                value={this.state[name]}
+                value={state[name]}
                 onChange={this.handleChange}
               />
             </p>
