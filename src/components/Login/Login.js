@@ -1,15 +1,16 @@
 import React, { PureComponent } from 'react';
-import styles from './Login.module.css';
 import { getIsAuthorized, addApiKey } from '../../modules/Auth';
 import { connect } from 'react-redux';
 import { withRouter, Redirect } from 'react-router-dom';
 import Input from '../Input';
 
+import styles from './Login.module.css';
+
 class Login extends PureComponent {
   // на время разработки свой access token можно вставить сюда, чтобы
   // не вводить каждый раз
   state = {
-    key: ''
+    key: 'ce438df931ea72cbd26f6e2a960196220776b9d6'
   };
 
   input = React.createRef();
@@ -55,7 +56,7 @@ class Login extends PureComponent {
           ref={this.input}
           value={key}
           placeholder="access token"
-          className='t-login-input'
+          className="t-login-input"
           onChange={this.handleChange}
           onKeyPress={this.handleKeyPress}
         />
