@@ -14,7 +14,7 @@ export default () => (
           <Route path="/login" exact component={LoginForm} />
           <PrivateRoute path="/app" component={AppRouter} />
           <Route path="/app" component={AppRouter} />
-          <Redirect to="/" />
+          <Redirect to="/login" />
         </Switch>
       </BrowserRouter>
     </AuthProvider>

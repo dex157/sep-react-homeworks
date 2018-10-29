@@ -1,74 +1,79 @@
-import React, {Component} from 'react';
-import './LoginForm.module.css';
+import React, { Component } from 'react';
+import { withAuth } from '../../context/Auth';
+import styles from 'components/LoginForm/LoginForm.module.css';
+import { Redirect } from 'react-router-dom';
+
+const inp = [
+  {
+    name: 'email',
+    label: 'Почта',
+    type: 'text'
+  },
+  {
+    name: 'password',
+    label: 'Пароль',
+    type: 'password'
+  }
+];
 
 class LoginForm extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            email: '',
-            password: ''
-        }
-    }
-        onChange = event => {
-        //let field = event.target.name;
-        console.log(event.target.value);
-        this.setState({
-          email: event.target.value
-        });
-    }
+  state = {
+    email: '',
+    password: ''
+  };
 
-    onSubmit = event => {
-        event.preventDefault();
-        //let field = event.target.name;
-        console.log(event.target.value);
-        this.setState({
-          name: event.target.value
-        });
-    }
+  inpChangeHandler = e => {
+    const value = e.target.value,
+      name = e.target.name;
+    this.setState({
+      [name]: value
+    });
+  };
 
-    render() {
-        const { email, password } = this.state;
+  formSendHandler = () => {
+    const { email, password } = this.state,
+      { authorize } = this.props;
+    authorize(email, password);
+  };
 
-        return (
-          <form className="form">
-              <div className="LoginForm">
-                <div className="LoginForm_form">
-                    <p>
-                        <label htmlFor="email">
-                            <span className="LoginForm_labelText">Почта</span>                            
-                        </label>
-                        <input 
-                            type="text" 
-                            name="email" 
-                            className="LoginForm_input t-input-email" 
-                            value={email} 
-                            onChange={this.onChange} 
-                        />
-                    </p>
-                    <p>
-                    <label htmlFor="password">
-                        <span className="LoginForm_labelText">Пароль</span>                            
-                    </label>
-                    <input 
-                        type="password" 
-                        name="password" 
-                        className="LoginForm_input t-input-pawssword" 
-                        value={ password } 
-                        onChange={this.onChange}                         
-                    />
-                </p>
-                </div>
-                <div className="LoginForm_buttons">
-                    <button className="LoginForm_button t-login">Войти</button>
-                </div>
-              </div>
- 
-              <div className="LoginForm__buttons">
-                  <button className="button t-submit" onClick={this.onSubmit}>Проверить</button>
-              </div>
-          </form>
-        )
-    }      
+  render() {
+    console.log(styles);
+    const state = this.state,
+      { isAuthorized, authError } = this.props;
+    return (
+      <div className={styles.bg}>
+        <div className={`${styles.form} t-form`}>
+          {inp.map(inp => (
+            <p key={inp.name}>
+              <label htmlFor={inp.name}>
+                <span className={styles.labelText}>{inp.label}</span>
+              </label>
+              <input
+                type={inp.type}
+                name={inp.name}
+                className={`${styles.input} t-input-${inp.name}`}
+                onChange={this.inpChangeHandler}
+                value={state[inp.name]}
+              />
+            </p>
+          ))}
+          {isAuthorized ? (
+            <Redirect to="/app" />
+          ) : authError !== '' ? (
+            <p className={styles.error}>{authError}</p>
+          ) : null}
+          <div className={styles.buttons}>
+            <button
+              className={`${styles.button} t-login`}
+              onClick={this.formSendHandler}
+            >
+              Войти
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
-export default LoginForm;
+export default withAuth(LoginForm);
