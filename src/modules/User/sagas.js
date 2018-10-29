@@ -1,9 +1,9 @@
-import { takeLatest, select, put, call } from 'redux-saga/effects';
+import { takeLatest, select, put, call, fork } from 'redux-saga/effects';
 import { getUserInfo } from './api';
 import { fetchSuccess } from './actions';
 import { getApiKey } from "../Auth";
 
-export default function* fetchUserWatcher() {
+function* fetchUserWatcher() {
   yield takeLatest('USER/FETCH_REQUEST', fetchUserFlow);
 }
 
@@ -17,8 +17,6 @@ export function* fetchUserFlow(action) {
   }
 }
 
-/*
 export default function*() {
   yield fork(fetchUserWatcher);
 }
-*/

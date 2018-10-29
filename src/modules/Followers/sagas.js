@@ -1,9 +1,9 @@
-import { takeLatest, select, put, call } from 'redux-saga/effects';
+import { takeLatest, select, put, call, fork } from 'redux-saga/effects';
 import { getFollowersInfo } from './api';
 import { fetchSuccess } from "./actions";
 import { getApiKey } from "../Auth";
 
-export default function* fetchFollowersWatcher() {
+function* fetchFollowersWatcher() {
   yield takeLatest('FOLLOWERS/FETCH_REQUEST', fetchFollowersFlow);
 }
 
@@ -17,8 +17,6 @@ export function* fetchFollowersFlow(action) {
   }
 }
 
-/*
 export default function*() {
   yield fork(fetchFollowersWatcher);
 }
-*/
