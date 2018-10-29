@@ -38,6 +38,8 @@ class LoginForm extends Component {
   }
 
   renderForm = () => {
+    const state = this.state;
+
     return (
       fields.map(item => (
         <p key={item.name}>
@@ -50,7 +52,7 @@ class LoginForm extends Component {
             className={styles.input + ` t-input-${item.name}`}
             type={item.type}
             name={item.name}
-            value={this.state[item.name]}
+            value={state[item.name]}
             onChange={this.onInputChange}
           />
         </p>
