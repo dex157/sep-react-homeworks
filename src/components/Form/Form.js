@@ -2,11 +2,8 @@ import React, {Component} from 'react';
 import './Form.css';
 import bondImg from './assets/bond_approve.jpg';
 
-
 class FirstNameField extends Component {
-  
-  state = {valueFirst: '', statusFirst: ''}; 
-
+  state = {valueFirst: '', statusFirst: 'empty'}; 
   onChangeFirst = (e) => { 
     var val = e.target.value;
     this.setState({valueFirst: val});
@@ -20,23 +17,25 @@ class FirstNameField extends Component {
       }
     }   
   }  
-
   render() {
     return (
-      <p className = "field" >
-        <label className = "field__label" >Имя </label>
-        <input className = "field__input t-input-firstname" type="text" value={this.state.valueFirst} onChange={this.onChangeFirst} />
+     <p className = "field" >
+        <label className = "field__label" htmlFor='firstname'>
+           <span className = "field-label">Имя</span>
+         </label>
+              <input  
+                className='field__input field-input t-input-firstname'
+                type='text'
+                name='firstname'
+                value={this.state.valueFirst}
+                onChange={this.onChangeFirst}></input> 
       </p>
     )
   }   
-
 }
 
-
 class LastNameField extends Component {
-
-  state = {valueLast: '', statusLast: ''}; 
-    
+  state = {valueLast: '', statusLast: 'empty'};   
   onChangeLast = (e) => {
     var val = e.target.value;
     this.setState({valueLast: val});
@@ -50,24 +49,26 @@ class LastNameField extends Component {
       }
     }   
   }  
-
   render() {
     return (
-      <p className = "field" >
-        <label className = "field__label" >Фамилия </label>
-        <input className = "field__input t-input-lastname" type="text" value={this.state.valueLast} onChange={this.onChangeLast} />
-      </p>
+      <span className = "field" >
+        <label className = "field__label" htmlFor='lastname'>
+           <span className = "field-label">Фамилия</span>
+         </label>
+              <input  
+                className='field__input field-input t-input-lastname'
+                type='text'
+                name='lastname'
+                value={this.state.valueLast}
+                onChange={this.onChangeLast}></input> 
+      </span>
     )
   }     
-
 }
 
-
 class PasswordField extends Component {
-
-  state = {valuePassword: '', statusPassword: ''}; 
-    
-  onChangeLast = (e) => {
+  state = {valuePassword: '', statusPassword: 'empty'};   
+  onChangePassword = (e) => {
     var val = e.target.value;
     this.setState({valuePassword: val});
     if (val === "007") {
@@ -80,78 +81,70 @@ class PasswordField extends Component {
       }
     }   
   }  
-
   render() {
     return (
-      <p className = "field">
-        <label  className = "field__label" >Пароль </label>
-        <input className = "field__input t-input-password" type="password" value={this.state.valuePassword} onChange={this.onChangePassword} />
-      </p>
+      <span className = "field" >
+        <label className = "field__label" htmlFor='password'>
+           <span className = "field-label">Пароль</span>
+         </label>
+              <input  
+                className='field__input field-input t-input-password'
+                type='password'
+                name='password'
+                value={this.state.valuePassword}
+                onChange={this.onChangePassword}></input> 
+      </span> 
     )
   }   
-
 }
 
 
 export default class Form extends Component {
-
- // state = {display: "", bondik: false};
-
   constructor(props) {
     super(props);
-    this.state = {display: "", bondik: false}; 
-    this.firstNameField = React.createRef();
-    this.lastNameField = React.createRef();
-    this.passwordField = React.createRef();
-   
+    this.state = {displayErr: "none", bondik: false}; 
+    this.firstStatus = {empty: 'Нужно указать имя', wrong: 'Имя указано неверно', correct: ''};
+    this.lastStatus = {empty: 'Нужно указать фамилию', wrong: 'Фамилия указана неверно', correct: ''};
+    this.passwordStatus = {empty: 'Нужно указать пароль', wrong: 'Пароль указан неверно', correct: ''}; 
     this.status = {};
-  
   }
-
-  componentDidMount() {
-    this.status = {
-      firstStat: this.firstNameField.current.state.statusFirst,
-      lastStat: this.lastNameField.current.state.statusLast,
-      passwordStat: this.passwordField.current.state.statusPassword
-    };
-    console.log(this.status); 
-  } 
-
-
   onChangeForm = (e) => {
-    this.setState({display: "none"});
+    this.setState({displayErr: "none"});
   }
-
   handleSubmit = (e) => {
-    e.preventDefault();
-    this.setState({display: "block"});
-    if (this.firstNameField.current.state.statusFirst === "correct" && this.lastNameField.current.state.statusLast === "correct" && this.passwordField.current.state.statusPassword === "correct") {
+    e.preventDefault(); 
+    this.setState({displayErr: "disp"});
+    if (this.firstNameField.state.statusFirst === "correct" && this.lastNameField.state.statusLast === "correct" && this.passwordField.state.statusPassword === "correct") {
       this.setState({bondik: true});
     } else {
       this.setState({bondik: false});     
     }
+    this.status = {
+      firstStat: this.firstNameField.state.statusFirst,
+      lastStat: this.lastNameField.state.statusLast,
+      passwordStat: this.passwordField.state.statusPassword
+    };
   }   
-  
-  render() {
-    let display = this.state.display;
-    var  firstStatus = {empty: 'Нужно указать имя', wrong: 'Имя указано неверно', correct: ''};
-    var  lastStatus = {empty: 'Нужно указать фамилию', wrong: 'Фамилия указано неверно', correct: ''};
-    var  passwordStatus = {empty: 'Нужно указать пароль', wrong: 'Пароль указан неверно', correct: ''};  
-    console.log(this.status);
-    let {firstStat, lastStat, passwordStat} = this.status;
-    console.log(display); 
+  render() {    
+    let {firstStat, lastStat, passwordStat} = this.status; 
     return (
        (this.state.bondik === false) ? (
-         <div className="app-container">
+         <div className="app-container">   
            <form onChange={this.onChangeForm} onSubmit={this.handleSubmit}>
-             <FirstNameField  ref={this.firstNameField} />
-             <p className = "field__error t-error-firstname" style={{display: display}}>{firstStatus[firstStat]}</p>                
-             <LastNameField  ref={this.lastNameField} />
-             <p className = "field__error t-error-lastname" style={{display: display}}>{lastStatus[lastStat]}</p>                
-             <PasswordField  ref={this.passwordField} />
-             <p className = "field__error t-error-password" style={{display: display}}>{passwordStatus[passwordStat]}</p>                
-             <div className="form__buttons">
-               <input className="button t-submit" type="submit" value="Проверить" />
+             <h1>Введите свои данные, агент</h1>      
+             <FirstNameField  ref={component => (this.firstNameField = component)}/>
+             <span className = "field__error field-error t-error-firstname" >{this.state.displayErr === 'none' ? '':this.firstStatus[firstStat]}</span>              
+             <LastNameField  ref={component => (this.lastNameField = component)} />
+             <span className = "field__error field-error t-error-lastname" >{this.state.displayErr === 'none' ? '':this.lastStatus[lastStat]}</span>                
+             <PasswordField  ref={component => (this.passwordField = component)} />
+             <span className = "field__error field-error t-error-password" >{this.state.displayErr === 'none' ? '':this.passwordStatus[passwordStat]}</span>                
+            
+             <div className = "form__buttons">
+               <input
+                 className = "button t-submit"
+                 type = "submit"
+                 value = "Проверить"
+               />
              </div>
            </form>        
          </div>
@@ -159,10 +152,7 @@ export default class Form extends Component {
          <div className="app-container">
            <img src={bondImg} alt="bond approve" className="t-bond-image"></img>
          </div>   
-       )
-        
+       )       
     )
-
   }
-
 }
