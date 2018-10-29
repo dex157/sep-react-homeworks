@@ -3,7 +3,7 @@ import { withAuth } from '../../context/Auth';
 import styles from 'components/LoginForm/LoginForm.module.css';
 import { Redirect } from 'react-router-dom';
 
-const inp = [
+const input = [
   {
     name: 'email',
     label: 'Почта',
@@ -22,7 +22,7 @@ class LoginForm extends Component {
     password: ''
   };
 
-  inpChangeHandler = e => {
+  inputChangeHandler = e => {
     const value = e.target.value,
       name = e.target.name;
     this.setState({
@@ -43,17 +43,17 @@ class LoginForm extends Component {
     return (
       <div className={styles.bg}>
         <div className={`${styles.form} t-form`}>
-          {inp.map(inp => (
-            <p key={inp.name}>
-              <label htmlFor={inp.name}>
-                <span className={styles.labelText}>{inp.label}</span>
+          {input.map(input => (
+            <p key={input.name}>
+              <label htmlFor={input.name}>
+                <span className={styles.labelText}>{input.label}</span>
               </label>
               <input
-                type={inp.type}
-                name={inp.name}
-                className={`${styles.input} t-input-${inp.name}`}
-                onChange={this.inpChangeHandler}
-                value={state[inp.name]}
+                type={input.type}
+                name={input.name}
+                className={`${styles.input} t-input-${input.name}`}
+                onChange={this.inputChangeHandler}
+                value={state[input.name]}
               />
             </p>
           ))}
