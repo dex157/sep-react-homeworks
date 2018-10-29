@@ -4,8 +4,10 @@
   "private": true,
   "dependencies": {
     "classnames": "^2.2.6",
+    "path-to-regexp": "^2.4.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
+    "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.0.4",
     "truncate": "^2.0.1"
