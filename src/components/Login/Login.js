@@ -1,9 +1,10 @@
 import React, { PureComponent } from 'react';
-import styles from './Login.module.css';
 import { getIsAuthorized, addApiKey } from '../../modules/Auth';
 import { connect } from 'react-redux';
 import { withRouter, Redirect } from 'react-router-dom';
 import Input from '../Input';
+
+import styles from './Login.module.css';
 
 class Login extends PureComponent {
   // на время разработки свой access token можно вставить сюда, чтобы
@@ -55,7 +56,7 @@ class Login extends PureComponent {
           ref={this.input}
           value={key}
           placeholder="access token"
-          className='t-login-input'
+          className="t-login-input"
           onChange={this.handleChange}
           onKeyPress={this.handleKeyPress}
         />
