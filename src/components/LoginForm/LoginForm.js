@@ -37,7 +37,6 @@ class LoginForm extends Component {
   };
 
   render() {
-    console.log(styles);
     const state = this.state,
       { isAuthorized, authError } = this.props;
     return (
