@@ -11,7 +11,8 @@
     "react-scripts": "2.0.4",
     "redux": "^4.0.1",
     "redux-actions": "^2.6.1",
-    "redux-saga": "^0.16.2"
+    "redux-saga": "^0.16.2",
+    "reselect": "^4.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
