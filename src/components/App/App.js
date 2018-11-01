@@ -3,9 +3,10 @@ import Grid from '@material-ui/core/Grid';
 import Login from '../Login';
 import NasaCard from '../NasaCard';
 import RoversViewer from '../RoversViewer';
-import styles from './App.module.css';
 import { connect } from 'react-redux';
 import { getIsAuthorized, addKey } from '../../modules/Auth';
+
+import styles from './App.module.css';
 
 class App extends PureComponent {
   handleEnterApiKey = apiKey => {

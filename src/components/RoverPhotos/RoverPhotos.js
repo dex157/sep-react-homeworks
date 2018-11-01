@@ -19,6 +19,7 @@ const styles = {
 class RoverPhotos extends PureComponent {
   render() {
     const { classes, photos, name } = this.props;
+    // console.log('RoverPhotos.render()');
     return (
       <Paper className={classes.root}>
         <Typography className={classes.title} component="h2">{name}</Typography>
