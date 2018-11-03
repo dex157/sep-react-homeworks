@@ -6,7 +6,6 @@ import cls from 'classnames';
 class MailList extends Component {
   render() {
     const { type } = this.props;
-    console.log(this.props);
 
     return (
       <div className={cls(styles.container, `t-${type}-list`)}>

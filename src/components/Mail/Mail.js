@@ -4,7 +4,6 @@ import styles from './Mail.module.css';
 class Mail extends Component {
   render() {
     const { body, from, to } = this.props;
-    console.log(this.props);
 
     return (
       <div className={styles.container}>
