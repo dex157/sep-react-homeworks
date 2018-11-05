@@ -20,10 +20,7 @@ class UserInfo extends PureComponent {
     const render = () => {
       return (
         <div className={styles.imageWrapper}>
-          <img
-           className={styles.image}
-           src={data.avatar_url}
-           />
+            <img className={styles.image} src={data.avatar_url} alt="user" />
            <p>{data.name}</p>
         </div>
       )
