@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { showRequest } from '../../reducers/shows';
+import Actor from '../Actor';
 import styles from './ShowPage.module.css';
 
 const showById = state => showId => {
@@ -8,8 +9,7 @@ const showById = state => showId => {
     const { shows: {entities} } = state;
 
     const findedShow = entities.find((element) => {
-        if (element.id === parseInt(showId)) return true;
-        return false;
+        return element.id === parseInt(showId);
     });
 
     if (findedShow) {
@@ -39,10 +39,7 @@ class ShowPage extends Component {
                     <div dangerouslySetInnerHTML = {{__html: summary}} />
                     <div className = { styles.cast }>
                         { cast.map( row =>
-                            <div key = { `${row.person.id} + ${row.character.id}` } className = "t-person">
-                                <p>{ row.person.name }</p>
-                                <img src = { row.person.image.medium } alt = {row.person.name} />
-                            </div>
+                            <Actor row = { row } />
                         ) }
                     </div>
                 </div>
