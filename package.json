@@ -10,7 +10,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "lint": "eslint src/**/*.js",
+    "lint": "eslint src/**/*.js --max-warnings=0",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "cypress:open": "cypress open",
