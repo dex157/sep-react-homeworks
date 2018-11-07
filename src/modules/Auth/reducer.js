@@ -1,4 +1,3 @@
-import { combineReducers } from 'redux';
 import { handleActions } from 'redux-actions';
 import { addApiKey } from './actions';
 
@@ -14,7 +13,3 @@ export default  handleActions({
         return { ...state, apiKey: payload };
     }
 }, initialState);
-
-// export default combineReducers({
-//     auth,
-// });

@@ -1,4 +1,3 @@
-import { combineReducers } from 'redux';
 import { handleActions } from 'redux-actions';
 import { fetchRequest, fetchSuccess, fetchFailure} from './actions';
 
@@ -21,7 +20,3 @@ export default handleActions({
         return { ...state, isLoading: false, data: payload }
     }
 }, initialState);
-
-// export default combineReducers ({
-//     user,
-// });

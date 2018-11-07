@@ -1,4 +1,3 @@
-import { combineReducers } from 'redux';
 import { handleActions } from 'redux-actions';
 import { fetchRequest, fetchSuccess, fetchFailure } from './actions';
 
@@ -22,6 +21,3 @@ export default handleActions({
     }
 }, initialState);
 
-// export default combineReducers({
-//     followers,
-// });
