@@ -18,20 +18,20 @@ const photos = combineReducers(
           return name === rover
             ? {
                 ...state,
-                [sol]: { photos: [], isLoading: true, isLoaded: false }
+                [sol]: { photos: null, isLoaded: false }
               }
             : state;
         },
         [fetchPhotosSuccess]: (state, action) => {
           const { name, sol, photos } = action.payload;
           return name === rover
-            ? { ...state, [sol]: { photos, isLoading: false, isLoaded: true } }
+            ? { ...state, [sol]: { photos, isLoaded: true } }
             : state;
         },
         [fetchPhotosFailure]: (state, action) => {
           const { name, sol, error } = action.payload;
           return name === rover
-            ? { ...state, [sol]: { isLoading: false, isLoaded: true, error } }
+            ? { ...state, [sol]: { error, isLoading: false } }
             : state;
         }
       },
