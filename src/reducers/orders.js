@@ -16,26 +16,17 @@ export default (state = [], action) => {
     case CREATE_NEW_ORDER:
       const { id, recipe } = action.payload;
       const order = { id, recipe, ingredients: [], position: 'clients' };
-
-      //console.log('state.orders0  ', state);
-
-      //if (state.orders === undefined) return [...state, order];
-      //else return [...state.orders, order]
-
       return [...state, order];
 
     case MOVE_ORDER_NEXT:
       return state.map(order => {
         if (order.id === action.payload) {
-          //console.log('order.position0  ', order, order.position);
           const newPositionNumber = positions.indexOf(order.position) + 1;
           if (positions[newPositionNumber] === 'finish') {
             const { recipe, ingredients } = order;
             for (let ingred of recipe)
               if (ingredients.includes(ingred) !== true) return order;
           }
-          
-          //console.log('order.position1  ', order, order.position);
 
           return { ...order, position: positions[newPositionNumber] };
         }
@@ -45,8 +36,6 @@ export default (state = [], action) => {
     case MOVE_ORDER_BACK:
       return state.map(order => {
         if (order.id === action.payload) {
-          console.log('state.orders1  ', state.orders); 
-          console.log('order.id  ', order.id);
           let newPositionNumber = positions.indexOf(order.position) - 1;
           if (newPositionNumber === 0) return order;
           return { ...order, position: positions[newPositionNumber] };
@@ -57,10 +46,7 @@ export default (state = [], action) => {
 
     case ADD_INGREDIENT:
       let notFound = true;
-      const { from, ingredient } = action.payload;
-      
-      //console.log('from, ingredient  ', from, ingredient);
-
+      const { from, ingredient } = action.payload
       return state.map(order => {
         if (order.position === from && notFound) {
           if (
